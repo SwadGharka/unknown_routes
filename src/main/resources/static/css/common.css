@@ -1,0 +1,9 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
+}
+.scrolled {
+  background: #fafafa !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
