@@ -1,45 +1,35 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Add Category</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        form { width: 400px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
-        input, textarea { width: 100%; margin: 10px 0; padding: 8px; }
-        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        .msg { color: green; text-align: center; }
-    </style>
 </head>
 <body>
+<h2>Add Category</h2>
 
-<h2 style="text-align:center;">Add New Category</h2>
+<form:form action="save-category" method="post" modelAttribute="category">
 
-<form action="save-category" method="post">
     <label>Name:</label>
-    <input type="text" name="name" required />
+    <form:input path="name" /><br/>
 
     <label>Description:</label>
-    <textarea name="desc" rows="3"></textarea>
+    <form:textarea path="description" /><br/>
 
     <label>Icon URL:</label>
-    <input type="text" name="iconUrl" />
+    <form:input path="iconUrl" /><br/>
 
     <label>Meta Value:</label>
-    <input type="text" name="metaValue" />
+    <form:input path="metaValue" /><br/>
 
     <label>Status:</label>
-    <select name="status">
-        <option value="true">Active</option>
-        <option value="false">Inactive</option>
-    </select>
+    <form:select path="status">
+        <form:option value="true" label="Active"/>
+        <form:option value="false" label="Inactive"/>
+    </form:select><br/>
 
-    <button type="submit">Save Category</button>
-</form>
+    <button type="submit">Save</button>
+</form:form>
 
-<c:if test="${not empty message}">
-    <p class="msg">${message}</p>
-</c:if>
+<p>${message}</p>
 
 </body>
 </html>
