@@ -2,7 +2,7 @@ package com.v1.tourapp.service;
 
 import org.springframework.stereotype.Service;
 
-import com.v1.tourapp.entity.TourPackage;
+import com.v1.tourapp.entity.Package;
 import com.v1.tourapp.repository.PackageRepository;
 
 import java.util.List;
@@ -17,12 +17,12 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public List<TourPackage> getAllPackages() {
+    public List<Package> getAllPackages() {
         return packageRepository.findAll();
     }
 
     @Override
-    public TourPackage getPackageById(Long id) {
+    public Package getPackageById(Long id) {
         return packageRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Package not found with id: " + id));
     }
