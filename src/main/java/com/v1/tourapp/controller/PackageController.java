@@ -23,4 +23,12 @@ public class PackageController {
         baseController.updateModel(model);
         return "dashboardCopy";
     }
+    
+    @GetMapping("/addPackage")
+	public String showAddPackage(Model model) {
+		baseController.updateModel(model);
+		return "addPackage";
+	}
+    
+    
 }
