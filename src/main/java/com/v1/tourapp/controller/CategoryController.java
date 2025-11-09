@@ -21,15 +21,17 @@ public class CategoryController {
 	CategoryService categoryService;
 
 	@GetMapping("/addCategory")
-	public String showAddCategoryPage(Model model) {
-		baseController.updateModel(model);
-		return "addCategory";
-	}
-	
-	@PostMapping("/save-category")
-    public ModelAndView saveCategory(@ModelAttribute Category category) {
+    public ModelAndView showAddCategoryPage() {
+        ModelAndView mv = new ModelAndView("addCategory");
+        mv.addObject("category", new Category());
+        return mv;
+    }
+
+    @PostMapping("/save-category")
+    public ModelAndView saveCategory(@ModelAttribute("category") Category category) {
         categoryService.saveCategory(category);
         ModelAndView mv = new ModelAndView("add-category");
+        mv.addObject("category", new Category());
         mv.addObject("message", "Category added successfully!");
         return mv;
     }
