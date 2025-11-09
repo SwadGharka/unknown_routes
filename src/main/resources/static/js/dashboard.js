@@ -59,7 +59,7 @@ function discoverCard(toggleSection, icon, cardName, description, badge, classNa
     let html = "";
     html = `
     <div class="col-md-6 col-lg-3">
-        <div class="card nav-card ${className} text-white border-0 shadow-lg" style="height:${height}; width:${width}; max-width: 100%;" onclick="toggleSection(${toggleSection})">
+        <div class="card nav-card ${className} text-white border-0 shadow-lg" style="height:100%; width:100%; max-width: 100%;" onclick="toggleSection(${toggleSection})">
             <div class="card-body text-center p-4">
                 <div class="fs-1 mb-3">${icon}</div>
                 <h4 class="card-title fw-bold mb-2">${cardName}</h4>
