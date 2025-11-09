@@ -24,11 +24,16 @@ public class PackageController {
         return "dashboardCopy";
     }
     
-    @GetMapping("/addPackage")
-	public String showAddPackage(Model model) {
+    @GetMapping("/add-package")
+	public String addPackage(Model model) {
 		baseController.updateModel(model);
 		return "addPackage";
 	}
     
-    
+    @PostMapping("/save-package")
+	public String savePackage(Model model) {
+		baseController.updateModel(model);
+        // TODO work in progress 
+		return "addPackage";
+	}
 }

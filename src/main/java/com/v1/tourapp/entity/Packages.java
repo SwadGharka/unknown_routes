@@ -16,7 +16,7 @@ import lombok.*;
 @Setter
 @Builder
 @Table(name = "`PACKAGES`")
-public class Package {
+public class Packages {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
