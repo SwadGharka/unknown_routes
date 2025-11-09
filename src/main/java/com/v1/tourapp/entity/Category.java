@@ -15,7 +15,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@Table(name = "CATEGORY")
+@Table(name = "`CATEGORY`")
 public class Category {
 
 	@Id
@@ -26,13 +26,13 @@ public class Category {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	@Column(name = "DESC", columnDefinition = "TEXT")
-	private String desc;
+	@Column(name = "DESCRIPTION")
+	private String description;
 
-	@Column(name = "ICONURL")
+	@Column(name = "ICON_URL")
 	private String iconUrl;
 
-	@Column(name = "METAVALUE")
+	@Column(name = "META_VALUE")
 	private String metaValue;
 
 	@Column(name = "STATUS")
