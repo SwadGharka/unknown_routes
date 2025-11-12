@@ -20,7 +20,7 @@
 
     <!-- ✅ Common JS -->
     <script src="${PATH_FOLDER_JS}/common.js"></script>
-    <script src="${PATH_FOLDER_JS}/Dashboard.js"></script>
+    <script src="${PATH_FOLDER_JS}/dashboard.js"></script>
     <script src="${PATH_FOLDER_JS}/hero.js"></script>
 </head>
 <body>
@@ -123,7 +123,7 @@
 </body>
 <script>
     $(document).ready(function(){
-        let discoverCardData = [
+        let discoverCardDataHardCoded = [
         {
             toggleSection : 'packages',
             icon : '📦',
@@ -165,6 +165,13 @@
             width : '100%'
         },
     ]
+
+        //let discoverCardData = [];
+
+
+        var discoverCardData = getDataByPayloadWithParentUrl('GET', true, true, '/tour/api/category/get-all-categories', "");
+		
+        console.log(discoverCardData);
         getAllDiscoverCardCardByData(discoverCardData);
     })
 </script>

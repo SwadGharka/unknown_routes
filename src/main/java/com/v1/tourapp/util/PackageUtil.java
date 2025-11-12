@@ -1,5 +1,7 @@
 package com.v1.tourapp.util;
 
+import java.util.List;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,5 +39,9 @@ public class PackageUtil {
             response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
         }
         return response;
+    }
+    
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 }
