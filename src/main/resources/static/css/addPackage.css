@@ -1,13 +1,12 @@
 body {
-    /* margin: 0; */
     font-family: "Poppins", sans-serif;
     background: linear-gradient(135deg, #667eea, #764ba2);
-    /* display: flex; */
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    overflow: hidden;
     color: #333;
+    margin: 0;
+    padding: 0;
+    padding-top: 100px; /* header ke liye space */
+    overflow-x: hidden;
 }
 
 /* Hide scrollbar completely */
@@ -15,12 +14,12 @@ body {
     width: 0;
     height: 0;
 }
-
 * {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
+/* Common glassmorphism base */
 .form-container,
 .activities-container,
 .extra-fields {
@@ -29,16 +28,14 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 20px;
     padding: 35px 45px;
-    width: 520px;
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
     animation: fadeIn 0.7s ease;
     display: none;
-    max-height: 90vh;
+    max-height: 85vh;
     overflow-y: auto;
-    margin-left: 30%;
-    margin-bottom: 10px;
-    margin-top: 10% !important;
-
+    width: 90%;
+    max-width: 1000px;
+    margin: 10px auto;
 }
 
 .form-container.active,
@@ -47,14 +44,14 @@ body {
     display: block;
 }
 
-h2 {
-    text-align: center;
-    color: #fff;
-    margin-bottom: 25px;
-    font-weight: 600;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+/* ---------- Step 1 Two Column Layout ---------- */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px 40px;
 }
 
+/* Inputs and labels */
 label {
     display: block;
     font-weight: 500;
@@ -91,63 +88,105 @@ textarea {
     height: 80px;
 }
 
-button {
-    width: 100%;
+/* Buttons */
+.button {
+    width: auto;
+    min-width: 140px;
     background: linear-gradient(45deg, #ffc107, #fd7e14);
     color: white;
-    font-weight: 600;
+    font-weight: 500;
     border: none;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 12px;
+    padding: 10px 18px;
+    font-size: 15px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 10px;
+    margin-top: 15px;
+    display: inline-block;
+    text-align: center;
 }
 
-button:hover {
-    background: linear-gradient(45deg, #ffca2c, #fd7e14);
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
+
+/* Step 2 and Step 3 */
 .day-activity {
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
-
 .day-activity h4 {
     color: #ffd700;
     margin-bottom: 10px;
     font-weight: 600;
 }
-
 .btn-group {
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+.btn-wrapper{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
 }
 
+/* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-8px); }
-  40%, 80% { transform: translateX(8px); }
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}
+.shake {
+    animation: shake 0.5s ease;
+    border: 2px solid red;
 }
 
-.shake {
-  animation: shake 0.5s ease;
-  border: 2px solid red;
+/* Headings */
+h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 25px;
+    font-weight: 600;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-container {
+        width: 95%;
+        margin: 20px auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .activities-container,
+    .extra-fields {
+        width: 90% !important;
+        margin-left: 5%;
+    }
+}
+
+/* Green button for Next / Continue actions */
+.next-btn {
+    background: linear-gradient(45deg, #28a745, #34ce57);
+}
+.button:not(.next-btn) {
+    background: linear-gradient(45deg, #ffc107, #fd7e14);
+}
+.activities-container,
+.extra-fields {
+    width: 600px !important;  /* ya jitni chahiye */
 }

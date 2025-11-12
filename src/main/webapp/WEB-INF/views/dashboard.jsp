@@ -122,7 +122,7 @@
     </section>
 </body>
 <script>
-    $(document).ready(function(){
+    $(document).ready(async function(){
         let discoverCardDataHardCoded = [
         {
             toggleSection : 'packages',
@@ -169,7 +169,7 @@
         //let discoverCardData = [];
 
 
-        var discoverCardData = getDataByPayloadWithParentUrl('GET', true, true, '/tour/api/category/get-all-categories', "");
+        var discoverCardData = await getDataByPayloadWithParentUrl('GET', true, true, '${BASE_URL}${CONTEXT_PATH}api/category/get-all-categories', "");
 		
         console.log(discoverCardData);
         getAllDiscoverCardCardByData(discoverCardData);

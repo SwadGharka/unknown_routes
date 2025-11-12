@@ -5,20 +5,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/api/packages")
+@RequestMapping("/dashboard")
 @CrossOrigin
-public class PackageController {
+public class ViewResolverController {
 
     @Autowired
     BaseController baseController;
     
-    @GetMapping("/dashboard")
+    @GetMapping("/home")
     public String dashboard(Model model) {
         baseController.updateModel(model);
         return "dashboard";
     }
     
-    @GetMapping("/dashboard-copy")
+    @GetMapping("/home-copy")
     public String copyDashboard(Model model) {
         baseController.updateModel(model);
         return "dashboardCopy";
