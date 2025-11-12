@@ -12,7 +12,6 @@
 
     <!-- ✅ Common CSS -->
     <!-- <link rel="stylesheet" href="${PATH_FOLDER_CSS}/common.css"> -->
-    <link rel="stylesheet" href="${PATH_FOLDER_CSS}/header.css">
     <link rel="stylesheet" href="${PATH_FOLDER_CSS}/dashboard.css">
     <link rel="stylesheet" href="${PATH_FOLDER_CSS}/hero.css">
 

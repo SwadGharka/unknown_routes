@@ -8,13 +8,14 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Add Package | OOO Trips</title>
       <link rel="stylesheet" href="${PATH_FOLDER_CSS}/addPackage.css">
-      <script src="${PATH_FOLDER_JS}/addPAckages.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+      <script src="${PATH_FOLDER_JS}/addPAckages.js"></script>
+      <script src="${PATH_FOLDER_JS}/common.js"></script>
 
     </head>
 
     <body>
-
+      <%@ include file="header.jsp"%>
       <!-- Step 1 -->
       <form class="form-container active" id="step1">
         <h2>🧭 Add New Travel Package</h2>

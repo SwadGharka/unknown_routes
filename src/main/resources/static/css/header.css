@@ -1,9 +1,13 @@
-/* 🌴 Navbar Section Styles */
-
 .navbar-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
 }
 
@@ -40,4 +44,9 @@
 
 .navbar-toggler-icon {
   filter: invert(1);
+}
+
+/* prevent overlap with content */
+body {
+  padding-top: 80px; /* adjust if header height changes */
 }

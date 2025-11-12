@@ -1,6 +1,14 @@
 /* ----------------------------------------
    🌈 Navigation Cards (Discover Section)
 -----------------------------------------*/
+body {
+  margin: 0;
+  padding-top: 0 !important;
+}
+
+.main-content {
+  margin-top: 100px; /* header height ke बराबर */
+}
 
 .nav-card {
   position: relative;

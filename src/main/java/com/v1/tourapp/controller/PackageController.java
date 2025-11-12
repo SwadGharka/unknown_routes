@@ -30,10 +30,11 @@ public class PackageController {
 		return "addPackage";
 	}
     
-    @PostMapping("/save-package")
-	public String savePackage(Model model) {
-		baseController.updateModel(model);
-        // TODO work in progress 
-		return "addPackage";
-	}
+    
+	@GetMapping("/add-category")
+    public String showAddCategoryPage(Model model) {
+        baseController.updateModel(model);
+        return "addCategory";
+    }
+
 }

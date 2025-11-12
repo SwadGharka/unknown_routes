@@ -1,35 +1,60 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<html>
-<head>
-    <title>Add Category</title>
-</head>
-<body>
-<h2>Add Category</h2>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
+        <!DOCTYPE html>
+        <html lang="en">
 
-<form:form action="save-category" method="post" modelAttribute="category">
+        <head>
+            <meta charset="UTF-8">
+            <title>Add Category | OOO Trips</title>
+            <link rel="stylesheet" href="${PATH_FOLDER_CSS}/addCategory.css">
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <script src="${PATH_FOLDER_JS}/common.js"></script>
+        </head>
 
-    <label>Name:</label>
-    <form:input path="name" /><br/>
+        <body>
+            <%@ include file="header.jsp"%> 
+            <div class="form-container">
+                <h2>🗂️ Add New Category</h2>
 
-    <label>Description:</label>
-    <form:textarea path="description" /><br/>
+                <form id="categoryForm" method="post">
+                    <label>Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter category name" required>
 
-    <label>Icon URL:</label>
-    <form:input path="iconUrl" /><br/>
+                    <label>Description:</label>
+                    <textarea id="description" name="description" placeholder="Write a short description"></textarea>
 
-    <label>Meta Value:</label>
-    <form:input path="metaValue" /><br/>
+                    <label>Icon URL:</label>
+                    <input type="text" id="iconUrl" name="iconUrl" placeholder="https://example.com/icon.png">
 
-    <label>Status:</label>
-    <form:select path="status">
-        <form:option value="true" label="Active"/>
-        <form:option value="false" label="Inactive"/>
-    </form:select><br/>
+                    <label>Meta Value:</label>
+                    <input type="text" id="metaValue" name="metaValue" placeholder="Optional metadata value">
 
-    <button type="submit">Save</button>
-</form:form>
+                    <label>Status:</label>
+                    <select id="status" name="status">
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
 
-<p>${message}</p>
+                    <button type="button" class="save-category" onclick="saveCategory();">💾 Save Category</button>
+                </form>
+            </div>            
+        </body>
+        <script>
+            function saveCategory() {
+                let payload = getCategory();
+                getDataByPayloadWithParentUrl("post", false, true, "${BASE_URL}${CONTEXT_PATH}api/category/save-category", payload)
+            }
+            function getCategory() {
+                const categoryData = {
+                name: $("#name").val().trim(),
+                description: $("#description").val().trim(),
+                iconUrl: $("#iconUrl").val().trim(),
+                metaValue: $("#metaValue").val().trim(),
+                status: $("#status").val() === "true"
+                };
+                return categoryData;
+            }
 
-</body>
-</html>
+        </script>
+
+        </html>
