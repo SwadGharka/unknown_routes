@@ -12,7 +12,6 @@
 
     <!-- ✅ Common CSS -->
     <!-- <link rel="stylesheet" href="${PATH_FOLDER_CSS}/common.css"> -->
-    <link rel="stylesheet" href="${PATH_FOLDER_CSS}/header.css">
     <link rel="stylesheet" href="${PATH_FOLDER_CSS}/dashboard.css">
     <link rel="stylesheet" href="${PATH_FOLDER_CSS}/hero.css">
 
@@ -21,7 +20,7 @@
 
     <!-- ✅ Common JS -->
     <script src="${PATH_FOLDER_JS}/common.js"></script>
-    <script src="${PATH_FOLDER_JS}/Dashboard.js"></script>
+    <script src="${PATH_FOLDER_JS}/dashboard.js"></script>
     <script src="${PATH_FOLDER_JS}/hero.js"></script>
 </head>
 <body>
@@ -98,10 +97,24 @@
                     </button>
                 </div>
             </div>
-            <div class="mt-5">
-                <h4 class="fw-bold text-center mb-4 text-success">🗺️ All Indian States & Union Territories</h4>
-                <p class="text-center text-muted mb-4">Click on any state to explore travel packages and destinations</p>
-                <div class="row g-3" id="stateCard">
+        </div>
+    </section>
+        <!-- Packages Section -->
+    <section id="packages" class="py-5 bg-light section-content d-none">
+        <div class="container">
+            <div class="text-center mb-5 slide-in">
+                <h3 class="display-4 fw-bold text-dark mb-3">Explore All Indian States</h3>
+                <p class="lead text-muted">Discover incredible destinations across all 28 states and 8 union territories of India</p>
+                <div class="mx-auto mt-3 rounded-pill" style="width: 100px; height: 4px; background: linear-gradient(45deg, #ffc107, #fd7e14);"></div>
+            </div>
+
+            <!-- Featured Packages Section -->
+            <div class="mb-5">
+                <h4 class="fw-bold text-center mb-4 text-primary">🌟 Featured Weekend Packages</h4>
+
+            <div class="row g-4">
+                <!-- BRB Package - Manali -->
+                <div id="packagesRow">
 
                 </div>
             </div>
@@ -109,8 +122,8 @@
     </section>
 </body>
 <script>
-    $(document).ready(function(){
-        let discoverCardData = [
+    $(document).ready(async function(){
+        let discoverCardDataHardCoded = [
         {
             toggleSection : 'packages',
             icon : '📦',
@@ -152,6 +165,13 @@
             width : '100%'
         },
     ]
+
+        //let discoverCardData = [];
+
+
+        var discoverCardData = await getDataByPayloadWithParentUrl('GET', true, true, '${BASE_URL}${CONTEXT_PATH}api/category/get-all-categories', "");
+		
+        console.log(discoverCardData);
         getAllDiscoverCardCardByData(discoverCardData);
     })
 </script>

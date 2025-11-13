@@ -1,0 +1,107 @@
+body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      /* display: flex; */
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #191010;
+      padding-top: 80px;
+    }
+
+
+.form-container {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 35px 45px;
+  width: 600px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.7s ease;
+  margin-top: 40px;
+  margin-left: 30%;
+}
+
+h2 {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #f1f1f1;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  color: #333;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
+  transform: scale(1.02);
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+.save-category {
+  width: 100%;
+  background: linear-gradient(45deg, #ffc107, #fd7e14);
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-category:hover {
+  background: linear-gradient(45deg, #ffca2c, #fd7e14);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+p {
+  text-align: center;
+  font-weight: 500;
+  color: #ffd700;
+  margin-top: 15px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -2,11 +2,11 @@ package com.v1.tourapp.service;
 
 import java.util.List;
 
-import com.v1.tourapp.entity.Package;
+import com.v1.tourapp.entity.Packages;
 
 public interface PackageService {
 	
-	List<Package> getAllPackages();
+	List<Packages> getAllPackages();
 
-	Package getPackageById(Long id);
+	Packages getPackageById(Long id);
 }

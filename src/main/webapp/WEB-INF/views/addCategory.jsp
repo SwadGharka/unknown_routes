@@ -1,45 +1,68 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Add Category</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        form { width: 400px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
-        input, textarea { width: 100%; margin: 10px 0; padding: 8px; }
-        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        .msg { color: green; text-align: center; }
-    </style>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
+        <!DOCTYPE html>
+        <html lang="en">
 
-<h2 style="text-align:center;">Add New Category</h2>
+        <head>
+            <meta charset="UTF-8">
+            <title>Add Category | OOO Trips</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+            <link rel="stylesheet" href="${PATH_FOLDER_CSS}/addCategory.css">
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <script src="${PATH_FOLDER_JS}/common.js"></script>
+        </head>
 
-<form action="save-category" method="post">
-    <label>Name:</label>
-    <input type="text" name="name" required />
+        <body>
+            <%@ include file="header.jsp"%> 
+            <div class="form-container">
+                <h2>🗂️ Add New Category</h2>
 
-    <label>Description:</label>
-    <textarea name="desc" rows="3"></textarea>
+                <form id="categoryForm" method="post">
+                    <label>Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter category name" required>
 
-    <label>Icon URL:</label>
-    <input type="text" name="iconUrl" />
+                    <label>Description:</label>
+                    <textarea id="description" name="description" placeholder="Write a short description"></textarea>
 
-    <label>Meta Value:</label>
-    <input type="text" name="metaValue" />
+                    <label>Icon URL:</label>
+                    <input type="text" id="iconUrl" name="iconUrl" placeholder="https://example.com/icon.png">
 
-    <label>Status:</label>
-    <select name="status">
-        <option value="true">Active</option>
-        <option value="false">Inactive</option>
-    </select>
+                    <label>Meta Value:</label>
+                    <input type="text" id="metaValue" name="metaValue" placeholder="Optional metadata value">
 
-    <button type="submit">Save Category</button>
-</form>
+                    <label>Status:</label>
+                    <select id="status" name="status">
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
 
-<c:if test="${not empty message}">
-    <p class="msg">${message}</p>
-</c:if>
+                    <button type="button" class="save-category" onclick="saveCategory();">💾 Save Category</button>
+                </form>
+            </div>            
+        </body>
+        <script>
+            async function saveCategory() {
+                let payload = getCategory();
+                let response = await getDataByPayloadWithParentUrl("post", false, true, "${BASE_URL}${CONTEXT_PATH}api/save-category", payload);
+                if(response.status == '1'){
+                    showMessage("success", response.message, true);
+                    setTimeout(() => window.location.reload(), 3000);
+                }else{
+                    showMessage("error", response.message);
+                }
+            }
+            function getCategory() {
+                const categoryData = {
+                name: $("#name").val().trim(),
+                description: $("#description").val().trim(),
+                iconUrl: $("#iconUrl").val().trim(),
+                metaValue: $("#metaValue").val().trim(),
+                status: $("#status").val() === "true"
+                };
+                return categoryData;
+            }
 
-</body>
-</html>
+        </script>
+
+        </html>

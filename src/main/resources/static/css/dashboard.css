@@ -1,6 +1,14 @@
 /* ----------------------------------------
    🌈 Navigation Cards (Discover Section)
 -----------------------------------------*/
+body {
+  margin: 0;
+  padding-top: 0 !important;
+}
+
+.main-content {
+  margin-top: 100px; /* header height ke बराबर */
+}
 
 .nav-card {
   position: relative;
@@ -105,4 +113,24 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.package-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.card-hover {
+    transition: all 0.35s ease-in-out;
+    transform: translateY(0);
+}
+.card-hover:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+}
+.card-wrapper {
+    will-change: transform, opacity;
 }

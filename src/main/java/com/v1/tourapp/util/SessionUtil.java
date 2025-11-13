@@ -36,6 +36,15 @@ public class SessionUtil {
 		}
 	}
 
+	public String getContextPath() {
+		try {
+			HttpServletRequest req = getServletRequest();
+			return getContextPath(req);
+		} catch (Exception e) {
+			return "/";
+		}
+	}
+
     public String getBaseUrl(HttpServletRequest req ) {
 		if(req!=null){
 			String scheme = req.getScheme();
@@ -47,6 +56,11 @@ public class SessionUtil {
 			return scheme + "://"+ serverName + ":" + serverPort;
 		}
 		return StringUtils.EMPTY;
+	}
+
+	public String getBaseUrl() {
+		HttpServletRequest req = getServletRequest();
+		return getBaseUrl(req);
 	}
 
     public String getBaseUrlWithContextPath(){

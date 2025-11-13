@@ -9,13 +9,12 @@ import javax.persistence.Table;
 import lombok.*;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder
 @Table(name = "CATEGORY")
+@Setter
+@Getter
 public class Category {
 
 	@Id
@@ -23,19 +22,73 @@ public class Category {
 	@Column(name = "ID")
 	private Long id;
 
-	@Column(name = "NAME", nullable = false)
+	@Column(name = "NAME")
 	private String name;
 
-	@Column(name = "DESC", columnDefinition = "TEXT")
-	private String desc;
+	@Column(name = "DESCRIPTION")
+	private String description;
 
-	@Column(name = "ICONURL")
+	@Column(name = "ICON_URL")
 	private String iconUrl;
 
-	@Column(name = "METAVALUE")
+	@Column(name = "META_VALUE")
 	private String metaValue;
 
 	@Column(name = "STATUS")
 	private Boolean status;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getIconUrl() {
+		return iconUrl;
+	}
+
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
+
+	public String getMetaValue() {
+		return metaValue;
+	}
+
+	public void setMetaValue(String metaValue) {
+		this.metaValue = metaValue;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [id=" + id + ", name=" + name + ", description=" + description + ", iconUrl=" + iconUrl + ", metaValue=" + metaValue + ", status=" + status + "]";
+	}
+	
+	
 }
