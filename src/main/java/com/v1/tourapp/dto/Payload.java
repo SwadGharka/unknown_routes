@@ -2,6 +2,8 @@ package com.v1.tourapp.dto;
 
 import java.net.URLDecoder;
 
+import org.apache.commons.lang3.StringUtils;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,15 +22,15 @@ public class Payload {
 
 	public String getPayload() {
 
-		String payloadDecode = payload.replaceAll(" ", "+");
-		payloadDecode = new String(java.util.Base64.getDecoder().decode(payload));
 		try {
+			String payloadDecode = payload.replaceAll(" ", "+");
+			payloadDecode = new String(java.util.Base64.getDecoder().decode(payload));
 			payloadDecode = URLDecoder.decode(payloadDecode, "UTF-8");
+			return payloadDecode;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return StringUtils.EMPTY;
 		}
-
-		return payloadDecode;
 	}
 
 	public void setPayload(String payload) {

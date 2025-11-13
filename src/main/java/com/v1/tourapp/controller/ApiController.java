@@ -33,10 +33,13 @@ public class ApiController {
         return ResponseEntity.ok().body(packageUtil.getAllCategoriesNameAndIds().toString());
     }
 
+    @PostMapping("/get-all-categories")
+    public ResponseEntity<String> getAllCategories(@RequestBody Payload payload) {
+        return ResponseEntity.ok().body(packageUtil.getAllCategories().toString());
+    }
+
     @PostMapping("/save-package-step1")
-	public String savePackage(Model model) {
-		baseController.updateModel(model);
-        // TODO work in progress 
-		return "addPackage";
+	public ResponseEntity<String> saveNewTravelPackage(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(packageUtil.saveNewTravelPackage(payload.getPayload()).toString());
 	}
 }
