@@ -13,7 +13,7 @@
       <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
       <script src="${PATH_FOLDER_JS}/addPAckages.js"></script>
       <script src="${PATH_FOLDER_JS}/common.js"></script>
-
+      <%@ include file="common/commonScript.jsp" %>
     </head>
 
     <body>
@@ -63,7 +63,7 @@
                 </select>
 
                 <label>Category<span style="color: red;">*</span></label>
-                <select id="categorySelect" name="categorySelect">
+                <select id="category" name="category">
                   <option value="">Select Category</option>
                 </select>
               </div>

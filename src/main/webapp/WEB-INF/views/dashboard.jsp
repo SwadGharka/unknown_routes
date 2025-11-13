@@ -169,7 +169,7 @@
         //let discoverCardData = [];
 
 
-        var discoverCardData = await getDataByPayloadWithParentUrl('GET', true, true, '${BASE_URL}${CONTEXT_PATH}api/category/get-all-categories', "");
+        var discoverCardData = await getDataByPayloadWithParentUrl('POST', true, true, '${BASE_URL}${CONTEXT_PATH}api/get-all-categories', "");
 		
         console.log(discoverCardData);
         getAllDiscoverCardCardByData(discoverCardData);

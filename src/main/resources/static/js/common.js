@@ -1,5 +1,5 @@
 function showMessage(type, message) {
-  $(".custom-alert").remove(); // Remove any old alerts
+  $(".custom-alert").remove();
 
   let gradient;
   if (type === "success") gradient = "linear-gradient(135deg, #198754, #20c997)";
@@ -42,12 +42,10 @@ function showMessage(type, message) {
 
   $("body").append(alertBox);
 
-  // Slide in
   setTimeout(() => {
     alertBox.css({ top: "40px", opacity: "1" });
   }, 100);
 
-  // Auto-hide after 3s
   setTimeout(() => {
     alertBox.css({ top: "-80px", opacity: "0" });
     setTimeout(() => {
@@ -66,8 +64,8 @@ $.ajaxSetup({
       if (settings.contentType == APPLICATION_JSON_VALUE) {
         var payload = {};
         // console.log('settings.data '+settings.data)
-        // payload["payload"] = encode(settings.data);
-        payload["payload"] = (settings.data);
+        payload["payload"] = encode(settings.data);
+        // payload["payload"] = (settings.data);
         settings.data = JSON.stringify(payload);
       }
     }
