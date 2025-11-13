@@ -6,6 +6,8 @@
         <head>
             <meta charset="UTF-8">
             <title>Add Category | OOO Trips</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
             <link rel="stylesheet" href="${PATH_FOLDER_CSS}/addCategory.css">
             <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
             <script src="${PATH_FOLDER_JS}/common.js"></script>
@@ -40,9 +42,15 @@
             </div>            
         </body>
         <script>
-            function saveCategory() {
+            async function saveCategory() {
                 let payload = getCategory();
-                getDataByPayloadWithParentUrl("post", false, true, "${BASE_URL}${CONTEXT_PATH}api/category/save-category", payload)
+                let response = await getDataByPayloadWithParentUrl("post", false, true, "${BASE_URL}${CONTEXT_PATH}api/save-category", payload);
+                if(response.status == '1'){
+                    showMessage("success", response.message, true);
+                    setTimeout(() => window.location.reload(), 3000);
+                }else{
+                    showMessage("error", response.message);
+                }
             }
             function getCategory() {
                 const categoryData = {

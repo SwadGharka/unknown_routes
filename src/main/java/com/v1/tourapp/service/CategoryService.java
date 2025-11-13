@@ -9,6 +9,7 @@ public interface CategoryService {
 	Category saveCategory(Category category);
 
 	List<Category> getAllCategories();
+	List<Object[]> getAllCategoriesNameAndIds();
 
 	Category getCategoryById(Long id);
 
