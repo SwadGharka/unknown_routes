@@ -123,7 +123,7 @@
 </body>
 <script>
     $(document).ready(async function(){
-        let discoverCardDataHardCoded = [
+        let discoverCardData = [
         {
             toggleSection : 'packages',
             icon : '📦',
@@ -169,10 +169,23 @@
         //let discoverCardData = [];
 
 
-        var discoverCardData = await getDataByPayloadWithParentUrl('POST', true, true, '${BASE_URL}${CONTEXT_PATH}api/get-all-categories', "");
-		
+        var cardDataapi = await getDataByPayloadWithParentUrl('POST', true, true, '${BASE_URL}${CONTEXT_PATH}api/get-all-categories', "");
+        const converted = cardDataapi.categories.map(item => {
+            const meta = JSON.parse(item.metaValue);
+
+            return {
+                toggleSection: meta.toggleSection,
+                icon: '📞',
+                cardName: item.name,
+                description: item.description,
+                badge: meta.badge,
+                className: meta.className,
+                height: meta.height,
+                width: meta.width
+            };
+        });
         console.log(discoverCardData);
-        getAllDiscoverCardCardByData(discoverCardData);
+        getAllDiscoverCardCardByData(converted);
     })
 </script>
 </html>

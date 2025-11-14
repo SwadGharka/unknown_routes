@@ -43,8 +43,26 @@ public class PackageUtil {
         return response;
     }
     
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
+    public JSONObject getAllCategories() {
+    	JSONObject response = new JSONObject();
+    	JSONArray categories = new JSONArray();
+    	List<Category> allCategories = categoryService.getAllCategories();
+    	
+    	for (int i = 0; i < allCategories.size() && allCategories.get(i).getStatus(); i++) {
+    		Category category = allCategories.get(i);
+    		JSONObject categoryJson = new JSONObject();
+    		categoryJson.put("id", category.getId());
+    		categoryJson.put("name", category.getName());
+    		categoryJson.put("description", category.getDescription());
+    		categoryJson.put("iconUrl", category.getIconUrl());
+    		categoryJson.put("metaValue", category.getMetaValue());
+    		categories.put(categoryJson);
+		}
+    	
+    	response.put("categories", categories);
+    	response.put("message", "All categorys");
+        response.put("status", 1);
+        return response;
     }
 
     public JSONObject getAllCategoriesNameAndIds(){
