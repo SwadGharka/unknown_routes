@@ -39,8 +39,24 @@ public class ApiController {
         return responseEntity;
     }
 
-    @PostMapping("/save-package-step1")
+    @PostMapping("/save-travel-package")
 	public ResponseEntity<String> saveNewTravelPackage(@RequestBody Payload payload) {
 		return ResponseEntity.ok().body(packageUtil.saveNewTravelPackage(payload.getPayload()).toString());
 	}
+
+    @PostMapping("/save-activities")
+	public ResponseEntity<String> saveActivities(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(packageUtil.saveActivities(payload.getPayload()).toString());
+	}
+
+    @PostMapping("/get-all-activities-by-packageId")
+	public ResponseEntity<String> getAllActivitiesByPackageId(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(packageUtil.getAllActivitiesByPackageId(payload.getPayload()).toString());
+	}
+
+    @PostMapping("/save-additional-details")
+	public ResponseEntity<String> saveAdditionalDetails(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(packageUtil.saveAdditionalDetails(payload.getPayload()).toString());
+	}
+
 }

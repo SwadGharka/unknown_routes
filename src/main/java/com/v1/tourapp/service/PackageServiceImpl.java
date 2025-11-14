@@ -1,5 +1,6 @@
 package com.v1.tourapp.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.v1.tourapp.entity.Packages;
@@ -10,10 +11,12 @@ import java.util.List;
 @Service
 public class PackageServiceImpl implements PackageService {
 
-    private final PackageRepository packageRepository;
+    @Autowired
+    PackageRepository packageRepository;
 
-    public PackageServiceImpl(PackageRepository packageRepository) {
-        this.packageRepository = packageRepository;
+    @Override
+    public Packages save(Packages packages){
+        return packageRepository.saveAndFlush(packages);
     }
 
     @Override
@@ -23,7 +26,6 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public Packages getPackageById(Long id) {
-        return packageRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Package not found with id: " + id));
+        return packageRepository.findById(id).orElse(null);
     }
 }

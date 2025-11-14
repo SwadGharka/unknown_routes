@@ -20,6 +20,7 @@
       <%@ include file="header.jsp" %>
         <!-- Step 1 -->
         <div  class="">
+          <input type="hidden" id="packageId">
           <form class="form-container active" id="step1">
             <h2>🧭 Add New Travel Package</h2>
             <div class="form-grid">
@@ -70,7 +71,7 @@
             </div>
 
             <div class="btn-wrapper">
-              <button class="button next-btn" type="button" id="toActivities" onclick="bindActivity('step1')">Next ➜</button>
+              <button class="button next-btn" type="button" id="toActivities" onclick="saveStep1('step1')">Next ➜</button>
             </div>
           </form>
         </div>
@@ -78,11 +79,12 @@
 
         <!-- Step 2 -->
         <div class="activities-container" id="step2">
+          <input type="hidden" id="totalDays">
           <h2>🏕️ Add Day-wise Activities</h2>
           <div id="activitiesFields"></div>
           <div class="btn-group">
             <button class="button" type="button" id="back1">⬅ Back</button>
-            <button class="button next-btn" type="button" id="toExtras" onclick="saveStep2()">Next ➜</button>
+            <button class="button next-btn" type="button" id="toExtras" onclick="saveActivities()">Next ➜</button>
           </div>
         </div>
 
@@ -104,15 +106,10 @@
 
           <div class="btn-group">
             <button class="button" type="button" id="back2">⬅ Back</button>
-            <button class="button next-btn" type="submit" id="addPackage">Add Package ✅</button>
+            <button class="button next-btn" type="submit" id="addPackage" onclick="saveAdditionalDetails()">Add Package ✅</button>
           </div>
         </div>
         <script>
-          $("#toExtras").click(function () {
-            $("#step2").removeClass("active");
-            $("#step3").addClass("active");
-          });
-
           $("#back1").click(function () {
             $("#step2").removeClass("active");
             $("#step1").addClass("active");

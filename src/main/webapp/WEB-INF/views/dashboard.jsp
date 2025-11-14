@@ -171,7 +171,7 @@
 
         var cardDataapi = await getDataByPayloadWithParentUrl('POST', true, true, '${BASE_URL}${CONTEXT_PATH}api/get-all-categories', "");
         const converted = cardDataapi.categories.map(item => {
-            const meta = JSON.parse(item.metaValue);
+            const meta = {};//JSON.parse(item.metaValue);
 
             return {
                 toggleSection: meta.toggleSection,
@@ -179,7 +179,7 @@
                 cardName: item.name,
                 description: item.description,
                 badge: meta.badge,
-                className: meta.className,
+                className: meta.className == '' ? 'bg-gradient-green' : 'bg-gradient-green',
                 height: meta.height,
                 width: meta.width
             };

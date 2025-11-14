@@ -15,7 +15,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@Table(name = "`PACKAGES`")
+@Table(name = "PACKAGES")
 public class Packages {
 
 	@Id
@@ -35,14 +35,11 @@ public class Packages {
 	@Column(name = "IMAGE_URL")
 	private String imageUrl;
 
-	@Column(name = "CITY")
-	private String city;
+	@Column(name = "DESTINATION")
+	private String destination;
 
-	@Column(name = "STATE")
-	private String state;
-
-	@Column(name = "CONTRY")
-	private String country;
+	@Column(name = "MEMBERS")
+	private String members;
 
 	@Column(name = "AMOUNT")
 	private Double amount;
@@ -50,18 +47,21 @@ public class Packages {
 	@Column(name = "CATORGY_ID")
 	private Long categoryId;
 
-	@Column(name = "DAY_AND_NIGHT")
-	private String dayAndNight;
-
-	@Column(name = "ACTIVITIES_LIST")
-	private String activitiesList;
-
-	@Column(name = "NUMBER_OF_ADULT")
-	private Integer numberOfAdult;
-
-	@Column(name = "NUMBER_OF_CHILD")
-	private Integer numberOfChild;
+	@Column(name = "TOTAL_DAYS")
+	private Integer totalDays;
 
 	@Column(name = "STATUS")
 	private Boolean status;
+	
+	@Column(name = "INCLUSION")
+	private String inclusion;
+	
+	@Column(name = "EXCLUSION")
+	private String exclusion;
+	
+	@Column(name = "HOTEL")
+	private String hotel;
+	
+	@Column(name = "FLIGHT")
+	private String flight;
 }

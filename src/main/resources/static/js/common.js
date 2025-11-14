@@ -95,3 +95,12 @@ function getDataByPayloadWithParentUrl(method, globalflag, isMessageShow, url, p
   });
 }
 
+function validateFieldAndShake(selectorId) {
+  let element = $("#"+selectorId);
+  if ($.trim(element.val()) === "") {
+    element.addClass("shake");
+    setTimeout(() => element.removeClass("shake"), 1000);
+    return false;
+  }
+  return true;
+}
