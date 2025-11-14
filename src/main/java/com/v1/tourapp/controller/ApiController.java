@@ -35,7 +35,8 @@ public class ApiController {
 
     @PostMapping("/get-all-categories")
     public ResponseEntity<String> getAllCategories(@RequestBody Payload payload) {
-        return ResponseEntity.ok().body(packageUtil.getAllCategories().toString());
+    	ResponseEntity<String> responseEntity = ResponseEntity.ok().body(packageUtil.getAllCategories().toString());
+        return responseEntity;
     }
 
     @PostMapping("/save-package-step1")
