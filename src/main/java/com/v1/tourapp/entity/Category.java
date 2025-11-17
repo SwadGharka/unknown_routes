@@ -28,14 +28,14 @@ public class Category {
 	@Column(name = "DESCRIPTION")
 	private String description;
 
-	@Column(name = "ICON_URL")
-	private String iconUrl;
-
-	@Column(name = "META_VALUE")
-	private String metaValue;
+	@Column(name = "ICON")
+	private String icon;
 
 	@Column(name = "STATUS")
 	private Boolean status;
+
+	@Column(name = "BACKGROUND_COLOR")
+	private String backgroundColor;
 
 	public Long getId() {
 		return id;
@@ -61,20 +61,12 @@ public class Category {
 		this.description = description;
 	}
 
-	public String getIconUrl() {
-		return iconUrl;
+	public String getIcon() {
+		return icon;
 	}
 
-	public void setIconUrl(String iconUrl) {
-		this.iconUrl = iconUrl;
-	}
-
-	public String getMetaValue() {
-		return metaValue;
-	}
-
-	public void setMetaValue(String metaValue) {
-		this.metaValue = metaValue;
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	public Boolean getStatus() {
@@ -87,7 +79,7 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", description=" + description + ", iconUrl=" + iconUrl + ", metaValue=" + metaValue + ", status=" + status + "]";
+		return "Category [id=" + id + ", name=" + name + ", description=" + description + ", icon=" + icon + ", status=" + status + "]";
 	}
 	
 	

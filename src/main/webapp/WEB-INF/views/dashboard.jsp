@@ -9,19 +9,19 @@
     <title>OOO TRIPS - Out Of Office Weekend Getaways</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- ✅ Common CSS -->
     <!-- <link rel="stylesheet" href="${PATH_FOLDER_CSS}/common.css"> -->
-    <link rel="stylesheet" href="${PATH_FOLDER_CSS}/dashboard.css">
-    <link rel="stylesheet" href="${PATH_FOLDER_CSS}/hero.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/dashboard.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/hero.css">
 
     <!-- ✅ jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- ✅ Common JS -->
-    <script src="${PATH_FOLDER_JS}/common.js"></script>
-    <script src="${PATH_FOLDER_JS}/dashboard.js"></script>
-    <script src="${PATH_FOLDER_JS}/hero.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/dashboard.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/hero.js"></script>
+    <%@ include file="common/commonScript.jsp" %>
 </head>
 <body>
     <%@ include file="header.jsp"%>
@@ -112,79 +112,29 @@
             <div class="mb-5">
                 <h4 class="fw-bold text-center mb-4 text-primary">🌟 Featured Weekend Packages</h4>
 
-            <div class="row g-4">
-                <!-- BRB Package - Manali -->
-                <div id="packagesRow">
-
-                </div>
+            <div class="row g-4" id="packagesRow">
             </div>
         </div>
     </section>
 </body>
 <script>
     $(document).ready(async function(){
-        let discoverCardData = [
-        {
-            toggleSection : 'packages',
-            icon : '📦',
-            cardName : 'Travel Packages',
-            description : 'Discover our weekend getaway packages designed for busy professionals',
-            badge : '6 Amazing Packages',
-            className : 'bg-gradient-blue',
-            height : '100%',
-            width : '100%'
-        },
-        {
-            toggleSection : 'stats',
-            icon : '⭐',
-            cardName : 'Why Choose Us',
-            description : 'See our impressive stats and what makes us the best choice',
-            badge : '2500+ Happy Travelers',
-            className : 'bg-gradient-purple',
-            height : '100%',
-            width : '100%'
-        },
-        {
-            toggleSection : 'testimonials',
-            icon : '💬',
-            cardName : 'Customer Reviews',
-            description : 'Read what our satisfied customers have to say about their trips',
-            badge : '5-Star Rated',
-            className : 'bg-gradient-green',
-            height : '100%',
-            width : '100%'
-        },
-        {
-            toggleSection : 'contact',
-            icon : '📞',
-            cardName : 'Get In Touch',
-            description : 'Ready to book? Contact us for personalized assistance',
-            badge : '24/7 Support',
-            className : 'bg-gradient-orange',
-            height : '100%',
-            width : '100%'
-        },
-    ]
-
-        //let discoverCardData = [];
-
-
-        var cardDataapi = await getDataByPayloadWithParentUrl('POST', true, true, '${BASE_URL}${CONTEXT_PATH}api/get-all-categories', "");
+        var cardDataapi = await getDataByPayloadWithParentUrl('POST', true, true, '${pageContext.request.contextPath}/api/get-all-categories', "");
         const converted = cardDataapi.categories.map(item => {
-            const meta = {};//JSON.parse(item.metaValue);
-
+            // getAllDiscoverCardCardByData('',item.icon, item.name, item.description, '',item.backgroundColor == '' ? 'linear-gradient(135deg, #4a6cf7, #0106a7)' : item.backgroundColor, '','');
             return {
-                toggleSection: meta.toggleSection,
-                icon: '📞',
+                toggleSection: item.toggleSection == '' ? '': '',
+                icon: item.icon,
                 cardName: item.name,
                 description: item.description,
-                badge: meta.badge,
-                className: meta.className == '' ? 'bg-gradient-green' : 'bg-gradient-green',
-                height: meta.height,
-                width: meta.width
+                badge: item.packageCount > 0 ?  item.packageCount + ' Amazing Packages' : '',
+                backgroundColor: item.backgroundColor == '' ? 'linear-gradient(135deg, #4a6cf7, #0106a7)' : item.backgroundColor,
+                height: '',
+                width: '',
+                id: item.id
             };
         });
-        console.log(discoverCardData);
+        // console.log(discoverCardData);
         getAllDiscoverCardCardByData(converted);
     })
 </script>

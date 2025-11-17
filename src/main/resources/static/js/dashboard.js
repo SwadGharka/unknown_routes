@@ -1,65 +1,61 @@
-function toggleSection(sectionId) {
-  // 🔹 Hide all sections first
+var allPackage = {}
+
+async function toggleSection(sectionId) {
+  // Hide all sections
   $('.section-content').addClass('d-none');
 
-  // 🔹 Show the selected section
-  const $target = $('#' + sectionId);
-  if ($target.length) {
-    $target.removeClass('d-none');
+  const targetSection = document.getElementById(sectionId);
+  if (!targetSection) return;
 
-    // 🔹 Update section title (like "Travel Packages", "Why Choose Us")
-    const sectionNames = {
-      'packages': 'Travel Packages',
-      'stats': 'Why Choose Us',
-      'testimonials': 'Customer Reviews',
-      'contact': 'Get In Touch'
-    };
+  // Show selected section
+  targetSection.classList.remove('d-none');
 
-    $('#activeSection').removeClass('d-none');
-    $('#activeSectionName').text(sectionNames[sectionId] || '');
+  // Update Section Title
+  const sectionNames = {
+    packages: 'Travel Packages',
+    stats: 'Why Choose Us',
+    testimonials: 'Customer Reviews',
+    contact: 'Get In Touch'
+  };
 
-    // 🔹 Smooth scroll to section
-    $('html, body').animate({
-      scrollTop: $target.offset().top - 50
-    }, 600);
+  $('#activeSection').removeClass('d-none');
+  $('#activeSectionName').text(sectionNames[sectionId] || '');
 
-    // 🔹 Trigger basic animations (slide/fade/counters)
-    $target.find('.slide-in, .fade-in, .stats-counter').each(function () {
-      $(this).addClass('animated');
-    });
+  setTimeout(() => {
+    void targetSection.offsetWidth;
 
-    // 🔹 Animate counters if "stats" section is selected
-    if (sectionId === 'stats') {
-      $target.find('.stats-counter').each(function () {
-        const $counter = $(this);
-        const targetValue = parseInt($counter.data('target'));
-        animateCounter($counter, targetValue);
-      });
-    }
+    const items = targetSection.querySelectorAll('.slide-in, .fade-in, .stats-counter');
+    items.forEach(el => el.classList.add('animated'));
     if(sectionId == 'packages'){
-      const cardHtml = createPackageCard({
-          imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
-          location: 'Manali, Himachal Pradesh',
-          title: 'BRB Package',
-          subtitle: 'Be Right Back - Mountain Escape',
-          attractions: ['Rohtang Pass', 'Solang Valley', 'Hadimba Temple', 'Mall Road'],
-          highlights: [
-              { icon: '🏨', text: 'Mountain Resort Stay (2 nights)' },
-              { icon: '🥾', text: 'Solang Valley Adventure' },
-              { icon: '🧘', text: 'Himalayan Yoga Sessions' },
-              { icon: '🍽️', text: 'Local Himachali Cuisine' }
-          ],
-          price: '45,999',
-          badgeText: 'Popular',
-          isPopular: true,
-          onDetailsClick: "showPackageDetails('brb')",
-          onBookClick: "bookPackage('BRB Package')"
-      });
-
+    //   const cardHtml = createPackageCard({
+    //       imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
+    //       location: 'Manali, Himachal Pradesh',
+    //       title: 'BRB Package',
+    //       subtitle: 'Be Right Back - Mountain Escape',
+    //       attractions: ['Rohtang Pass', 'Solang Valley', 'Hadimba Temple', 'Mall Road'],
+    //       highlights: [
+    //           { icon: '🏨', text: 'Mountain Resort Stay (2 nights)' },
+    //           { icon: '🥾', text: 'Solang Valley Adventure' },
+    //           { icon: '🧘', text: 'Himalayan Yoga Sessions' },
+    //           { icon: '🍽️', text: 'Local Himachali Cuisine' }
+    //       ],
+    //       price: '45,999',
+    //       badgeText: 'Popular',
+    //       isPopular: true,
+    //       onDetailsClick: "showPackageDetails('brb')",
+    //       onBookClick: "bookPackage('BRB Package')"
+    //   });
+        getAllPackages();
       $('#packagesRow').html(cardHtml);
     }
-  }
+    targetSection.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }, 80);
+
 }
+
 
 /* ✅ Helper Function: Animate numeric counters smoothly */
 function animateCounter($element, target) {
@@ -85,7 +81,7 @@ window.addEventListener('scroll', function() {
         navbar.classList.add('navbar-custom');
     }
 });
-// Intersection Observer for animations
+
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -93,12 +89,10 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            // Add animation classes
             if (entry.target.classList.contains('slide-in') || entry.target.classList.contains('fade-in')) {
                 entry.target.classList.add('animated');
             }
             
-            // Animate counters
             if (entry.target.classList.contains('stats-counter')) {
                 const target = parseInt(entry.target.getAttribute('data-target'));
                 animateCounter(entry.target, target);
@@ -108,17 +102,17 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-function discoverCard(toggleSection, icon, cardName, description, badge, className, height, width){
+function discoverCard(toggleSection, icon, cardName, description, badge, backgroundColor, height, width, id){
     let html = "";
     html = `
     <div class="col-md-6 col-lg-3">
-        <div class="card nav-card ${className} text-white border-0 shadow-lg" style="height:100%; width:100%; max-width: 100%;" onclick="toggleSection('${toggleSection}')">
+        <div class="card nav-card text-white border-0 shadow-lg" style="height:100%; width:100%; max-width: 100%; background : ${backgroundColor}" onclick="calegoryClicked('${id}')">
             <div class="card-body text-center p-4">
                 <div class="fs-1 mb-3">${icon}</div>
                 <h4 class="card-title fw-bold mb-2">${cardName}</h4>
                 <p class="card-text opacity-75 small">${description}</p>
                 <div class="mt-3">
-                    <span class="badge bg-light bg-opacity-25 px-3 py-2 rounded-pill fw-semibold">
+                    <span class="${badge != '' ? 'badge bg-light': ''} bg-opacity-25 px-3 py-2 rounded-pill fw-semibold">
                         ${badge}
                     </span>
                 </div>
@@ -128,40 +122,25 @@ function discoverCard(toggleSection, icon, cardName, description, badge, classNa
     return html;
 }
 
-// function discoverCard({
-//   toggleSection,
-//   icon,
-//   cardName,
-//   description,
-//   badge,
-//   className = '',
-//   height = 'auto',
-//   width = '100%'
-// }) {
-//   return `
-//     <div class="d-flex justify-content-center" style="width:${width}; max-width:100%;">
-//       <div
-//         class="card nav-card ${className} text-white border-0 shadow-lg"
-//         style="height:${height}; width:100%; max-width:${width};"
-//         onclick="toggleSection('${toggleSection}')"
-//       >
-//         <div class="card-body text-center p-4 d-flex flex-column justify-content-between">
-//           <div>
-//             <div class="fs-1 mb-3">${icon}</div>
-//             <h4 class="card-title fw-bold mb-2">${cardName}</h4>
-//             <p class="card-text opacity-75 small">${description}</p>
-//           </div>
-//           <div class="mt-3">
-//             <span class="badge bg-light bg-opacity-25 px-3 py-2 rounded-pill fw-semibold">
-//               ${badge}
-//             </span>
-//           </div>
-//         </div>
-//       </div>
-//     </div>`;
-// }
-
-
+// Hide all sections
+function hideAllSections() {
+    const allSections = document.querySelectorAll('.section-content');
+    allSections.forEach(section => {
+        section.classList.add('d-none');
+    });
+    
+    const activeSection = document.getElementById('activeSection');
+    activeSection.classList.add('d-none');
+    
+    // Scroll back to navigation menu
+    const navSection = document.querySelector('.py-5.bg-white');
+    if (navSection) {
+        navSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+    }
+}
 
 function getAllDiscoverCardCardByData(discoverCardData){
     $("#discoverCard").html('');
@@ -169,7 +148,7 @@ function getAllDiscoverCardCardByData(discoverCardData){
     discoverCardData.map(item => {
         console.log(item.icon, item.cardName);
         // html += discoverCard({toggleSection : item.toggleSection, icon : item.icon, cardName : item.cardName, description : item.description, badge : item.badge, className : item.className, height : item.height, width : item.width});
-        html += discoverCard(item.toggleSection,  item.icon, item.cardName, item.description, item.badge, item.className, item.height, item.width);
+        html += discoverCard(item.toggleSection,  item.icon, item.cardName, item.description, item.badge, item.backgroundColor, item.height, item.width, item.id);
     });
     $("#discoverCard").html(html);
     // return html;
@@ -186,8 +165,11 @@ function createPackageCard({
     badgeText = '',
     isPopular = false,
     onDetailsClick = '',
-    onBookClick = ''
+    onBookClick = '',
+    member,
+    pngIcon
 }) {
+    pngIcon = BASE_URL + CONTEXT_PATH+'static/img/ribbon.png'
     const attractionBadges = attractions
         .map(a => `<span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1">${a}</span>`)
         .join('');
@@ -195,30 +177,31 @@ function createPackageCard({
     const highlightItems = highlights
         .map(h => `
             <li class="d-flex align-items-center mb-2">
-                <span class="me-3 text-primary">${h.icon}</span>
-                <span>${h.text}</span>
+                <span class="me-3 text-primary"><i class="bi bi-check-circle text-success me-2"></i></span>
+                <span>${h}</span>
             </li>
         `)
         .join('');
 
-    const popularBadge = isPopular
+    const popularBadge = true
         ? `<span class="badge bg-primary px-3 py-2 rounded-pill">${badgeText}</span>`
         : '';
 
     const cardHtml = `
-        <div class="col-lg-4 col-md-6 card-wrapper" style="opacity:0; transform: translateY(30px); transition: all 0.5s ease;">
+        <div class="col-lg-4 col-md-6" style="opacity:0; transform: translateY(30px); transition: all 0.5s ease;">
             <div class="card card-hover h-100 border-0 shadow-lg overflow-hidden">
                 <div class="package-image rounded-top"
-                    style="height: 250px;
+                    style="
                            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1)), 
                            url('${imageUrl}');
                            background-size: cover;
                            background-position: center;">
-                    <div class="position-absolute top-0 end-0 m-3">
-                        ${popularBadge}
+                    <div class="position-absolute top-0 end-0 m-3" style="display:flex; flex-direction:column; align-items:end; gap:6px;">
+                        ${badgeText ? `<img src="${pngIcon}" style="width: 63px;height: 15px;border-radius: 9px;transform: rotate(40deg) scale(4);transform-origin: center;""><span style="position: absolute;top: 13px;right: 7px; color: white; border-radius: 5px;font-size: 6px;transform: rotate(40deg) scale(3);transform-origin: center;"> ${badgeText}` : ''}
                     </div>
+
                     <div class="position-absolute bottom-0 start-0 m-3 text-white">
-                        <h5 class="fw-bold mb-0">${location}</h5>
+                        <h5 class="fw-bold mb-0">${location}${popularBadge}</h5>
                     </div>
                 </div>
 
@@ -241,7 +224,7 @@ function createPackageCard({
 
                     <div class="text-center">
                         <div class="price-highlight display-5 fw-bold mb-2">₹${price}</div>
-                        <p class="text-muted small mb-3">per person</p>
+                        <p class="text-muted small mb-3">${member}</p>
                         <div class="d-flex gap-2">
                             <button class="btn btn-outline-primary flex-fill py-2 rounded-pill fw-semibold" onclick="${onDetailsClick}">
                                 View Details 📋
@@ -260,12 +243,53 @@ function createPackageCard({
     $('#packagesRow').append($card);
 
     // Smooth reveal animation
-    setTimeout(() => {
+    // setTimeout(() => {
         $card.css({
             opacity: '1',
             transform: 'translateY(0)'
         });
-    }, 100);
+    // }, 100);
 }
 
+async function getAllPackages() { 
+  let apiResponse = await getDataByPayloadWithParentUrl(
+    'POST',
+    true,
+    true,
+    BASE_URL + CONTEXT_PATH + 'api/get-all-packages',
+    ""
+  );
 
+  allPackage = apiResponse?.packages || [];
+}
+function getPackageCard(allPackage){
+  var cardsHTML = "";
+  let icon = BASE_URL + CONTEXT_PATH+'static/img/ribbon.png'
+  allPackage.forEach(pkg => {
+    cardsHTML += createPackageCard({
+      imageUrl: pkg.imageUrl,
+      location: pkg.destination,
+      title: pkg.name,
+      subtitle: pkg.description || "",
+      attractions: pkg.majorAttractionsList ? pkg.majorAttractionsList.split(",") : [],
+      highlights: pkg.inclusionsForCard ? pkg.inclusionsForCard.split(",") : [],
+      price: pkg.amount,
+      badgeText: pkg.badge ? pkg.badge : '',
+      isPopular: pkg.totalDays > 3,
+      onDetailsClick: `showPackageDetails('${pkg.name}')`,
+      onBookClick: `bookPackage('${pkg.name}')`,
+      member:pkg.members,
+      icon
+    });
+  });
+  return allPackage;
+}
+
+function getPackagesByCategory(allPackages, categoryId) {
+    return allPackages.filter(pkg => pkg.categoryId.includes(parseInt(categoryId)));
+}
+
+function calegoryClicked(id){
+    let packages = getPackagesByCategory(allPackage, id);
+    getPackageCard(packages);
+}

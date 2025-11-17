@@ -32,6 +32,9 @@ public class Packages {
 	@Column(name = "MAJOR_ATTRACTIONS_LIST")
 	private String majorAttractionsList;
 
+	@Column(name = "INCLUSIONS_FOR_CARD")
+	private String inclusionsForCard;
+
 	@Column(name = "IMAGE_URL")
 	private String imageUrl;
 
@@ -43,9 +46,6 @@ public class Packages {
 
 	@Column(name = "AMOUNT")
 	private Double amount;
-
-	@Column(name = "CATORGY_ID")
-	private Long categoryId;
 
 	@Column(name = "TOTAL_DAYS")
 	private Integer totalDays;
@@ -64,4 +64,7 @@ public class Packages {
 	
 	@Column(name = "FLIGHT")
 	private String flight;
+	
+	@Column(name = "BADGE")
+	private String badge;
 }

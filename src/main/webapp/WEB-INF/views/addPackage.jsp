@@ -9,10 +9,17 @@
       <title>Add Package | OOO Trips</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-      <link rel="stylesheet" href="${PATH_FOLDER_CSS}/addPackage.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/addPackage.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/common.css">
       <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-      <script src="${PATH_FOLDER_JS}/addPAckages.js"></script>
-      <script src="${PATH_FOLDER_JS}/common.js"></script>
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+      <script src="${pageContext.request.contextPath}/static/js/addPAckages.js"></script>
+      <script src="${pageContext.request.contextPath}/static/js/common.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
+
+
       <%@ include file="common/commonScript.jsp" %>
     </head>
 
@@ -35,11 +42,17 @@
                 <input type="text" id="majorAttractionsList" name="majorAttractionsList"
                   placeholder="Rohtang Pass, Solang Valley...">
 
+
                 <label>Image URL<span style="color: red;">*</span></label>
                 <input type="text" id="imageUrl" name="imageUrl" placeholder="Paste image link">
 
                 <label>Destination<span style="color: red;">*</span></label>
                 <input type="text" id="destination" name="destination" placeholder="Destination">
+
+                <label>Category<span style="color: red;">*</span></label>
+                <select id="category" name="category" multiple style="width: 100%;">
+                  <option value="">Select Category</option>
+                </select>
               </div>
 
               <div class="form-right">
@@ -50,6 +63,9 @@
                     <option value="${i}">${i} Day${i > 1 ? 's' : ''}</option>
                   </c:forEach>
                 </select>
+
+                <label>Inclusions for card<span style="color: red;">*</span></label>
+                <textarea id="inclusionsForCard" name="inclusionsForCard" placeholder="Inclusion 1, Inclusion 2, Inclusion 3, Inclusion 4"></textarea>
 
                 <label>Amount (₹)<span style="color: red;">*</span></label>
                 <input type="text" name="amount" id="amount" placeholder="e.g. 45999">
@@ -62,16 +78,13 @@
                   <option value="true" selected>Active</option>
                   <option value="false">Inactive</option>
                 </select>
+                <label>Offer Badge<span style="color: red;">*</span></label>
+                <input type="text" id="offerBadge" name="offerBadge" placeholder="Enter Offer Badge" required>
 
-                <label>Category<span style="color: red;">*</span></label>
-                <select id="category" name="category">
-                  <option value="">Select Category</option>
-                </select>
+                <div class="btn-wrapper">
+                  <button class="button next-btn" type="button" id="toActivities" onclick="saveStep1('step1')">Next ➜</button>
+                </div>
               </div>
-            </div>
-
-            <div class="btn-wrapper">
-              <button class="button next-btn" type="button" id="toActivities" onclick="saveStep1('step1')">Next ➜</button>
             </div>
           </form>
         </div>
@@ -110,6 +123,19 @@
           </div>
         </div>
         <script>
+          $(document).ready(function() {
+              $('#category').select2({
+                  placeholder: "Select categories",
+                  allowClear: true
+              });
+              async function getAllActiveCategorys(){
+              let payload = {};
+                let response = await getDataByPayloadWithParentUrl("post", false, true, "${pageContext.request.contextPath}/api/get-category", payload);
+                bindCategories(response.categoryList);
+            }
+              getAllActiveCategorys();
+          });
+
           $("#back1").click(function () {
             $("#step2").removeClass("active");
             $("#step1").addClass("active");
@@ -119,12 +145,6 @@
             $("#step3").removeClass("active");
             $("#step2").addClass("active");
           });
-          async function getAllActiveCategorys(){
-            let payload = {"data": 123};
-              let response = await getDataByPayloadWithParentUrl("post", false, true, "${BASE_URL}${CONTEXT_PATH}api/get-category", payload);
-              bindCategories(response.categoryList);
-          }
-          getAllActiveCategorys()
         </script>
     </body>
 

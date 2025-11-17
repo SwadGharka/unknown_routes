@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 
 import com.v1.tourapp.entity.Activities;
 import com.v1.tourapp.entity.Category;
+import com.v1.tourapp.entity.PackageAndCategoryMapping;
 import com.v1.tourapp.entity.Packages;
 import com.v1.tourapp.service.ActivitiesService;
 import com.v1.tourapp.service.CategoryService;
+import com.v1.tourapp.service.PackageAndCategoryMappingService;
 import com.v1.tourapp.service.PackageService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,26 +32,29 @@ public class PackageUtil {
     @Autowired
 	ActivitiesService activitiesService;
 
+    @Autowired
+	PackageAndCategoryMappingService packageAndCategoryMappingService;
+
     public JSONObject saveCategory(String payload){
         JSONObject response = new JSONObject();
         try {
             JSONObject request = new JSONObject(payload);
             String name = request.optString("name");
             String description = request.optString("description");
-            String iconUrl = request.optString("iconUrl");
-            String metaValue = request.optString("metaValue");
+            String iconUrl = request.optString("icon");
+            String backgroundColor = request.optString("backgroundColor");
             Boolean status = request.optBoolean("status");
             Category category = new Category();
             category.setName(name);
             category.setDescription(description);
-            category.setIconUrl(iconUrl);
-            category.setMetaValue(metaValue);
+            category.setIcon(iconUrl);
+            category.setBackgroundColor(backgroundColor);
             category.setStatus(status);
             categoryService.saveCategory(category);
             response.put("status", 1);
             response.put("message", "Category add successfully");
         } catch (Exception e) {
-            // TODO: handle exception
+            log.info("Exception cought in saveCategory :: ", e);
             response.put("status", 0);
             response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
         }
@@ -67,8 +72,10 @@ public class PackageUtil {
     		categoryJson.put("id", category.getId());
     		categoryJson.put("name", category.getName());
     		categoryJson.put("description", category.getDescription());
-    		categoryJson.put("iconUrl", category.getIconUrl());
-    		categoryJson.put("metaValue", category.getMetaValue());
+    		categoryJson.put("icon", category.getIcon());
+    		categoryJson.put("backgroundColor", category.getBackgroundColor());
+            List<Long> packageIds = packageAndCategoryMappingService.getAllPackageIdsByCategoryId(category.getId());
+    		categoryJson.put("packageCount", ValidatorUtil.isValid(packageIds) ? packageIds.size() : 0);
     		categories.put(categoryJson);
 		}
     	
@@ -108,8 +115,10 @@ public class PackageUtil {
             int days = request.optInt("days");
             Double amount = request.optDouble("amount");
             String members = request.optString("members");
+            String inclusionsForCard = request.optString("inclusionsForCard");
+            String badge = request.optString("badge");
             boolean status = request.optBoolean("status");
-            Long categoryId = request.optLong("categoryId");
+            JSONArray categoryIds = request.optJSONArray("categoryIds");
             Long packageId = request.optLong("packageId");
             if(!ValidatorUtil.isValid(packageName)) return response.put("message", "Please fill the Name of package.");
             if(!ValidatorUtil.isValid(description)) return response.put("message", "Please fill the Description.");
@@ -118,7 +127,8 @@ public class PackageUtil {
             if(!ValidatorUtil.isValid(days)) return response.put("message", "Please select the Number of Days.");
             if(!ValidatorUtil.isValid(amount)) return response.put("message", "Please fill the Amount.");
             if(!ValidatorUtil.isValid(members)) return response.put("message", "Please fill the Members.");
-            if(!ValidatorUtil.isValid(categoryId)) return response.put("message", "Please select the Category");
+            if(categoryIds == null || categoryIds.length() == 0) return response.put("message", "Please select the Category");
+            if(!ValidatorUtil.isValid(inclusionsForCard)) return response.put("message", "Please select the Category");
             Packages packages = packageService.getPackageById(packageId);
             if(packages == null){
                 packages = new Packages();
@@ -129,10 +139,24 @@ public class PackageUtil {
             packages.setDestination(destination);
             packages.setTotalDays(days);
             packages.setMajorAttractionsList(majorAttractionsList);
+            packages.setInclusionsForCard(inclusionsForCard);
             packages.setAmount(amount);
-            packages.setCategoryId(categoryId);
+            packages.setMembers(members);
             packages.setStatus(status);
+            packages.setBadge(badge);
             packageService.save(packages);
+            packageAndCategoryMappingService.updateMappingStatusByPachageId(packages.getId(), "N");
+            for(int i = 0; i < categoryIds.length(); i++){
+                Long categoryId = categoryIds.optLong(i);
+                PackageAndCategoryMapping packageAndCategoryMapping = packageAndCategoryMappingService.getPackageAndCategoryMappingByPackageId(packages.getId(), categoryId, "N");
+                if(packageAndCategoryMapping == null){
+                    packageAndCategoryMapping = new PackageAndCategoryMapping();
+                }
+                packageAndCategoryMapping.setCategoryId(categoryId);
+                packageAndCategoryMapping.setPackageId(packages.getId());
+                packageAndCategoryMapping.setActive("Y");
+                packageAndCategoryMappingService.save(packageAndCategoryMapping);
+            }
             response.put("packageId", packages.getId());
             response.put("status", 1);
             response.put("message", "Package details save");
@@ -237,5 +261,49 @@ public class PackageUtil {
             response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
         }
         return response;
-    } 
+    }
+    
+    public JSONObject getAllPackage(String payload){
+        JSONObject response = new JSONObject();
+        try {
+            List<Packages> allPackages = packageService.getAllPackages();
+            JSONArray packageArray = new JSONArray();
+            for(Packages packages : allPackages ){
+                List<Activities> allActivities = activitiesService.getAllActivitiesByPackageId(packages.getId());
+                JSONObject packageData = new JSONObject();
+                packageData.put("name", packages.getName());
+                packageData.put("description", packages.getDescription());
+                packageData.put("majorAttractionsList", packages.getMajorAttractionsList());
+                packageData.put("imageUrl", packages.getImageUrl());
+                packageData.put("destination", packages.getDestination());
+                packageData.put("inclusionsForCard", packages.getInclusionsForCard());
+                packageData.put("members", packages.getMembers());
+                packageData.put("amount", packages.getAmount());
+                packageData.put("totalDays", packages.getTotalDays());
+                packageData.put("badge", packages.getBadge());
+                JSONArray activitArray = new JSONArray();
+                for (Activities activitie : allActivities) {
+                    JSONObject activityObj = new JSONObject();
+                    activityObj.put("header", activitie.getHeader());
+                    activityObj.put("point", activitie.getPoints());
+                    activityObj.put("pakcageId", activitie.getPackageId());
+                    activityObj.put("day", activitie.getDay());
+                    activitArray.put(activityObj);
+                }
+                packageData.put("activities", activitArray);
+                List<Long> categoryIds = packageAndCategoryMappingService.getAllCategoryIdsByPackageId(packages.getId());
+                packageData.put("categoryId", categoryIds);
+                packageArray.put(packageData);
+            }
+            response.put("packages", packageArray);
+            response.put("status", 1);
+            response.put("message", "All Packages");
+            return response;
+        } catch (Exception e) {
+            log.info("Exception cought in getAllPackage :: ", e);
+            response.put("status", 2);
+            response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
+        }
+        return response;
+    }
 }

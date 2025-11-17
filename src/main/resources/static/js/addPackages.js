@@ -9,6 +9,7 @@ async function saveStep1(formId) {
     if (!validateFieldAndShake("members")) return;
     if (!validateFieldAndShake("status")) return;
     if (!validateFieldAndShake("category")) return;
+    if (!validateFieldAndShake("inclusionsForCard")) return;
     let payload = getPackageStep1(formId);
     let response = await getDataByPayloadWithParentUrl("post", false, true, BASE_URL + CONTEXT_PATH + "api/save-travel-package", payload)
     if (response != null && response.status == 1) {
@@ -141,7 +142,9 @@ function getPackageStep1(formId) {
     request['amount'] = $("#" + formId + " #amount").val().trim();
     request['members'] = $("#" + formId + " #members").val().trim();
     request['status'] = $("#" + formId + " #status").val();
-    request['categoryId'] = $("#" + formId + " #category").val();
+    request['categoryIds'] = $("#" + formId + " #category").val();
+    request['inclusionsForCard'] = $("#" + formId + " #inclusionsForCard").val();
+    request['badge'] = $("#" + formId + " #offerBadge").val();
     request['packageId'] = $("#packageId").val();
     return request;
 }
