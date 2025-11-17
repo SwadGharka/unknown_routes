@@ -36,5 +36,12 @@ public class ViewResolverController {
         baseController.updateModel(model);
         return "addCategory";
     }
+	
+	@GetMapping("/car-rental")
+    public String carRentalDashboard(Model model) {
+        baseController.updateModel(model);
+        return "carRentalHome";
+    }
+	
 
 }
