@@ -41,10 +41,10 @@
                             </select>
                             <label>Category Gradient</label>
                             <select id="backgroundColor">
-                                <option value="linear-gradient(135deg, #0d6efd, #6f42c1)">Blue</option>
-                                <option value="linear-gradient(135deg, #6f42c1, #e83e8c)">Pink</option>
-                                <option value="linear-gradient(135deg, #198754, #20c997)">Green</option>
-                                <option value="linear-gradient(135deg, #fd7e14, #dc3545)">Orange</option>
+                                <option style="color: #0d6efd;" value="linear-gradient(135deg, #0d6efd, #6f42c1)">Blue</option>
+                                <option style="color: #6f42c1;" value="linear-gradient(135deg, #6f42c1, #e83e8c)">Pink</option>
+                                <option style="color: #198754;" value="linear-gradient(135deg, #198754, #20c997)">Green</option>
+                                <option style="color: #fd7e14;" value="linear-gradient(135deg, #fd7e14, #dc3545)">Orange</option>
                             </select>
 
                             <button type="button" class="save-category" onclick="saveCategory();">💾 Save

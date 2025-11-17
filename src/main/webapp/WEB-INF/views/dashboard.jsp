@@ -26,7 +26,7 @@
 <body>
     <%@ include file="header.jsp"%>
      <section class="hero-bg text-white d-flex align-items-center position-relative overflow-hidden">
-        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(45deg, rgba(13, 110, 253, 0.2), rgba(111, 66, 193, 0.2));"></div>
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="    background: linear-gradient(45deg, rgb(79 20 112), rgb(74 6 98));"></div>
         <div class="container text-center position-relative" style="z-index: 10;">
             <div class="floating mb-4">
                 <div class="display-1 mb-3">🏖️</div>
@@ -103,19 +103,126 @@
     <section id="packages" class="py-5 bg-light section-content d-none">
         <div class="container">
             <div class="text-center mb-5 slide-in">
-                <h3 class="display-4 fw-bold text-dark mb-3">Explore All Indian States</h3>
-                <p class="lead text-muted">Discover incredible destinations across all 28 states and 8 union territories of India</p>
+                <h3 class="display-4 fw-bold text-dark mb-3">Top Packages for Your Selection</h3>
+                <p class="lead text-muted">Carefully curated options to make your trip memorable.</p>
                 <div class="mx-auto mt-3 rounded-pill" style="width: 100px; height: 4px; background: linear-gradient(45deg, #ffc107, #fd7e14);"></div>
             </div>
 
             <!-- Featured Packages Section -->
             <div class="mb-5">
-                <h4 class="fw-bold text-center mb-4 text-primary">🌟 Featured Weekend Packages</h4>
+                <!-- <h4 class="fw-bold text-center mb-4 text-primary">🌟 Featured Weekend Packages</h4> -->
 
             <div class="row g-4" id="packagesRow">
             </div>
         </div>
     </section>
+    <section id="contact" class="py-5 bg-white position-relative overflow-hidden section-content">
+        <div class="position-absolute top-0 start-0 w-100 h-100 opacity-50" style="background: linear-gradient(135deg, rgba(13, 110, 253, 0.1), rgba(111, 66, 193, 0.1));"></div>
+        <div class="container position-relative">
+            <div class="text-center mb-5">
+                <h3 class="display-4 fw-bold text-dark mb-3">Ready to Go OOO?</h3>
+                <p class="lead text-muted mb-3">Contact us to book your perfect weekend getaway or customize a package for your team.</p>
+                <div class="mx-auto rounded-pill" style="width: 100px; height: 4px; background: linear-gradient(45deg, #ffc107, #fd7e14);"></div>
+            </div>
+           
+            <div class="row g-5 align-items-start">
+                <div class="col-lg-6">
+                    <div class="card glass-effect border-0 shadow-lg">
+                        <div class="card-body p-4">
+                            <form onsubmit="handleSubmit(event)">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control form-control-lg" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" class="form-control form-control-lg" placeholder="Email Address" required>
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control form-control-lg" placeholder="Company Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="tel" class="form-control form-control-lg" placeholder="Phone Number" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <select id="packageSelect" class="form-select form-select-lg">
+                                        <option value="">Select a Package</option>
+                                        <option value="brb">BRB Package - Manali Mountain Adventure (₹45,999)</option>
+                                        <option value="ttyl">TTYL Package - Goa Beach Paradise (₹52,999)</option>
+                                        <option value="afk">AFK Package - Rishikesh River Retreat (₹35,999)</option>
+                                        <option value="gtg">GTG Package - Jaipur Royal Heritage (₹48,999)</option>
+                                        <option value="lol">LOL Package - Mumbai Bollywood Fun (₹42,999)</option>
+                                        <option value="asap">ASAP Package - Ladakh High Altitude Thrill (₹65,999)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <textarea class="form-control form-control-lg" rows="4" placeholder="Tell us about your group size, travel dates, and any special requirements..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-gradient-secondary btn-lg w-100 py-3 rounded-pill">
+                                    Send Inquiry
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="col-lg-6">
+                    <div class="mb-4">
+                        <div class="card border-0 shadow-lg">
+                            <div class="card-body p-4">
+                                <h4 class="h3 fw-bold text-dark mb-4">Get In Touch</h4>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                                         style="width: 48px; height: 48px; background: linear-gradient(45deg, #0d6efd, #6f42c1);">
+                                        <i class="bi bi-telephone text-white"></i>
+                                    </div>
+                                    <div>
+                                        <p class="fw-semibold mb-0">Call Us</p>
+                                        <p class="text-muted mb-0">+91 8630327282</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                                         style="width: 48px; height: 48px; background: linear-gradient(45deg, #198754, #20c997);">
+                                        <i class="bi bi-envelope text-white"></i>
+                                    </div>
+                                    <div>
+                                        <p class="fw-semibold mb-0">Email Us</p>
+                                        <p class="text-muted mb-0">ooo.trips@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                                         style="width: 48px; height: 48px; background: linear-gradient(45deg, #fd7e14, #dc3545);">
+                                        <i class="bi bi-whatsapp text-white"></i>
+                                    </div>
+                                    <div>
+                                        <p class="fw-semibold mb-0">WhatsApp</p>
+                                        <a class="text-muted mb-0" href="https://wa.me/8630327282?text='Hi baby'">+91 8030327282</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="card text-white border-0" style="background: linear-gradient(45deg, #ffc107, #fd7e14);">
+                        <div class="card-body p-4">
+                            <h4 class="h3 fw-bold mb-3">🎉 Special Offer!</h4>
+                            <p class="lead mb-3">Book any package this month and get:</p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">✅ 15% discount for groups of 6+</li>
+                                <li class="mb-2">✅ Free airport transfers</li>
+                                <li class="mb-2">✅ Complimentary travel insurance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <jsp:include page="/WEB-INF/views/footer.jsp" />
 </body>
 <script>
     $(document).ready(async function(){
@@ -136,6 +243,8 @@
         });
         // console.log(discoverCardData);
         getAllDiscoverCardCardByData(converted);
+        getAllPackages();
+        toggleSection('packages', true);
     })
 </script>
 </html>

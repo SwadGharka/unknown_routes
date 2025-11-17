@@ -53,6 +53,16 @@
                 <select id="category" name="category" multiple style="width: 100%;">
                   <option value="">Select Category</option>
                 </select>
+                
+                <label>Package Color<span style="color: red;">*</span></label>
+                <select name="packageColor" id="packageColor">
+                  <option style="color: #0d6efd;" value="#0d6efd">Blue</option>
+                  <option style="color: #ffc107;" value="#ffc107">Yellow</option>
+                  <option style="color: #e83e8c;" value="#e83e8c">Pink</option>
+                  <option style="color: #dc3545;" value="#dc3545">Red</option>
+                  <option style="color: #198754;" value="#198754">Green</option>
+                  <option style="color: #6f42c1;" value="#6f42c1">Violet</option>
+                </select>
               </div>
 
               <div class="form-right">

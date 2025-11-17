@@ -67,4 +67,7 @@ public class Packages {
 	
 	@Column(name = "BADGE")
 	private String badge;
+	
+	@Column(name = "PACKAGE_COLOR")
+	private String packageColor;
 }
