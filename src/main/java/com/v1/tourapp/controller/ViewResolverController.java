@@ -43,5 +43,10 @@ public class ViewResolverController {
         return "carRentalHome";
     }
 	
+	@GetMapping("/addVehical")
+    public String addCarRental(Model model) {
+        baseController.updateModel(model);
+        return "addVehical";
+    }
 
 }

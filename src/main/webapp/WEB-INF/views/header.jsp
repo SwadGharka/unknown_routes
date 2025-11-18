@@ -51,7 +51,10 @@
           <a class="nav-link fw-semibold text-white" href="home">Home</a>
         </li>
         <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="car-rental">Rent Cars</a>
+          <a class="nav-link fw-semibold text-white" target="_blank" href="car-rental">Rent Cars</a>
+        </li>
+        <li class="nav-item" style="margin-left: 20px;">
+          <a class="nav-link fw-semibold text-white" target="_blank" href="addVehicle">Add Vehicle</a>
         </li>
         <li class="nav-item" style="margin-left: 20px;">
           <a class="nav-link fw-semibold text-white" href="#">Why Us</a>

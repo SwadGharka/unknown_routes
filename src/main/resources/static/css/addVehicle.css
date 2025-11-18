@@ -1,0 +1,73 @@
+body {
+            background: linear-gradient(135deg, #6a75ff, #8256d9);
+            min-height: 100vh;
+        }
+
+        .page-wrapper {
+            display: flex;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .form-container, .preview-container {
+            flex: 1;
+        }
+
+        .form-container {
+            background: rgba(255,255,255,0.15);
+            padding: 40px;
+            border-radius: 22px;
+            border: 1px solid rgba(255,255,255,0.35);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(8px);
+            color: white;
+        }
+
+        .form-container input, 
+        .form-container textarea,
+        .form-container select {
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .save-btn {
+            margin-top: 20px;
+            padding: 12px;
+            width: 100%;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            background: linear-gradient(to right, #ffc800, #ff8d00);
+            color: white;
+        }
+
+        /* Preview Box */
+        .preview-container {
+            color: white;
+        }
+
+        .preview-wrapper {
+            margin-top: 20px;
+        }
+
+        .vehicle-preview-card {
+            border-radius: 16px;
+            overflow: hidden;
+            background: white;
+            color: black;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        }
+
+        .vehicle-image {
+            height: 450px;
+    		width: 450px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .vehicle-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+        }
