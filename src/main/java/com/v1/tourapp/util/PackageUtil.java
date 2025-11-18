@@ -117,6 +117,7 @@ public class PackageUtil {
             String members = request.optString("members");
             String inclusionsForCard = request.optString("inclusionsForCard");
             String badge = request.optString("badge");
+            String packageColor = request.optString("packageColor");
             boolean status = request.optBoolean("status");
             JSONArray categoryIds = request.optJSONArray("categoryIds");
             Long packageId = request.optLong("packageId");
@@ -127,6 +128,7 @@ public class PackageUtil {
             if(!ValidatorUtil.isValid(days)) return response.put("message", "Please select the Number of Days.");
             if(!ValidatorUtil.isValid(amount)) return response.put("message", "Please fill the Amount.");
             if(!ValidatorUtil.isValid(members)) return response.put("message", "Please fill the Members.");
+            if(!ValidatorUtil.isValid(packageColor)) return response.put("message", "Please Select Package color.");
             if(categoryIds == null || categoryIds.length() == 0) return response.put("message", "Please select the Category");
             if(!ValidatorUtil.isValid(inclusionsForCard)) return response.put("message", "Please select the Category");
             Packages packages = packageService.getPackageById(packageId);
@@ -144,6 +146,7 @@ public class PackageUtil {
             packages.setMembers(members);
             packages.setStatus(status);
             packages.setBadge(badge);
+            packages.setPackageColor(packageColor);
             packageService.save(packages);
             packageAndCategoryMappingService.updateMappingStatusByPachageId(packages.getId(), "N");
             for(int i = 0; i < categoryIds.length(); i++){
@@ -281,6 +284,7 @@ public class PackageUtil {
                 packageData.put("amount", packages.getAmount());
                 packageData.put("totalDays", packages.getTotalDays());
                 packageData.put("badge", packages.getBadge());
+                packageData.put("packageColor", packages.getPackageColor());
                 JSONArray activitArray = new JSONArray();
                 for (Activities activitie : allActivities) {
                     JSONObject activityObj = new JSONObject();

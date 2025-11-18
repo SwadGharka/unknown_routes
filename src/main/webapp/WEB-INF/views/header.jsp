@@ -45,7 +45,7 @@
     </button>
 
     <!-- Menu -->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <div class="navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav ms-auto align-items-lg-center" style="list-style: none; margin: 0; padding: 0;">
         <li class="nav-item" style="margin-left: 20px;">
           <a class="nav-link fw-semibold text-white" href="home">Home</a>

@@ -172,3 +172,17 @@ body {
     opacity: 0;
     transform: translateY(30px);
 }
+.btn-gradient-secondary {
+    background: linear-gradient(45deg, #76179f, #39094e);
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-gradient-secondary:hover {
+    background: linear-gradient(45deg, #76179f, #39094e);
+    border: none;
+    color: white;
+    font-weight: bold;
+    transform: scale(1.05);
+}
