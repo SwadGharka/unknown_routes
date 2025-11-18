@@ -7,8 +7,7 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Add Package | OOO Trips</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+      <%@ include file="common/commonScript.jsp" %>
       <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/addPackage.css">
       <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/common.css">
       <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -20,16 +19,15 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
 
 
-      <%@ include file="common/commonScript.jsp" %>
     </head>
 
     <body>
       <%@ include file="header.jsp" %>
         <!-- Step 1 -->
         <div  class="">
-          <input type="hidden" id="packageId">
+          <input type="hidden" id="packageId" value="${packageId}">
           <form class="form-container active" id="step1">
-            <h2>🧭 Add New Travel Package</h2>
+            <h2 style="color: white;">Add New Travel Package</h2>
             <div class="form-grid">
               <div class="form-left">
                 <label>Package Name<span style="color: red;">*</span></label>
@@ -143,7 +141,8 @@
                 let response = await getDataByPayloadWithParentUrl("post", false, true, "${pageContext.request.contextPath}/api/get-category", payload);
                 bindCategories(response.categoryList);
             }
-              getAllActiveCategorys();
+            getAllActiveCategorys();
+            getPackageDetails();
           });
 
           $("#back1").click(function () {

@@ -145,6 +145,7 @@ function getPackageStep1(formId) {
     request['categoryIds'] = $("#" + formId + " #category").val();
     request['inclusionsForCard'] = $("#" + formId + " #inclusionsForCard").val();
     request['badge'] = $("#" + formId + " #offerBadge").val();
+    request['packageColor'] = $("#packageColor").val();
     request['packageId'] = $("#packageId").val();
     return request;
 }
@@ -199,4 +200,48 @@ function extraFieldsRequest() {
     request["extraObj"] = extraObj;
 
     return request;
+}
+
+async function getPackageDetails(){
+    let payload = {
+        'packageId' : $("#packageId").val()
+    }
+    const response = await getDataByPayloadWithParentUrl("POST", true, true, BASE_URL + CONTEXT_PATH + "api/get-packages-by-id", payload);
+    prefillPackageForm(response.packageData);
+}
+
+function prefillPackageForm(data) {
+
+    if (!data) return;
+
+    // Text fields
+    $("#name").val(data.name || "");
+    $("#desc").val(data.description || "");
+    $("#majorAttractionsList").val(data.majorAttractionsList || "");
+    $("#imageUrl").val(data.imageUrl || "");
+    $("#destination").val(data.destination || "");
+    $("#amount").val(data.amount || "");
+    $("#members").val(data.members || "");
+    $("#offerBadge").val(data.badge || "");
+
+    // Days dropdown
+    $("#days").val(data.totalDays || "").trigger("change");
+
+    // Status
+    // (If backend me status nahi aa raha to default active hi rakho)
+    if (data.status !== undefined) {
+        $("#status").val(data.status.toString()).trigger("change");
+    }
+
+    // Package Color
+    $("#packageColor").val(data.packageColor || "").trigger("change");
+
+    // Inclusions for card
+    $("#inclusionsForCard").val(data.inclusionsForCard || "");
+
+    // MULTIPLE CATEGORY (Select2)
+    if (Array.isArray(data.categoryId)) {
+        let ids = data.categoryId.map(String); // convert to string for select2
+        $("#category").val(ids).trigger("change");
+    }
 }

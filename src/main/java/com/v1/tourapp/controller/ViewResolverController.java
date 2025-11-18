@@ -1,5 +1,6 @@
 package com.v1.tourapp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,8 @@ public class ViewResolverController {
     }
     
     @GetMapping("/add-package")
-	public String addPackage(Model model) {
+	public String addPackage(Model model, @RequestParam("packageId") @Nullable Integer  packageId) {
+        model.addAttribute("packageId", packageId);
 		baseController.updateModel(model);
 		return "addPackage";
 	}
@@ -43,5 +45,11 @@ public class ViewResolverController {
         return "carRentalHome";
     }
 	
+	
+	@GetMapping("/package-list")
+    public String packageList(Model model) {
+        baseController.updateModel(model);
+        return "packageList";
+    }
 
 }

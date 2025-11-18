@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/dashboard.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/hero.css">
 
-    <!-- ✅ jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- ✅ Common JS -->
     <script src="${pageContext.request.contextPath}/static/js/dashboard.js"></script>
@@ -26,7 +24,7 @@
 <body>
     <%@ include file="header.jsp"%>
      <section class="hero-bg text-white d-flex align-items-center position-relative overflow-hidden">
-        <div class="position-absolute top-0 start-0 w-100 h-100" style="    background: linear-gradient(45deg, rgb(79 20 112), rgb(74 6 98));"></div>
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(45deg, rgba(13, 110, 253, 0.2), rgba(111, 66, 193, 0.2));"></div>
         <div class="container text-center position-relative" style="z-index: 10;">
             <div class="floating mb-4">
                 <div class="display-1 mb-3">🏖️</div>
@@ -160,7 +158,7 @@
                                 <div class="mb-4">
                                     <textarea class="form-control form-control-lg" rows="4" placeholder="Tell us about your group size, travel dates, and any special requirements..."></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-gradient-secondary btn-lg w-100 py-3 rounded-pill">
+                                <button type="submit" class="btn btn-gradient-primary btn-lg w-100 py-3 rounded-pill">
                                     Send Inquiry
                                 </button>
                             </form>

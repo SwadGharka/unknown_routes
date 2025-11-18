@@ -227,7 +227,7 @@ function getPackageCard(packages) {
             member: pkg.members,
             packageColor: pkg.packageColor,
             onDetailsClick: `showPackageDetails('${pkg.name}')`,
-            onBookClick: `bookPackage('${pkg.name}')`
+            onBookClick: `bookPackage(event, '${pkg.name}')`
         });
     }).join("");
 
@@ -279,28 +279,28 @@ function calegoryClicked(id) {
     }, 50);
 }
 
-function bookPackage(packageName) {
-    // Add click animation
-    event.target.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        event.target.style.transform = '';
-    }, 150);
+function bookPackage(event, packageName) {
 
-    // Show contact section
-    toggleSection('contact');
+    if (event && event.target) {
+        event.target.style.transform = "scale(0.95)";
+        setTimeout(() => {
+            event.target.style.transform = "";
+        }, 150);
+    }
 
-    // Pre-select the package in the form
+    toggleSection("contact");
+
     setTimeout(() => {
-        const select = document.getElementById('packageSelect');
-        const packageCode = packageName.split(' ')[0].toLowerCase();
+        const select = document.getElementById("packageSelect");
+        const packageCode = packageName.split(" ")[0].toLowerCase();
         const option = select.querySelector(`option[value="${packageCode}"]`);
+
         if (option) {
             select.value = option.value;
-            select.classList.add('border-primary');
-            
-            // Reset border color after 2 seconds
+            select.classList.add("border-primary");
+
             setTimeout(() => {
-                select.classList.remove('border-primary');
+                select.classList.remove("border-primary");
             }, 2000);
         }
     }, 1000);

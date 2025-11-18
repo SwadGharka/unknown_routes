@@ -10,7 +10,7 @@
     transition: all 0.3s ease-in-out;
     width: 100%;
     z-index: 1000;
-    height: 9%;
+    height: 85px;
   ">
 
   <div class="container-fluid" style="padding: 10px 20px;">

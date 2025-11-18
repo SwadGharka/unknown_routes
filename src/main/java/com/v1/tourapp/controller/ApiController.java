@@ -63,5 +63,10 @@ public class ApiController {
 	public ResponseEntity<String> saveAdditionalDetails(@RequestBody Payload payload) {
 		return ResponseEntity.ok().body(packageUtil.saveAdditionalDetails(payload.getPayload()).toString());
 	}
+    
+    @PostMapping("/get-packages-by-id")
+	public ResponseEntity<String> getPackageById(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(packageUtil.getPackageById(payload.getPayload()).toString());
+	}
 
 }

@@ -15,7 +15,6 @@
 
 
     <!-- Header -->
-    <!-- <%@ include file="header.jsp"%> -->
      <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom" id="navbar">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center fade-in" href="#">

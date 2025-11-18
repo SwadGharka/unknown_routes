@@ -2,6 +2,7 @@ package com.v1.tourapp.util;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -122,4 +123,12 @@ public class ValidatorUtil {
 	static boolean isValid(final String value) {
 		return StringUtils.isNotBlank(value) && !"0".equalsIgnoreCase(value) && !"null".equalsIgnoreCase(value) && !"N/A".equalsIgnoreCase(value);
 	}
+
+    public static String generatePackageCode(String text) {
+    LocalDate date = LocalDate.now();
+    String datePart = date.format(DateTimeFormatter.ofPattern("yyMMdd"));
+    int random = (int)(Math.random() * 9000) + 1000;
+    return text.toUpperCase() + "-" + datePart + "-" + random;
+}
+
 }
