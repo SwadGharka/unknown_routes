@@ -847,7 +847,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
- const vehicles = [
+ const vehicles1 = [
      {
          key: "hatchback",
          name: "Hatchback",
@@ -975,83 +975,110 @@ document.addEventListener("DOMContentLoaded", function () {
      }
  ];
 
-
- // ===========================
- // RENDER FUNCTION
- // ===========================
- function renderVehicles() {
-
-     const container = document.getElementById("vehicleContainer");
-
-     container.innerHTML = vehicles.map(v => `
-
-         <div class="col-lg-4 col-md-6">
-             <div class="card vehicle-card card-hover h-100 shadow-lg">
-
-                 <div class="vehicle-image"
-                     style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1)), url('\${v.image}');">
-                     <div class="vehicle-badge">
-                         <span class="badge \${v.badge.cssClass} px-3 py-2 rounded-pill">\${v.badge.label}</span>
-                     </div>
-                 </div>
-
-                 <div class="card-body p-4">
-
-                     <div class="text-center mb-4">
-                         <h4 class="card-title fw-bold text-primary mb-1">\${v.name}</h4>
-                         <p class="text-muted">\${v.tagline}</p>
-                     </div>
-
-                     <div class="vehicle-specs mb-4">
-                         <div class="row g-2 text-center">
-
-                             \${v.specs.map(s => `
-                                 <div class="col-6">
-                                     <div class="d-flex align-items-center justify-content-center">
-                                         <i class="bi \${s.icon} me-2 text-primary"></i>
-                                         <span class="fw-semibold">\${s.text}</span>
-                                     </div>
-                                 </div>
-                             `).join('')}
-
-                         </div>
-                     </div>
-
-                     <ul class="list-unstyled mb-4">
-
-                         \${v.features.map(f => `
-                             <li class="d-flex align-items-center mb-2">
-                                 <i class="bi bi-check-circle text-success me-2"></i>
-                                 <span>\${f}</span>
-                             </li>
-                         `).join('')}
-
-                     </ul>
-
-                     <div class="text-center">
-                         <div class="price-highlight display-6 fw-bold mb-2">\${v.price}</div>
-                         <p class="text-muted small mb-3">Starting from</p>
-
-                         <div class="d-flex gap-2">
-                             <button class="btn btn-outline-primary flex-fill py-2 rounded-pill fw-semibold"
-                                 onclick="showVehicleDetails('\${v.key}')">View Details</button>
-
-                             <button class="btn btn-primary flex-fill py-2 rounded-pill fw-semibold"
-                                 onclick="bookVehicle('\${v.name}')">Enquire Now</button>
-                         </div>
-                     </div>
-
-                 </div>
-
-             </div>
-         </div>
-
-     `).join("");
-
- }
-
- renderVehicles();
 });
+
+
+// ===========================
+// RENDER FUNCTION
+// ===========================
+function renderVehicles() {
+
+    const container = document.getElementById("vehicleContainer");
+
+    container.innerHTML = vehicles.map(v => `
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card vehicle-card card-hover h-100 shadow-lg">
+
+                <div class="vehicle-image"
+                    style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1)), url('\${v.image}');">
+                    <div class="vehicle-badge">
+                        <span class="badge \${v.badge.cssClass} px-3 py-2 rounded-pill">\${v.badge.label}</span>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <div class="text-center mb-4">
+                        <h4 class="card-title fw-bold text-primary mb-1">\${v.name}</h4>
+                        <p class="text-muted">\${v.tagline}</p>
+                    </div>
+
+                    <div class="vehicle-specs mb-4">
+                        <div class="row g-2 text-center">
+
+                            \${v.specs.map(s => `
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <i class="bi \${s.icon} me-2 text-primary"></i>
+                                        <span class="fw-semibold">\${s.text}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+
+                        </div>
+                    </div>
+
+                    <ul class="list-unstyled mb-4">
+
+                        \${v.features.map(f => `
+                            <li class="d-flex align-items-center mb-2">
+                                <i class="bi bi-check-circle text-success me-2"></i>
+                                <span>\${f}</span>
+                            </li>
+                        `).join('')}
+
+                    </ul>
+
+                    <div class="text-center">
+                        <div class="price-highlight display-6 fw-bold mb-2">\${v.price}</div>
+                        <p class="text-muted small mb-3">Starting from</p>
+
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary flex-fill py-2 rounded-pill fw-semibold"
+                                onclick="showVehicleDetails('\${v.key}')">View Details</button>
+
+                            <button class="btn btn-primary flex-fill py-2 rounded-pill fw-semibold"
+                                onclick="bookVehicle('\${v.name}')">Enquire Now</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    `).join("");
+
+}
+
+$(document).ready(async function(){
+    var cardDataapi = await getDataByPayloadWithParentUrl('POST', true, true, '${pageContext.request.contextPath}/api/get-all-vehicle', "");
+    const vehicles = convertDbToCardList(cardDataapi);
+	renderVehicles();
+})
+
+function convertDbToCardList(dbList) {
+    return dbList.vehicles.map(item => {
+        return {
+            name: item.name,
+            tagline: item.tagline,
+            image: item.image || "https://via.placeholder.com/400x250?text=No+Image",
+            badge: {
+                label: item.badge_label,
+                cssClass: item.badge_class
+            },
+            price: `₹${item.price_per_km}/km`,
+            specs: [
+                { icon: "bi-people", text: `${item.max_pax} Seats` },
+                { icon: "bi-bag", text: `${item.max_no_of_bags} Bags` },
+                { icon: "bi-gear", text: item.gear_type },
+                { icon: "bi-fuel-pump", text: item.fuel_type }
+            ],
+            features: item.features.split("#").map(f => f.trim())
+        };
+    });
+}
 
 
 </script>

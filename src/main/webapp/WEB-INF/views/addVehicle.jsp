@@ -24,7 +24,18 @@
 
 			<div class="col-lg-6">
 				<div class="form-container p-4">
+					
+
+					<div class="d-flex justify-content-between">
+					<div>
 					<h2 class="mb-4 text-white">🚗 Add New Vehicle</h2>
+					</div>
+					
+						<div class="form-check form-switch">
+						  <input class="form-check-input" type="checkbox" role="switch" id="activestatus">
+						  <label class="form-check-label" for="flexSwitchCheckDefault">Status</label>
+						</div>
+					</div>
 
 					<form id="vehicleForm">
 						<div class="row g-3">
@@ -223,7 +234,8 @@
                     transmission: $("#specTransmission").val(),
                     fuel: $("#specFuel").val()
                 },
-                features: $("#features").val()
+                features: $("#features").val(),
+                status: $("#activestatus").prop("checked")
             };
         }
 

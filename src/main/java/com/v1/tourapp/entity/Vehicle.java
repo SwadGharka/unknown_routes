@@ -53,4 +53,7 @@ public class Vehicle {
 
     @Column(name = "FEATURES")
     private String features;
+    
+    @Column(name = "ACTIVE_STAUS")
+    private boolean activeStatus;
 }

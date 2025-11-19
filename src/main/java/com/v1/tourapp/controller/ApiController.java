@@ -73,6 +73,11 @@ public class ApiController {
 		return ResponseEntity.ok().body(vehicleUtil.saveVehicle(payload.getPayload()).toString());
     }
     
+    @PostMapping("/get-all-vehicle")
+	public ResponseEntity<String> getAllVehicles(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(vehicleUtil.getAllVehicles().toString());
+	}
+    
     @PostMapping("/get-packages-by-id")
 	public ResponseEntity<String> getPackageById(@RequestBody Payload payload) {
 		return ResponseEntity.ok().body(packageUtil.getPackageById(payload.getPayload()).toString());
