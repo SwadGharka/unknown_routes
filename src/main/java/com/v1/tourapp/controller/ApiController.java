@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.v1.tourapp.dto.Payload;
 import com.v1.tourapp.util.PackageUtil;
+import com.v1.tourapp.util.VehicleUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -22,6 +23,9 @@ public class ApiController {
 	
     @Autowired
     PackageUtil packageUtil;
+    
+    @Autowired
+    VehicleUtil vehicleUtil;
 
     @PostMapping("/save-category")
     public ResponseEntity<String> saveCategory(@RequestBody Payload payload) {
@@ -62,6 +66,16 @@ public class ApiController {
     @PostMapping("/save-additional-details")
 	public ResponseEntity<String> saveAdditionalDetails(@RequestBody Payload payload) {
 		return ResponseEntity.ok().body(packageUtil.saveAdditionalDetails(payload.getPayload()).toString());
+	}
+    
+    @PostMapping("/save-vehicle")
+	public ResponseEntity<String> saveVehicle(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(vehicleUtil.saveVehicle(payload.getPayload()).toString());
+    }
+    
+    @PostMapping("/get-all-vehicle")
+	public ResponseEntity<String> getAllVehicles(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(vehicleUtil.getAllVehicles().toString());
 	}
     
     @PostMapping("/get-packages-by-id")
