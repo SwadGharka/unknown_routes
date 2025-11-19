@@ -24,8 +24,8 @@
 	 
 </head>
 <body>
-<%@ include file="header.jsp" %>
-	
+	<%@ include file="header.jsp"%>
+
 	<!-- Hero Section -->
 	<section
 		class="hero-bg text-white d-flex align-items-center position-relative overflow-hidden">
@@ -837,151 +837,12 @@
 		</div>
 	</div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 
-//===========================
-//VEHICLE DATA + RENDER CODE
-//===========================
-
-document.addEventListener("DOMContentLoaded", function () {
-
- const vehicles1 = [
-     {
-         key: "hatchback",
-         name: "Hatchback",
-         tagline: "Perfect for city rides",
-         image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80",
-         badge: { label: "Most Popular", cssClass: "bg-success" },
-         price: "₹12/km",
-         specs: [
-             { icon: "bi-people", text: "4 Seats" },
-             { icon: "bi-bag", text: "2 Bags" },
-             { icon: "bi-gear", text: "Manual/Auto" },
-             { icon: "bi-fuel-pump", text: "Petrol/CNG" }
-         ],
-         features: [
-             "Maruti Swift, Hyundai i20",
-             "AC & Music System",
-             "GPS Navigation",
-             "24/7 Roadside Assistance"
-         ]
-     },
-
-     {
-         key: "sedan",
-         name: "Sedan",
-         tagline: "Comfort & style combined",
-         image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=800&q=80",
-         badge: { label: "Premium", cssClass: "bg-primary" },
-         price: "₹15/km",
-         specs: [
-             { icon: "bi-people", text: "5 Seats" },
-             { icon: "bi-bag", text: "3 Bags" },
-             { icon: "bi-gear", text: "Automatic" },
-             { icon: "bi-fuel-pump", text: "Petrol/Diesel" }
-         ],
-         features: [
-             "Honda City, Maruti Ciaz",
-             "Premium Interiors",
-             "Bluetooth Connectivity",
-             "Professional Chauffeur"
-         ]
-     },
-
-     {
-         key: "suv",
-         name: "SUV",
-         tagline: "Spacious family travel",
-         image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=800&q=80",
-         badge: { label: "Luxury", cssClass: "bg-warning text-dark" },
-         price: "₹18/km",
-         specs: [
-             { icon: "bi-people", text: "7 Seats" },
-             { icon: "bi-bag", text: "5 Bags" },
-             { icon: "bi-gear", text: "Automatic" },
-             { icon: "bi-fuel-pump", text: "Diesel" }
-         ],
-         features: [
-             "Toyota Innova, Mahindra XUV",
-             "Captain Seats",
-             "Entertainment System",
-             "Extra Luggage Space"
-         ]
-     },
-
-     {
-         key: "luxury",
-         name: "Luxury",
-         tagline: "Ultimate premium experience",
-         image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80",
-         badge: { label: "VIP", cssClass: "bg-danger" },
-         price: "₹35/km",
-         specs: [
-             { icon: "bi-people", text: "4 Seats" },
-             { icon: "bi-bag", text: "3 Bags" },
-             { icon: "bi-gear", text: "Automatic" },
-             { icon: "bi-fuel-pump", text: "Premium" }
-         ],
-         features: [
-             "BMW, Mercedes, Audi",
-             "Leather Interiors",
-             "Premium Sound System",
-             "VIP Chauffeur Service"
-         ]
-     },
-
-     {
-         key: "tempo",
-         name: "Tempo Traveller",
-         tagline: "Perfect for group tours",
-         image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80",
-         badge: { label: "Group Travel", cssClass: "bg-info" },
-         price: "₹22/km",
-         specs: [
-             { icon: "bi-people", text: "12-17 Seats" },
-             { icon: "bi-bag", text: "Large Luggage" },
-             { icon: "bi-gear", text: "Manual" },
-             { icon: "bi-fuel-pump", text: "Diesel" }
-         ],
-         features: [
-             "Force Traveller, Mahindra",
-             "Push Back Seats",
-             "Music & Charging Points",
-             "Experienced Driver"
-         ]
-     },
-
-     {
-         key: "bus",
-         name: "Mini Bus",
-         tagline: "Corporate & event transport",
-         image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=800&q=80",
-         badge: { label: "Large Groups", cssClass: "bg-secondary" },
-         price: "₹28/km",
-         specs: [
-             { icon: "bi-people", text: "25-35 Seats" },
-             { icon: "bi-bag", text: "Cargo Space" },
-             { icon: "bi-gear", text: "Manual" },
-             { icon: "bi-fuel-pump", text: "Diesel" }
-         ],
-         features: [
-             "Tata, Ashok Leyland",
-             "Comfortable Seating",
-             "PA System Available",
-             "Professional Driver"
-         ]
-     }
- ];
-
-});
-
-
-// ===========================
-// RENDER FUNCTION
-// ===========================
-function renderVehicles() {
+function renderVehicles(vehicles) {
 
     const container = document.getElementById("vehicleContainer");
 
@@ -1055,7 +916,7 @@ function renderVehicles() {
 $(document).ready(async function(){
     var cardDataapi = await getDataByPayloadWithParentUrl('POST', true, true, '${pageContext.request.contextPath}/api/get-all-vehicle', "");
     const vehicles = convertDbToCardList(cardDataapi);
-	renderVehicles();
+	renderVehicles(vehicles);
 })
 
 function convertDbToCardList(dbList) {
@@ -1063,15 +924,15 @@ function convertDbToCardList(dbList) {
         return {
             name: item.name,
             tagline: item.tagline,
-            image: item.image || "https://via.placeholder.com/400x250?text=No+Image",
+            image: item.image || "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80",
             badge: {
                 label: item.badge_label,
                 cssClass: item.badge_class
             },
-            price: `₹${item.price_per_km}/km`,
+            price: `₹\${item.price_per_km}/km`,
             specs: [
-                { icon: "bi-people", text: `${item.max_pax} Seats` },
-                { icon: "bi-bag", text: `${item.max_no_of_bags} Bags` },
+                { icon: "bi-people", text: `\${item.max_pax} Seats` },
+                { icon: "bi-bag", text: `\${item.max_no_of_bags} Bags` },
                 { icon: "bi-gear", text: item.gear_type },
                 { icon: "bi-fuel-pump", text: item.fuel_type }
             ],
