@@ -86,8 +86,6 @@
 
         async function saveCategory() {
             let payload = getCategory();
-
-            payload = { name: "Sudhnashu" };
             let response = await getDataByPayloadWithParentUrl("post", false, true, "${BASE_URL}${CONTEXT_PATH}api/save-category", payload);
 
             if (response.status == '1') {
