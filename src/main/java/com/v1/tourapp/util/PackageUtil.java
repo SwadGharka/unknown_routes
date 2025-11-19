@@ -147,6 +147,7 @@ public class PackageUtil {
             packages.setStatus(status);
             packages.setBadge(badge);
             packages.setPackageColor(packageColor);
+            packages.setPackageUniqueCode(ValidatorUtil.generatePackageCode("pkg"));
             packageService.save(packages);
             packageAndCategoryMappingService.updateMappingStatusByPachageId(packages.getId(), "N");
             for(int i = 0; i < categoryIds.length(); i++){
@@ -285,6 +286,7 @@ public class PackageUtil {
                 packageData.put("totalDays", packages.getTotalDays());
                 packageData.put("badge", packages.getBadge());
                 packageData.put("packageColor", packages.getPackageColor());
+                packageData.put("packageUniqueCode", packages.getPackageUniqueCode());
                 JSONArray activitArray = new JSONArray();
                 for (Activities activitie : allActivities) {
                     JSONObject activityObj = new JSONObject();
@@ -305,6 +307,41 @@ public class PackageUtil {
             return response;
         } catch (Exception e) {
             log.info("Exception cought in getAllPackage :: ", e);
+            response.put("status", 2);
+            response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
+        }
+        return response;
+    }
+
+    public JSONObject getPackageById(String payload){
+        JSONObject response = new JSONObject();
+        response.put("status", 0);
+        response.put("message", "Invalid request");
+        try {
+            JSONObject request = new JSONObject(payload);
+            Long packageId = request.optLong("packageId");
+            Packages packages = packageService.getPackageById(packageId);
+            JSONObject packageData = new JSONObject();
+            packageData.put("name", packages.getName());
+            packageData.put("description", packages.getDescription());
+            packageData.put("majorAttractionsList", packages.getMajorAttractionsList());
+            packageData.put("imageUrl", packages.getImageUrl());
+            packageData.put("destination", packages.getDestination());
+            packageData.put("inclusionsForCard", packages.getInclusionsForCard());
+            packageData.put("members", packages.getMembers());
+            packageData.put("amount", packages.getAmount());
+            packageData.put("totalDays", packages.getTotalDays());
+            packageData.put("badge", packages.getBadge());
+            packageData.put("packageColor", packages.getPackageColor());
+            packageData.put("packageUniqueCode", packages.getPackageUniqueCode());
+            List<Long> categoryIds = packageAndCategoryMappingService.getAllCategoryIdsByPackageId(packages.getId());
+            packageData.put("categoryId", categoryIds);
+            response.put("packageData", packageData);
+            response.put("status", 1);
+            response.put("message", "Packages details");
+            return response;
+        } catch (Exception e) {
+            log.info("Exception cought in getPackageById :: ", e);
             response.put("status", 2);
             response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
         }

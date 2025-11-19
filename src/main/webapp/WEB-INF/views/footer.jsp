@@ -65,7 +65,7 @@
   padding: 48px 0;
   overflow: hidden;
   font-family: "Poppins", system-ui;
-  background: linear-gradient(45deg, rgb(79 20 112), rgb(74 6 98)); /* UPDATED THEME */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-top: 1px solid rgba(255,255,255,0.06);
 }
 

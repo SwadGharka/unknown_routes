@@ -1,6 +1,6 @@
 body {
     font-family: "Poppins", sans-serif;
-    background: linear-gradient(45deg, rgb(79 20 112), rgb(74 6 98));
+    background: linear-gradient(135deg, #667eea, #764ba2);
     min-height: 100vh;
     color: #333;
     margin: 0;
@@ -180,4 +180,11 @@ h2 {
 .activities-container,
 .extra-fields {
     width: 600px !important;  /* ya jitni chahiye */
+}
+h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 25px;
+    font-weight: 600;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }

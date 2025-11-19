@@ -70,4 +70,7 @@ public class Packages {
 	
 	@Column(name = "PACKAGE_COLOR")
 	private String packageColor;
+	
+	@Column(name = "PACKAGE_UNIQUE_CODE")
+	private String packageUniqueCode;
 }
