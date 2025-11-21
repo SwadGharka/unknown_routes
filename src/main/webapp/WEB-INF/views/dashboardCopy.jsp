@@ -22,7 +22,7 @@
                     <span class="text-white fw-bold fs-4">🏖️</span>
                 </div>
                 <div>
-                    <h1 class="h4 mb-0 text-shadow">OOO TRIPS Testing attempt 2</h1>
+                    <h1 class="h4 mb-0 text-shadow">OOO TRIPS</h1>
                     <small class="opacity-75">Out Of Office Trips</small>
                 </div>
             </a>
@@ -64,7 +64,7 @@
            
             <h2 class="display-3 fw-bold mb-4 text-shadow slide-in">
                 Time to Set Your Status to
-                <span class="text-warning">Sudhanshu</span>
+                <span class="text-warning">Away By CI/CD</span>
             </h2>
            
             <p class="lead mb-5 mx-auto opacity-75 slide-in text-shadow" style="max-width: 600px; animation-delay: 0.2s">
