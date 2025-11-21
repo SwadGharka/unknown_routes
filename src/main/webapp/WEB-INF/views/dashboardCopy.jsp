@@ -64,7 +64,7 @@
            
             <h2 class="display-3 fw-bold mb-4 text-shadow slide-in">
                 Time to Set Your Status to
-                <span class="text-warning">Away</span>
+                <span class="text-warning">Away Testing CI/CD</span>
             </h2>
            
             <p class="lead mb-5 mx-auto opacity-75 slide-in text-shadow" style="max-width: 600px; animation-delay: 0.2s">
