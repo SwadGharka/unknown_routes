@@ -63,7 +63,7 @@
             </div>
            
             <h2 class="display-3 fw-bold mb-4 text-shadow slide-in">
-                This Dashboard copy
+                This Dashboard
                 <span class="text-warning">Deployment by CI/CD</span>
             </h2>
            
