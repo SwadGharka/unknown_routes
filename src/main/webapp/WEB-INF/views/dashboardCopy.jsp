@@ -22,7 +22,7 @@
                     <span class="text-white fw-bold fs-4">🏖️</span>
                 </div>
                 <div>
-                    <h1 class="h4 mb-0 text-shadow">OOO TRIPS Testing</h1>
+                    <h1 class="h4 mb-0 text-shadow">OOO TRIPS Testing attempt 2</h1>
                     <small class="opacity-75">Out Of Office Trips</small>
                 </div>
             </a>
