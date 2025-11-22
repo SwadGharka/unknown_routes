@@ -49,7 +49,7 @@
 									placeholder="" required> <label
 									class="form-label mt-3">Vehicle Image:</label> <input
 									type="file" id="imageFile" class="form-control"
-									accept="image/*" required> <label
+									accept="image/*" > <label
 									class="form-label mt-3">Badge Label:</label> <input type="text"
 									id="badgeLabel" class="form-control" placeholder=""
 									required> <label class="form-label mt-3">Badge
