@@ -15,11 +15,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/dashboard.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/hero.css">
 
-
+    <%@ include file="common/commonScript.jsp" %>
     <!-- ✅ Common JS -->
     <script src="${pageContext.request.contextPath}/static/js/dashboard.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/hero.js"></script>
-    <%@ include file="common/commonScript.jsp" %>
 </head>
 <body>
     <%@ include file="header.jsp"%>

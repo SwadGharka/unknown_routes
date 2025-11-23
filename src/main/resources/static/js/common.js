@@ -104,3 +104,13 @@ function validateFieldAndShake(selectorId) {
   }
   return true;
 }
+
+async function logOut(){
+  const response = await getDataByPayloadWithParentUrl("POST", true, true, BASE_URL + CONTEXT_PATH + "api/logout", "");
+    if(response.status != 1){
+        showMessage("error", response.message);
+    }else{
+        showMessage("success", response.message);
+        window.location.href = "home";
+    }
+}

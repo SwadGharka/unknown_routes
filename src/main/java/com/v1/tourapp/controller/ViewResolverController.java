@@ -1,9 +1,15 @@
 package com.v1.tourapp.controller;
+
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.v1.tourapp.util.SessionUtil;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -12,6 +18,15 @@ public class ViewResolverController {
 
     @Autowired
     BaseController baseController;
+
+    @Autowired
+    SessionUtil sessionUtil;
+    
+    @GetMapping(value={"","/"})
+    public String index(Model model) {
+        baseController.updateModel(model);
+        return "redirect:/dashboard/login";
+    }
     
     @GetMapping("/home")
     public String dashboard(Model model) {
@@ -53,8 +68,27 @@ public class ViewResolverController {
 	
 	@GetMapping("/package-list")
     public String packageList(Model model) {
+        if(sessionUtil.getSession().getAttribute("userName") == null){
+            return "redirect:/dashboard/login";
+        }
         baseController.updateModel(model);
         return "packageList";
     }
+	
+	@GetMapping("/login")
+    public String login(Model model) {
+        baseController.updateModel(model);
+        if(sessionUtil.getSession().getAttribute("userName") != null){
+            return "redirect:/dashboard/home";
+        }
+        return "login";
+    }
+    
+    @GetMapping("/logout")
+	public String userLogOut(HttpSession session) {
+		session.invalidate();
+        sessionUtil.getSession().setAttribute("userName", null);
+        return "redirect:/dashboard/login";
+	}
 
 }

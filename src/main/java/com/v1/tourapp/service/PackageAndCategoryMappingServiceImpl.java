@@ -23,7 +23,7 @@ public class PackageAndCategoryMappingServiceImpl implements PackageAndCategoryM
     }
 
     @Override
-    public List<Long> getAllCategoryIdsByPackageId(Long packageId){
+    public List<Object[]> getAllCategoryIdsByPackageId(Long packageId){
         return packageAndCategoryMappingRepository.getAllCategoryIdsByPackageId(packageId);
     }
 

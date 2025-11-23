@@ -2,7 +2,6 @@ package com.v1.tourapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.v1.tourapp.dto.Payload;
 import com.v1.tourapp.util.PackageUtil;
+import com.v1.tourapp.util.UserUtil;
 import com.v1.tourapp.util.VehicleUtil;
 
 @RestController
@@ -26,6 +26,9 @@ public class ApiController {
     
     @Autowired
     VehicleUtil vehicleUtil;
+    
+    @Autowired
+    UserUtil userUtil;
 
     @PostMapping("/save-category")
     public ResponseEntity<String> saveCategory(@RequestBody Payload payload) {
@@ -81,6 +84,21 @@ public class ApiController {
     @PostMapping("/get-packages-by-id")
 	public ResponseEntity<String> getPackageById(@RequestBody Payload payload) {
 		return ResponseEntity.ok().body(packageUtil.getPackageById(payload.getPayload()).toString());
+	}
+
+    @PostMapping("/get-all-packages-list")
+	public ResponseEntity<String> getAllPackageForList(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(packageUtil.getAllPackageForList(payload.getPayload()).toString());
+	}
+
+    @PostMapping("/package-active-deactive")
+	public ResponseEntity<String> packageActiveDeactive(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(packageUtil.packageActiveDeactive(payload.getPayload()).toString());
+	}
+
+    @PostMapping("/login")
+	public ResponseEntity<String> userLogin(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(userUtil.userLogin(payload.getPayload()).toString());
 	}
 
 }

@@ -45,10 +45,28 @@
     </button>
 
     <!-- Menu -->
-    <div class="navbar-collapse justify-content-end" id="navbarNav">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav ms-auto align-items-lg-center" style="list-style: none; margin: 0; padding: 0;">
         <li class="nav-item" style="margin-left: 20px;">
           <a class="nav-link fw-semibold text-white" href="home">Home</a>
+        </li>
+        <%--<li class="nav-item" style="margin-left: 20px;">
+          <a class="nav-link fw-semibold text-white" href="#">Why Us</a>
+        </li>
+        <li class="nav-item" style="margin-left: 20px;">
+          <a class="nav-link fw-semibold text-white" href="#">Reviews</a>
+        </li>
+        <li class="nav-item" style="margin-left: 20px;">
+          <a class="nav-link fw-semibold text-white" href="#">Contact</a>
+        </li>--%>
+        <li class="nav-item" style="margin-left: 20px;">
+          <a class="nav-link fw-semibold text-white" href="add-category">Add Category</a>
+        </li>
+        <li class="nav-item" style="margin-left: 20px;">
+          <a class="nav-link fw-semibold text-white" href="add-package">Add Package</a>
+        </li>
+        <li class="nav-item" style="margin-left: 20px;">
+          <a class="nav-link fw-semibold text-white" href="package-list">Package List</a>
         </li>
         <li class="nav-item" style="margin-left: 20px;">
           <a class="nav-link fw-semibold text-white" target="_blank" href="car-rental">Rent Cars</a>
@@ -57,19 +75,7 @@
           <a class="nav-link fw-semibold text-white" target="_blank" href="addVehicle">Add Vehicle</a>
         </li>
         <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="#">Why Us</a>
-        </li>
-        <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="#">Reviews</a>
-        </li>
-        <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="#">Contact</a>
-        </li>
-        <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="add-category">Add Category</a>
-        </li>
-        <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="add-package">Add Package</a>
+          <a class="nav-link fw-semibold text-white" href="logout">Log out</a>
         </li>
       </ul>
     </div>
@@ -90,7 +96,7 @@
   /* ✅ Mobile menu fix */
   @media (max-width: 991px) {
     #navbarNav {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.564);
       backdrop-filter: blur(10px);
       border-radius: 10px;
       padding: 15px 0;
@@ -107,8 +113,42 @@
       font-size: 16px;
     }
   }
-</style>
+  @media (max-width: 991px) {
+    #navbarNav {
+      position: fixed;
+      top: 85px; /* navbar height */
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 85px);
+      /* background: rgba(0, 0, 0, 0.45); */
+      backdrop-filter: blur(14px);
+      overflow-y: auto; /* Menu scroll karega */
+      padding-top: 20px;
+      z-index: 99999;
+    }
 
+    /* Body ko freeze karo when menu open */
+    body.menu-open {
+      overflow: hidden; 
+      height: 100vh;
+    }
+  }
+
+</style>
+<script>
+  document.querySelector('.navbar-toggler').addEventListener('click', function () {
+    const body = document.body;
+    const menu = document.getElementById('navbarNav');
+
+    // Toggle "menu-open"
+    if (menu.classList.contains('show')) {
+        body.classList.remove('menu-open');
+    } else {
+        body.classList.add('menu-open');
+    }
+});
+
+</script>
 <!-- Bootstrap JS dependencies -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>

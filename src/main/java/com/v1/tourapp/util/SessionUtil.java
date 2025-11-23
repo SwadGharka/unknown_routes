@@ -1,7 +1,7 @@
 package com.v1.tourapp.util;
 
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -67,4 +67,8 @@ public class SessionUtil {
         HttpServletRequest req = getServletRequest();
         return getBaseUrl(req)+getContextPath(req);
     }
+
+	public HttpSession getSession() {
+		return getServletRequest().getSession(true);
+	}
 }

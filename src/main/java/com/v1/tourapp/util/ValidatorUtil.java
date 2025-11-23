@@ -1,15 +1,22 @@
 package com.v1.tourapp.util;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
-
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ValidatorUtil {
+
+    @Autowired
+    SessionUtil sessionUtil;
     
     public static String stringvlue(Object value) {
         if(value != null && !(value.equals("") || value.toString().equalsIgnoreCase("undefined") || value.toString().equalsIgnoreCase("null"))) {
@@ -90,45 +97,112 @@ public class ValidatorUtil {
         return getDateTimeByFormat(requiredFormat, getChangeDateFormat(givenFormat,date));
     }
 
-    static boolean isValid(final Object value) {
+    public static boolean isValid(final Object value) {
 		return value != null;
 	}
-	static boolean isValid(final double value) {
+	public static boolean isValid(final double value) {
 		return value > 0;
 	}
-	static boolean isValid(final Double value) {
+	public static boolean isValid(final Double value) {
 		return value != null && value > 0;
 	}
 
-	static boolean isValid(final float value) {
+	public static boolean isValid(final float value) {
 		return value > 0;
 	}
 
-	static boolean isValid(final Float value) {
+	public static boolean isValid(final Float value) {
 		return value != null && value > 0;
 	}
 
-	static boolean isValid(final BigDecimal value) {
+	public static boolean isValid(final BigDecimal value) {
 		return value != null;
 	}
 
-	static boolean isValid(final Integer value) {
+	public static boolean isValid(final Integer value) {
 		return value != null && value > 0;
 	}
 
-	static boolean isValid(final Long value) {
+	public static boolean isValid(final Long value) {
 		return value != null && value > 0;
 	}
 
-	static boolean isValid(final String value) {
+	public static boolean isValid(final String value) {
 		return StringUtils.isNotBlank(value) && !"0".equalsIgnoreCase(value) && !"null".equalsIgnoreCase(value) && !"N/A".equalsIgnoreCase(value);
 	}
 
     public static String generatePackageCode(String text) {
-    LocalDate date = LocalDate.now();
-    String datePart = date.format(DateTimeFormatter.ofPattern("yyMMdd"));
-    int random = (int)(Math.random() * 9000) + 1000;
-    return text.toUpperCase() + "-" + datePart + "-" + random;
-}
+        LocalDate date = LocalDate.now();
+        String datePart = date.format(DateTimeFormatter.ofPattern("yyMMdd"));
+        int random = (int)(Math.random() * 9000) + 1000;
+        return text.toUpperCase() + "-" + datePart + "-" + random;
+    }
+
+    static String valueCheck(Object[] value, Integer index, String defaultValue){
+		try{
+			return value != null && value[index]!=null ? value[index].toString() : defaultValue;
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.err.println("Exception caught in String valueCheck: " + e);
+			System.err.println("Invalid index " + index + " for array: " + Arrays.toString(value));
+		}
+		return defaultValue;
+	}
+
+	static Integer valueCheck(Object[] value, Integer index, Integer defaultValue){
+		try{
+			return value != null && value[index]!=null ? Integer.parseInt(value[index].toString()) : defaultValue;
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.err.println("Exception caught in Integer valueCheck: " + e);
+			System.err.println("Invalid index " + index + " for array: " + Arrays.toString(value));
+		}
+		return defaultValue;
+	}
+
+	static Long valueCheck(Object[] value, Integer index, Long defaultValue){
+		try{
+			return value != null && value[index]!=null ? Long.parseLong(value[index].toString()) : defaultValue;
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.err.println("Exception caught in String valueCheck: " + e);
+			System.err.println("Invalid index " + index + " for array: " + Arrays.toString(value));
+		}
+		return defaultValue;
+	}
+
+	static Double valueCheck(Object[] value, Integer index, Double defaultValue){
+		try{
+			return value != null && value[index]!=null ? Double.parseDouble(value[index].toString()) : defaultValue;
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.err.println("Exception caught in Double valueCheck: " + e);
+			System.err.println("Invalid index " + index + " for array: " + Arrays.toString(value));
+		}
+		return defaultValue;
+	}
+
+	static Float valueCheck(Object[] value, Integer index, Float defaultValue) {
+		try {
+			return value != null && value[index] != null ? Float.parseFloat(value[index].toString()) : defaultValue;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.err.println("Exception caught in Float valueCheck: " + e);
+			System.err.println("Invalid index " + index + " for array: " + Arrays.toString(value));
+		}
+		return defaultValue;
+	}
+
+    public static String getEncryption(String input)
+    {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

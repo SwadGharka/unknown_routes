@@ -1,6 +1,7 @@
 package com.v1.tourapp.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -54,7 +55,7 @@ public class PackageUtil {
             response.put("status", 1);
             response.put("message", "Category add successfully");
         } catch (Exception e) {
-            log.info("Exception cought in saveCategory :: ", e);
+            log.error("Exception cought in saveCategory :: ", e);
             response.put("status", 0);
             response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
         }
@@ -165,7 +166,7 @@ public class PackageUtil {
             response.put("status", 1);
             response.put("message", "Package details save");
         } catch (Exception e) {
-            log.info("Exception caught in saveNewTravelPackage :: ", e);
+            log.error("Exception caught in saveNewTravelPackage :: ", e);
             response.put("status", 2);
             response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
         }
@@ -203,7 +204,7 @@ public class PackageUtil {
             response.put("message", "Package activties save");
 
         } catch (Exception e) {
-            log.info("Exception caught in saveActivities ::", e);
+            log.error("Exception caught in saveActivities ::", e);
             response.put("status", 2);
             response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
         }
@@ -230,7 +231,7 @@ public class PackageUtil {
             response.put("status", 1);
             response.put("message", "Acitivity List");
         } catch (Exception e) {
-            log.info("Exception caught in getAllActivitiesByPackageId :: ", e);
+            log.error("Exception caught in getAllActivitiesByPackageId :: ", e);
             response.put("status", 2);
             response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
         }
@@ -270,7 +271,8 @@ public class PackageUtil {
     public JSONObject getAllPackage(String payload){
         JSONObject response = new JSONObject();
         try {
-            List<Packages> allPackages = packageService.getAllPackages();
+            List<Boolean> status = Arrays.asList(true);
+            List<Packages> allPackages = packageService.getAllPackages(status);
             JSONArray packageArray = new JSONArray();
             for(Packages packages : allPackages ){
                 List<Activities> allActivities = activitiesService.getAllActivitiesByPackageId(packages.getId());
@@ -297,8 +299,12 @@ public class PackageUtil {
                     activitArray.put(activityObj);
                 }
                 packageData.put("activities", activitArray);
-                List<Long> categoryIds = packageAndCategoryMappingService.getAllCategoryIdsByPackageId(packages.getId());
-                packageData.put("categoryId", categoryIds);
+                List<Long> categoryId = new ArrayList<>();
+                List<Object[]> categoryIds = packageAndCategoryMappingService.getAllCategoryIdsByPackageId(packages.getId());
+                for(Object[] data : categoryIds){
+                    categoryId.add(ValidatorUtil.valueCheck(data, 0, 0l));
+                }
+                packageData.put("categoryId", categoryId);
                 packageArray.put(packageData);
             }
             response.put("packages", packageArray);
@@ -306,7 +312,7 @@ public class PackageUtil {
             response.put("message", "All Packages");
             return response;
         } catch (Exception e) {
-            log.info("Exception cought in getAllPackage :: ", e);
+            log.error("Exception cought in getAllPackage :: ", e);
             response.put("status", 2);
             response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
         }
@@ -334,17 +340,102 @@ public class PackageUtil {
             packageData.put("badge", packages.getBadge());
             packageData.put("packageColor", packages.getPackageColor());
             packageData.put("packageUniqueCode", packages.getPackageUniqueCode());
-            List<Long> categoryIds = packageAndCategoryMappingService.getAllCategoryIdsByPackageId(packages.getId());
-            packageData.put("categoryId", categoryIds);
+            packageData.put("status", packages.getStatus());
+            List<Long> categoryId = new ArrayList<>();
+            List<Object[]> categoryIds = packageAndCategoryMappingService.getAllCategoryIdsByPackageId(packages.getId());
+            for(Object[] data : categoryIds){
+                categoryId.add(ValidatorUtil.valueCheck(data, 0, 0l));
+            }
+            packageData.put("categoryId", categoryId);
             response.put("packageData", packageData);
             response.put("status", 1);
             response.put("message", "Packages details");
             return response;
         } catch (Exception e) {
-            log.info("Exception cought in getPackageById :: ", e);
+            log.error("Exception cought in getPackageById :: ", e);
             response.put("status", 2);
             response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
         }
         return response;
     }
+
+    public JSONObject getAllPackageForList(String payload){
+        JSONObject response = new JSONObject();
+        response.put("status", 0);
+        response.put("message", "Invalid request");
+        try {
+            List<Boolean> status = Arrays.asList(true, false);
+            List<Packages> allPackages = packageService.getAllPackages(status);
+            JSONArray packageArray = new JSONArray();
+            for(Packages packages : allPackages ){
+                List<Activities> allActivities = activitiesService.getAllActivitiesByPackageId(packages.getId());
+                JSONObject packageData = new JSONObject();
+                packageData.put("id", packages.getId());
+                packageData.put("name", packages.getName());
+                packageData.put("description", packages.getDescription());
+                packageData.put("majorAttractionsList", packages.getMajorAttractionsList());
+                packageData.put("imageUrl", packages.getImageUrl());
+                packageData.put("destination", packages.getDestination());
+                packageData.put("inclusionsForCard", packages.getInclusionsForCard());
+                packageData.put("members", packages.getMembers());
+                packageData.put("amount", packages.getAmount());
+                packageData.put("totalDays", packages.getTotalDays());
+                packageData.put("badge", packages.getBadge());
+                packageData.put("packageColor", packages.getPackageColor());
+                packageData.put("packageUniqueCode", packages.getPackageUniqueCode());
+                packageData.put("status", packages.getStatus());
+                JSONArray activitArray = new JSONArray();
+                for (Activities activitie : allActivities) {
+                    JSONObject activityObj = new JSONObject();
+                    activityObj.put("header", activitie.getHeader());
+                    activityObj.put("point", activitie.getPoints());
+                    activityObj.put("pakcageId", activitie.getPackageId());
+                    activityObj.put("day", activitie.getDay());
+                    activitArray.put(activityObj);
+                }
+                packageData.put("activities", activitArray);
+                JSONArray categoryArray = new JSONArray();
+                List<Object[]> categoryIds = packageAndCategoryMappingService.getAllCategoryIdsByPackageId(packages.getId());
+                for(Object[] data : categoryIds){
+                    JSONObject categoryObj = new JSONObject();
+                    int index = 0;
+                    categoryObj.put("Id", ValidatorUtil.valueCheck(data, index++, 0));
+                    categoryObj.put("name", ValidatorUtil.valueCheck(data, index++, "N/A"));
+                    categoryArray.put(categoryObj);
+                }
+                packageData.put("categoryObj", categoryArray);
+                packageArray.put(packageData);
+            }
+            response.put("packages", packageArray);
+            response.put("status", 1);
+            response.put("message", "All Packages");
+            return response;
+        } catch (Exception e) {
+            log.error("Exception cought in getAllPackage :: ", e);
+            response.put("status", 2);
+            response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
+        }
+        return response;
+    }
+
+    public JSONObject packageActiveDeactive(String payload){
+        JSONObject response = new JSONObject();
+        response.put("status", 0);
+        response.put("message", "Invalid request");
+        try {
+            JSONObject request = new JSONObject(payload);
+            Long packageId = request.optLong("packageId");
+            Boolean status = request.optBoolean("status");
+            packageService.updatePackageStatus(status, packageId);
+            response.put("status", 1);
+            response.put("message", "Package updated");
+        } catch (Exception e) {
+            log.error("Exception cought in packageActiveDeactive :: ", e);
+            response.put("status", 0);
+            response.put("message", "Sorry for inconvenience, system has encountered technical glitch.");
+        }
+        return response;
+    }
+
+    
 }
