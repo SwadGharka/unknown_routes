@@ -42,6 +42,9 @@ public class ViewResolverController {
     
     @GetMapping("/add-package")
 	public String addPackage(Model model, @RequestParam("packageId") @Nullable Integer  packageId) {
+        if(sessionUtil.getSession().getAttribute("userName") == null){
+            return "redirect:/dashboard/login";
+        }
         model.addAttribute("packageId", packageId);
 		baseController.updateModel(model);
 		return "addPackage";
@@ -50,6 +53,9 @@ public class ViewResolverController {
     
 	@GetMapping("/add-category")
     public String showAddCategoryPage(Model model) {
+        if(sessionUtil.getSession().getAttribute("userName") == null){
+            return "redirect:/dashboard/login";
+        }
         baseController.updateModel(model);
         return "addCategory";
     }
@@ -88,7 +94,7 @@ public class ViewResolverController {
 	public String userLogOut(HttpSession session) {
 		session.invalidate();
         sessionUtil.getSession().setAttribute("userName", null);
-        return "redirect:/dashboard/login";
+        return "redirect:/dashboard/home";
 	}
 
 }
