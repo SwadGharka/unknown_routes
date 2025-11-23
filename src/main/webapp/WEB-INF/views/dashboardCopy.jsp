@@ -63,8 +63,8 @@
             </div>
            
             <h2 class="display-3 fw-bold mb-4 text-shadow slide-in">
-                Time to Set Your Status to
-                <span class="text-warning">Away</span>
+                This Dashboard
+                <span class="text-warning">Deployment by CI/CD</span>
             </h2>
            
             <p class="lead mb-5 mx-auto opacity-75 slide-in text-shadow" style="max-width: 600px; animation-delay: 0.2s">
@@ -746,7 +746,7 @@
                         <div class="card-body p-4">
                             <div class="text-center mb-4">
                                 <h4 class="card-title fw-bold mb-1" style="color: #6f42c1;">AFK Package</h4>
-                                <p class="fw-medium" style="color: #6f42c1;">Away From Keyboard - River Retreat</p>
+                                <p class="fw-medium" style="color: #6f42c1;"> From Keyboard - River Retreat</p>
                             </div>
                             <div class="mb-3">
                                 <h6 class="fw-semibold mb-2" style="color: #6f42c1;">🗺️ Major Attractions:</h6>
