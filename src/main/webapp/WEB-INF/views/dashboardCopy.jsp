@@ -64,7 +64,7 @@
            
             <h2 class="display-3 fw-bold mb-4 text-shadow slide-in">
                 This Dashboard
-                <span class="text-warning">Deployment by CI/CD</span>
+                <span class="text-warning">Deployment by CI-CD</span>
             </h2>
            
             <p class="lead mb-5 mx-auto opacity-75 slide-in text-shadow" style="max-width: 600px; animation-delay: 0.2s">
