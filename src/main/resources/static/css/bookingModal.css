@@ -1,0 +1,135 @@
+/* ================= MODAL BASE ================= */
+.ooo-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.ooo-modal.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
+
+.ooo-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    animation: fadeIn 0.4s forwards;
+}
+
+/* ================= MODAL BOX ================= */
+.ooo-modal-box {
+    position: relative;
+    width: 90%;
+    max-width: 550px;
+    padding: 35px;
+    border-radius: 20px;
+
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+
+    transform: translateY(-30px);
+    opacity: 0;
+    animation: slideUp 0.45s forwards;
+}
+
+/* Close Button */
+.ooo-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+/* ================= TEXT ================= */
+.modal-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.modal-sub {
+    font-size: 14px;
+    color: #f0f0f0;
+    margin-bottom: 25px;
+}
+
+/* ================= INPUTS ================= */
+.modal-input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.25);
+    color: white;
+    margin-bottom: 15px;
+    transition: 0.25s;
+}
+
+.modal-input::placeholder {
+    color: #eee;
+}
+
+.modal-input:focus {
+    border-color: #6f42c1;
+}
+
+/* Row */
+.modal-field-row {
+    display: flex;
+    gap: 15px;
+}
+
+/* Textarea */
+.modal-textarea {
+    resize: none;
+}
+
+/* Button */
+.modal-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(45deg, rgba(13,110,253,0.7), rgba(111,66,193,0.7));
+    border: none;
+    color: white;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.modal-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(45deg, rgba(111,66,193,0.85), rgba(13,110,253,0.85));
+}
+
+/* Hide helper */
+.d-none {
+    display: none !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to   {opacity: 1;}
+}
+
+@keyframes slideUp {
+    from {opacity: 0; transform: translateY(35px);}
+    to   {opacity: 1; transform: translateY(0);}
+}

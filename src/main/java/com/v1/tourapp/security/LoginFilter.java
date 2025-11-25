@@ -1,9 +1,11 @@
 package com.v1.tourapp.security;
 
 import java.io.IOException;
-
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -15,6 +17,15 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class LoginFilter implements Filter {
 
+    @Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+
+	}
+
+	@Override
+	public void destroy() {
+	}
+    
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -28,19 +39,21 @@ public class LoginFilter implements Filter {
 
         String path = req.getRequestURI();
 
-        boolean isPublic = path.contains("login") 
-                        || path.contains("static")
-                        || path.contains("home");
+        List<String> publicUrls = Arrays.asList(
+                req.getContextPath()+"/dashboard/login",
+                req.getContextPath()+"/api/login",
+                req.getContextPath()+"/dashboard/home",
+                req.getContextPath()+"/static",
+                req.getContextPath()+"/api/get-all-categories",
+                req.getContextPath()+"/api/get-all-packages"
+        );
 
-        // if(path.contains("logout")){
-        //     res.sendRedirect(req.getContextPath() + "/dashboard/home");
-        //     return;
-        // }
+        boolean isPublic = publicUrls.stream().anyMatch(path::startsWith);
+
         if (!isLoggedIn && !isPublic) {
             res.sendRedirect(req.getContextPath() + "/dashboard/login");
             return;
         }
-
         chain.doFilter(request, response);
     }
 }

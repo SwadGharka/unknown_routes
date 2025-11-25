@@ -73,7 +73,7 @@ $.ajaxSetup({
 });
 
 var APPLICATION_JSON_VALUE = "application/json";
-function getDataByPayloadWithParentUrl(method, globalflag, isMessageShow, url, payload){
+async function getDataByPayloadWithParentUrl(method, globalflag, isMessageShow, url, payload){
   return new Promise(function (resolve, reject) {
       $.ajax({
           type : method,

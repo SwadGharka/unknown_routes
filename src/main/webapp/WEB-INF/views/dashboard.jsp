@@ -143,7 +143,7 @@
                                         <input type="tel" class="form-control form-control-lg" placeholder="Phone Number" required>
                                     </div>
                                 </div>
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <select id="packageSelect" class="form-select form-select-lg">
                                         <option value="">Select a Package</option>
                                         <option value="brb">BRB Package - Manali Mountain Adventure (₹45,999)</option>
@@ -153,7 +153,7 @@
                                         <option value="lol">LOL Package - Mumbai Bollywood Fun (₹42,999)</option>
                                         <option value="asap">ASAP Package - Ladakh High Altitude Thrill (₹65,999)</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="mb-4">
                                     <textarea class="form-control form-control-lg" rows="4" placeholder="Tell us about your group size, travel dates, and any special requirements..."></textarea>
                                 </div>
@@ -177,7 +177,7 @@
                                     </div>
                                     <div>
                                         <p class="fw-semibold mb-0">Call Us</p>
-                                        <p class="text-muted mb-0">+91 8630327282</p>
+                                        <p class="text-muted mb-0">+91 9560690925</p>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center mb-3">
@@ -187,7 +187,7 @@
                                     </div>
                                     <div>
                                         <p class="fw-semibold mb-0">Email Us</p>
-                                        <p class="text-muted mb-0">ooo.trips@gmail.com</p>
+                                        <p class="text-muted mb-0"><a href="mailto:mohit.sahu2017@gmail.com?subject=OOO%20Trips%20Enquiry&body=Hi%20Team,">ooo.trips@gmail.com</a></p>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
@@ -197,28 +197,17 @@
                                     </div>
                                     <div>
                                         <p class="fw-semibold mb-0">WhatsApp</p>
-                                        <a class="text-muted mb-0" href="https://wa.me/8630327282?text='Hi baby'">+91 8030327282</a>
+                                        <a class="text-muted mb-0" href="https://wa.me/9560690925?text='Hi team'">+91 9560690925</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                   
-                    <div class="card text-white border-0" style="background: linear-gradient(45deg, #ffc107, #fd7e14);">
-                        <div class="card-body p-4">
-                            <h4 class="h3 fw-bold mb-3">🎉 Special Offer!</h4>
-                            <p class="lead mb-3">Book any package this month and get:</p>
-                            <ul class="list-unstyled">
-                                <li class="mb-2">✅ 15% discount for groups of 6+</li>
-                                <li class="mb-2">✅ Free airport transfers</li>
-                                <li class="mb-2">✅ Complimentary travel insurance</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <%@ include file="/WEB-INF/views/bookingModal.jsp" %>
     <jsp:include page="/WEB-INF/views/footer.jsp" />
 </body>
 <script>

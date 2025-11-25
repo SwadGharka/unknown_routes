@@ -16,7 +16,7 @@
   <div class="container-fluid" style="padding: 10px 20px;">
 
     <!-- Brand -->
-    <a class="navbar-brand d-flex align-items-center" href="#" style="color: #fff; text-decoration: none;">
+    <a class="navbar-brand d-flex align-items-center" href="home" style="color: #fff; text-decoration: none;">
       <div style="
         background: linear-gradient(45deg, #ffc107, #fd7e14);
         width: 48px;

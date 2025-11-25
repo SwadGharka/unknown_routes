@@ -227,7 +227,7 @@ function getPackageCard(packages) {
             member: pkg.members,
             packageColor: pkg.packageColor,
             onDetailsClick: `showPackageDetails('${pkg.name}')`,
-            onBookClick: `bookPackage(event, '${pkg.name}')`
+            onBookClick: `openBookingModal(event, '${pkg.name}')`
         });
     }).join("");
 
