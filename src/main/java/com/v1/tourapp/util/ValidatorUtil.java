@@ -2,6 +2,7 @@ package com.v1.tourapp.util;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -131,11 +132,24 @@ public class ValidatorUtil {
 		return StringUtils.isNotBlank(value) && !"0".equalsIgnoreCase(value) && !"null".equalsIgnoreCase(value) && !"N/A".equalsIgnoreCase(value);
 	}
 
-    public static String generatePackageCode(String text) {
+    public static String generatePackageCode(String text, Boolean withRandomNumer) {
         LocalDate date = LocalDate.now();
         String datePart = date.format(DateTimeFormatter.ofPattern("yyMMdd"));
-        int random = (int)(Math.random() * 9000) + 1000;
-        return text.toUpperCase() + "-" + datePart + "-" + random;
+        if(withRandomNumer){
+            int random = (int)(Math.random() * 9000) + 1000;
+            return text.toUpperCase() + "-" + datePart + "-" + random;
+        }
+        return text.toUpperCase() + "-" + datePart;
+    }
+    public static String generateInquiryCode(String text) {
+        LocalDateTime dt = LocalDateTime.now();
+        String HH = dt.format(DateTimeFormatter.ofPattern("HH"));
+        String mm = dt.format(DateTimeFormatter.ofPattern("mm"));
+        String ss = dt.format(DateTimeFormatter.ofPattern("ss"));
+        String DD = dt.format(DateTimeFormatter.ofPattern("dd"));
+        String MM = dt.format(DateTimeFormatter.ofPattern("MM"));
+        String yy = dt.format(DateTimeFormatter.ofPattern("yy"));
+        return text.toUpperCase() + "-" + HH + mm + ss + MM + DD + yy;
     }
 
     static String valueCheck(Object[] value, Integer index, String defaultValue){
@@ -203,6 +217,18 @@ public class ValidatorUtil {
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String payloadDecode(String payload){
+        try {
+			String payloadDecode = payload.replaceAll(" ", "+");
+			payloadDecode = new String(java.util.Base64.getDecoder().decode(payload));
+			payloadDecode = URLDecoder.decode(payloadDecode, "UTF-8");
+			return payloadDecode;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return StringUtils.EMPTY;
+		}
     }
 
 }

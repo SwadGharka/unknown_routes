@@ -5,25 +5,26 @@
     <div class="ooo-modal-overlay" onclick="closeBookingModal()"></div>
 
     <div class="ooo-modal-box" id="bookingModalBox">
-        
         <!-- Close Button -->
         <button class="ooo-close-btn" onclick="closeBookingModal()">×</button>
 
         <!-- FORM CONTENT -->
         <div id="bookingFormSection">
+            <input type="hidden" id="travelType">
+            <input type="hidden" id="packageId">
             <h3 class="modal-title">Send Inquiry</h3>
             <p class="modal-sub">Fill the details and we will contact you soon.</p>
 
-            <form onsubmit="submitInquiry(event)">
+            <form onsubmit="submitInquiry(event, 'bookingFormSection')">
 
                 <div class="modal-field-row">
-                    <input type="text" class="modal-input" id="inqName" placeholder="Your Name" required>
-                    <input type="email" class="modal-input" id="inqEmail" placeholder="Email Address" required>
+                    <input type="text" class="modal-input" id="inqName" placeholder="Your Name" >
+                    <input type="email" class="modal-input" id="inqEmail" placeholder="Email Address" >
                 </div>
 
                 <div class="modal-field-row">
-                    <input type="text" class="modal-input" id="inqCompany" placeholder="Company Name">
-                    <input type="tel" class="modal-input" id="inqPhone" placeholder="Phone Number" required>
+                    <input type="number" class="modal-input" id="inqPersionCount" placeholder="Number of persion">
+                    <input type="tel" class="modal-input" id="inqPhone" placeholder="Phone Number" >
                 </div>
 
                 <textarea class="modal-input modal-textarea" id="inqMessage"

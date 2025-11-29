@@ -71,7 +71,18 @@ $.ajaxSetup({
     }
   },
 });
+$(document).ajaxStart(function (e) {
+});
+$(document).ajaxStop(function () {
+    showLoader("", false);
+});
 
+$(document).ajaxSend(function () {
+});
+
+$(document).ajaxComplete(function () {
+    showLoader("", false);
+});
 var APPLICATION_JSON_VALUE = "application/json";
 async function getDataByPayloadWithParentUrl(method, globalflag, isMessageShow, url, payload){
   return new Promise(function (resolve, reject) {
@@ -113,4 +124,47 @@ async function logOut(){
         showMessage("success", response.message);
         window.location.href = "home";
     }
+}
+
+function loader(){
+  return(`<div id="oooLoader" class="ooo-loader-overlay">
+            <div class="ooo-loader-box">
+                <div class="ooo-loader-circle"></div>
+                <p class="ooo-loader-text">Loading...</p>
+            </div>
+        </div>`);
+}
+
+function showLoader(message = "Loading...", show = true) {
+    if (show) {
+        if ($("#oooLoader").length === 0) {
+            $("body").append(loader()); 
+        }
+        $(".ooo-loader-text").text(message);
+        $("#oooLoader").css("display", "flex");
+        $("body").addClass("no-scroll");
+
+    } else {
+        $("#oooLoader").css("display", "none");
+        $("body").removeClass("no-scroll");
+    }
+}
+
+function toTitleCase(str){
+    return str.replace(/\w\S*/g,
+         txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    );
+}
+
+function formatAmount(amount) {
+    let x = amount.toString();
+    let lastThree = x.substring(x.length - 3);
+    let otherNumbers = x.substring(0, x.length - 3);
+
+    if (otherNumbers !== '') {
+        lastThree = ',' + lastThree;
+    }
+
+    // add commas after every 2 digits in the other part
+    return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
 }

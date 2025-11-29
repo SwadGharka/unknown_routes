@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.v1.tourapp.dto.Payload;
+import com.v1.tourapp.util.ContactInquiryUtil;
 import com.v1.tourapp.util.PackageUtil;
 import com.v1.tourapp.util.UserUtil;
 import com.v1.tourapp.util.VehicleUtil;
@@ -28,6 +29,9 @@ public class ApiController {
     
     @Autowired
     UserUtil userUtil;
+    
+    @Autowired
+    ContactInquiryUtil contactInquiryUtil;
 
     @PostMapping("/save-category")
     public ResponseEntity<String> saveCategory(@RequestBody Payload payload) {
@@ -98,6 +102,11 @@ public class ApiController {
     @PostMapping("/login")
 	public ResponseEntity<String> userLogin(@RequestBody Payload payload) {
 		return ResponseEntity.ok().body(userUtil.userLogin(payload.getPayload()).toString());
+	}
+
+    @PostMapping("/save-package-inquiry")
+	public ResponseEntity<String> saveInquiry(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(contactInquiryUtil.saveInquiry(payload.getPayload()).toString());
 	}
 
 }

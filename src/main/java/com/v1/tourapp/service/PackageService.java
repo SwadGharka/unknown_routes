@@ -9,4 +9,5 @@ public interface PackageService {
 	Packages save(Packages packages);
 	List<Packages> getAllPackages(List<Boolean> status);
 	int updatePackageStatus(Boolean status, Long packageId);
+	Packages getIncompletedPackage();
 }

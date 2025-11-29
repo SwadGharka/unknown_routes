@@ -73,4 +73,10 @@ public class Packages {
 	
 	@Column(name = "PACKAGE_UNIQUE_CODE")
 	private String packageUniqueCode;
+	
+	@Column(name = "TRAVEL_TYPE", length = 3)
+	private String travelType;
+	
+	@Column(name = "IS_COMPLETED")
+	private Boolean isCompleted;
 }

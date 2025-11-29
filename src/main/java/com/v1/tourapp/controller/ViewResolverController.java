@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.v1.tourapp.util.PackageUtil;
 import com.v1.tourapp.util.SessionUtil;
+import com.v1.tourapp.util.ValidatorUtil;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -21,6 +23,9 @@ public class ViewResolverController {
 
     @Autowired
     SessionUtil sessionUtil;
+
+    @Autowired
+    PackageUtil packageUtil;
     
     @GetMapping(value={"","/"})
     public String index(Model model) {
@@ -96,5 +101,11 @@ public class ViewResolverController {
         sessionUtil.getSession().setAttribute("userName", null);
         return "redirect:/dashboard/home";
 	}
+
+    @GetMapping("/package-details")
+    public String getPackageDetails(@RequestParam("payload") String payload, Model model) {
+        model.addAttribute("packageId", ValidatorUtil.payloadDecode(payload));
+        return "packageDetails";
+    }
 
 }

@@ -275,9 +275,8 @@
                         <th style="color: #6a2b97; width:130px;">Category</th>
                         <th style="color: #6a2b97; width:110px;">Status</th>
                         <th style="color: #6a2b97; width:150px;">Package Code</th>
-                        <th style="color: #6a2b97; width:200px;">Action</th>
+                        <th style="color: #6a2b97; width:200px; text-align: center;">Action</th>
                     </tr>
-
                 </thead>
                 <tbody id="packageTableBody"></tbody>
             </table>

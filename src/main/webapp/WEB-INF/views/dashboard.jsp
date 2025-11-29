@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control form-control-lg" placeholder="Company Name">
+                                        <input type="number" class="form-control form-control-lg" placeholder="Number of Persion">
                                     </div>
                                     <div class="col-md-6">
                                         <input type="tel" class="form-control form-control-lg" placeholder="Phone Number" required>

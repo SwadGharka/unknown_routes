@@ -119,9 +119,10 @@ public class PackageUtil {
             String inclusionsForCard = request.optString("inclusionsForCard");
             String badge = request.optString("badge");
             String packageColor = request.optString("packageColor");
+            String travelType = request.optString("travelType");
             boolean status = request.optBoolean("status");
             JSONArray categoryIds = request.optJSONArray("categoryIds");
-            Long packageId = request.optLong("packageId");
+            Long visitedPackageId = request.optLong("visitedPackageId");
             if(!ValidatorUtil.isValid(packageName)) return response.put("message", "Please fill the Name of package.");
             if(!ValidatorUtil.isValid(description)) return response.put("message", "Please fill the Description.");
             if(!ValidatorUtil.isValid(imageUrl)) return response.put("message", "Please give the Image URL.");
@@ -130,9 +131,10 @@ public class PackageUtil {
             if(!ValidatorUtil.isValid(amount)) return response.put("message", "Please fill the Amount.");
             if(!ValidatorUtil.isValid(members)) return response.put("message", "Please fill the Members.");
             if(!ValidatorUtil.isValid(packageColor)) return response.put("message", "Please Select Package color.");
+            if(!ValidatorUtil.isValid(travelType)) return response.put("message", "Please Select Internation or Domestic Type");
             if(categoryIds == null || categoryIds.length() == 0) return response.put("message", "Please select the Category");
             if(!ValidatorUtil.isValid(inclusionsForCard)) return response.put("message", "Please select the Category");
-            Packages packages = packageService.getPackageById(packageId);
+            Packages packages = packageService.getIncompletedPackage();
             if(packages == null){
                 packages = new Packages();
             }
@@ -148,7 +150,9 @@ public class PackageUtil {
             packages.setStatus(status);
             packages.setBadge(badge);
             packages.setPackageColor(packageColor);
-            packages.setPackageUniqueCode(ValidatorUtil.generatePackageCode("pkg"));
+            packages.setIsCompleted(false);
+            packages.setPackageUniqueCode(ValidatorUtil.generatePackageCode("pkg", true));
+            packages.setTravelType(travelType);
             packageService.save(packages);
             packageAndCategoryMappingService.updateMappingStatusByPachageId(packages.getId(), "N");
             for(int i = 0; i < categoryIds.length(); i++){
@@ -162,7 +166,8 @@ public class PackageUtil {
                 packageAndCategoryMapping.setActive("Y");
                 packageAndCategoryMappingService.save(packageAndCategoryMapping);
             }
-            response.put("packageId", packages.getId());
+            response.put("newPackageId", packages.getId());
+            response.put("visitedPackageId", visitedPackageId);
             response.put("status", 1);
             response.put("message", "Package details save");
         } catch (Exception e) {
@@ -258,6 +263,7 @@ public class PackageUtil {
             packages.setExclusion(exclusion);
             packages.setHotel(hotels);
             packages.setFlight(flight);
+            packages.setIsCompleted(true);
             packageService.save(packages);
             response.put("status", 1);
             response.put("message", "Save additional details");
@@ -277,6 +283,7 @@ public class PackageUtil {
             for(Packages packages : allPackages ){
                 List<Activities> allActivities = activitiesService.getAllActivitiesByPackageId(packages.getId());
                 JSONObject packageData = new JSONObject();
+                packageData.put("id", packages.getId());
                 packageData.put("name", packages.getName());
                 packageData.put("description", packages.getDescription());
                 packageData.put("majorAttractionsList", packages.getMajorAttractionsList());
@@ -288,6 +295,7 @@ public class PackageUtil {
                 packageData.put("totalDays", packages.getTotalDays());
                 packageData.put("badge", packages.getBadge());
                 packageData.put("packageColor", packages.getPackageColor());
+                packageData.put("travelType", packages.getTravelType());
                 packageData.put("packageUniqueCode", packages.getPackageUniqueCode());
                 JSONArray activitArray = new JSONArray();
                 for (Activities activitie : allActivities) {
@@ -340,6 +348,11 @@ public class PackageUtil {
             packageData.put("badge", packages.getBadge());
             packageData.put("packageColor", packages.getPackageColor());
             packageData.put("packageUniqueCode", packages.getPackageUniqueCode());
+            packageData.put("inclusion", packages.getInclusion());
+            packageData.put("exclusion", packages.getExclusion());
+            packageData.put("hotels", packages.getHotel());
+            packageData.put("flight", packages.getFlight());
+            packageData.put("travelType", packages.getTravelType());
             packageData.put("status", packages.getStatus());
             List<Long> categoryId = new ArrayList<>();
             List<Object[]> categoryIds = packageAndCategoryMappingService.getAllCategoryIdsByPackageId(packages.getId());
@@ -384,6 +397,7 @@ public class PackageUtil {
                 packageData.put("packageColor", packages.getPackageColor());
                 packageData.put("packageUniqueCode", packages.getPackageUniqueCode());
                 packageData.put("status", packages.getStatus());
+                packageData.put("isCompleted", packages.getIsCompleted());
                 JSONArray activitArray = new JSONArray();
                 for (Activities activitie : allActivities) {
                     JSONObject activityObj = new JSONObject();
@@ -436,6 +450,4 @@ public class PackageUtil {
         }
         return response;
     }
-
-    
 }

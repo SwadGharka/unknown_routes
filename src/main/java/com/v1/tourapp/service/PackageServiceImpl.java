@@ -32,4 +32,9 @@ public class PackageServiceImpl implements PackageService {
     public int updatePackageStatus(Boolean status, Long packageId) {
         return packageRepository.updatePackageStatus(status, packageId);
     }
+
+    @Override
+    public Packages getIncompletedPackage() {
+        return packageRepository.getIncompletedPackage();
+    }
 }

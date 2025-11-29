@@ -38,5 +38,10 @@
 <script>
   const BASE_URL = window.location.origin;
   const CONTEXT_PATH = "${pageContext.request.contextPath}/";
+  $(document).keydown(function (e) {
+      if (e.key === "Enter") {
+          $(".btn-login").click();
+      }
+  });
 </script>
 </html>

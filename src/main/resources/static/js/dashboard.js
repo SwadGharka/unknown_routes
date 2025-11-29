@@ -147,7 +147,7 @@ function createPackageCard(pkg) {
             </li>
         `)
         .join("");
-
+    const price = formatAmount(pkg.price);
     return `
         <div class="col-lg-4 col-md-6 package-card">
             <div class="card card-hover border-0 shadow-lg overflow-hidden">
@@ -179,15 +179,12 @@ function createPackageCard(pkg) {
 
                     <ul class="list-unstyled mb-4">${highlightItems}</ul>
 
-                    <div class="price-highlight display-5 fw-bold">₹${pkg.price}</div>
+                    <div class="price-highlight display-5 fw-bold">₹${price}</div>
                     <p class="text-muted small">${pkg.member}</p>
 
                     <div class="d-flex gap-2">
-                        <button class="btn flex-fill" style="border-color:${pkg.packageColor}"
-                                onclick="${pkg.onDetailsClick}"><spen style="color:${pkg.packageColor}">View Details</spen></button>
-
-                        <button class="btn flex-fill" style="background-color:${pkg.packageColor}"
-                                onclick="${pkg.onBookClick}"><span style="color:white">Book Now</span></button>
+                        <a class="btn flex-fill"style="border-color:${pkg.packageColor}; color:${pkg.packageColor};"href="package-details?payload=${pkg.onDetailsClick}"target="_blank">View Details</a>
+                        <button class="btn flex-fill" style="background-color:${pkg.packageColor}"onclick="${pkg.onBookClick}"><span style="color:white">Book Now</span></button>
                     </div>
                 </div>
             </div>
@@ -226,8 +223,8 @@ function getPackageCard(packages) {
             badgeText: pkg.badge || "",
             member: pkg.members,
             packageColor: pkg.packageColor,
-            onDetailsClick: `showPackageDetails('${pkg.name}')`,
-            onBookClick: `openBookingModal(event, '${pkg.name}')`
+            onDetailsClick: btoa(pkg.id),
+            onBookClick: `openBookingModal(event, '${pkg.name}', '${pkg.id}', '${pkg.travelType}')`
         });
     }).join("");
 

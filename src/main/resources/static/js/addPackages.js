@@ -7,55 +7,55 @@ async function saveStep1(formId) {
     if (!validateFieldAndShake("days")) return;
     if (!validateFieldAndShake("amount")) return;
     if (!validateFieldAndShake("members")) return;
-    if (!validateFieldAndShake("status")) return;
+    // if (!validateFieldAndShake("status")) return;
     if (!validateFieldAndShake("category")) return;
     if (!validateFieldAndShake("inclusionsForCard")) return;
+    if (!validateFieldAndShake("travelType")) return;
     let payload = getPackageStep1(formId);
     let response = await getDataByPayloadWithParentUrl("post", false, true, BASE_URL + CONTEXT_PATH + "api/save-travel-package", payload)
     if (response != null && response.status == 1) {
         showMessage("success", response.message);
-
+        $("#newPackageId").val(response.newPackageId);
         let getActivityPayload = {};
-        getActivityPayload['packageId'] = response.packageId;
+        getActivityPayload['packageId'] = response.visitedPackageId;
         let activitiesResponse = await getDataByPayloadWithParentUrl("post", false, true, BASE_URL + CONTEXT_PATH + "api/get-all-activities-by-packageId", getActivityPayload)
 
         if (activitiesResponse != null && activitiesResponse.status == 1) {
             let activityList = activitiesResponse.activityArray;
+            $("#totalDays").val(activityList.length);
             if (activityList && activityList.length > 0) {
-                $("#totalDays").val(activityList.length);
-                $("#packageId").val(response.packageId);
                 let $fields = $("#activitiesFields");
                 $fields.empty();
                 for (let i = 0; i < activityList.length; i++) {
                     let activity = activityList[i];
                     $fields.append(`
-              <div class="day-activity">
-                <h4>Day ${activity.day}</h4>
+                                    <div class="day-activity">
+                                        <h4>Day ${activity.day}</h4>
 
-                <label>Header:<span style="color: red;">*</span></label>
-                <input type="text" id="day${activity.day}_header" name="day${activity.day}_header" value="${activity.header}">
+                                        <label>Header:<span style="color: red;">*</span></label>
+                                        <input type="text" id="day${activity.day}_header" name="day${activity.day}_header" value="${activity.header}">
 
-                <label>Points:<span style="color: red;">*</span></label>
-                <textarea id="day${activity.day}_points" name="day${activity.day}_points">${activity.point}</textarea>
-              </div>
-          `);
+                                        <label>Points:<span style="color: red;">*</span></label>
+                                        <textarea id="day${activity.day}_points" name="day${activity.day}_points">${activity.point}</textarea>
+                                    </div>
+                                `);
                 }
             } else {
                 let days = $("#days").val();
                 $("#totalDays").val(days);
-                $("#packageId").val(response.packageId);
+                $("#newPackageId").val(response.newPackageId);
                 let $fields = $("#activitiesFields");
                 $fields.empty();
                 for (let i = 1; i <= days; i++) {
                     $fields.append(`
-              <div class="day-activity">
-              <h4>Day ${i}</h4>
-              <label>Header:<span style="color: red;">*</span></label>
-              <input type="text" id="day${i}_header" name="day${i}_header" placeholder="Title for Day ${i}">
-              <label>Points:<span style="color: red;">*</span></label>
-              <textarea id="day${i}_points" name="day${i}_points" placeholder="Details for Day ${i}"></textarea>
-              </div>
-          `);
+                                <div class="day-activity">
+                                <h4>Day ${i}</h4>
+                                <label>Header:<span style="color: red;">*</span></label>
+                                <input type="text" id="day${i}_header" name="day${i}_header" placeholder="Title for Day ${i}">
+                                <label>Points:<span style="color: red;">*</span></label>
+                                <textarea id="day${i}_points" name="day${i}_points" placeholder="Details for Day ${i}"></textarea>
+                                </div>
+                            `);
                 }
             }
         } else {
@@ -99,13 +99,17 @@ async function saveActivities() {
     }
 
     let payload = {};
-    payload['packageId'] = $("#packageId").val();
+    payload['packageId'] = $("#newPackageId").val();
     payload['activityarray'] = data.objArray;
     let response = await getDataByPayloadWithParentUrl("post", false, true, BASE_URL + CONTEXT_PATH + "api/save-activities", payload)
     if (response != null && response.status == 1) {
         showMessage("success", response.message);
         $("#step2").removeClass("active");
         $("#step3").addClass("active");
+        // let payload = {
+        //     'visitedPackageId' : $("#visitedPackageId").val()
+        // }
+        // const response = await getDataByPayloadWithParentUrl("POST", true, true, BASE_URL + CONTEXT_PATH + "api/get-package-additional-details", payload);
         return true;
     } else {
         showMessage("error", response.message);
@@ -129,8 +133,6 @@ function bindCategories(data) {
     });
 }
 
-
-
 function getPackageStep1(formId) {
     let request = {};
     request['packageName'] = $("#" + formId + " #name").val().trim();
@@ -146,7 +148,8 @@ function getPackageStep1(formId) {
     request['inclusionsForCard'] = $("#" + formId + " #inclusionsForCard").val();
     request['badge'] = $("#" + formId + " #offerBadge").val();
     request['packageColor'] = $("#packageColor").val();
-    request['packageId'] = $("#packageId").val();
+    request['visitedPackageId'] = $("#visitedPackageId").val();
+    request['travelType'] = $("#travelType").val()
     return request;
 }
 
@@ -157,7 +160,7 @@ async function saveAdditionalDetails() {
     }
 
     let payload = {};
-    payload['packageId'] = $("#packageId").val();
+    payload['packageId'] = $("#newPackageId").val();
     payload['additionalData'] = data.extraObj;
     let response = await getDataByPayloadWithParentUrl("post", false, true, BASE_URL + CONTEXT_PATH + "api/save-additional-details", payload)
     if (response != null && response.status == 1) {
@@ -204,7 +207,7 @@ function extraFieldsRequest() {
 
 async function getPackageDetails(){
     let payload = {
-        'packageId' : $("#packageId").val()
+        'packageId' : $("#visitedPackageId").val()
     }
     const response = await getDataByPayloadWithParentUrl("POST", true, true, BASE_URL + CONTEXT_PATH + "api/get-packages-by-id", payload);
     prefillPackageForm(response.packageData);
@@ -244,4 +247,10 @@ function prefillPackageForm(data) {
         let ids = data.categoryId.map(String); // convert to string for select2
         $("#category").val(ids).trigger("change");
     }
+
+    $("#travelType").val(data.travelType || "").trigger("change");;
+    $("#inclusion").val(data.inclusion || "");
+    $("#exclusion").val(data.exclusion || "");
+    $("#hotels").val(data.hotels || "");
+    $("#flight").val(data.flight || "");
 }

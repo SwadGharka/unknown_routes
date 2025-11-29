@@ -56,19 +56,21 @@ function renderTable(list) {
         <td style="text-align:left;width:200px;">${escapeHtml(pkg.name)}</td>
         <td style="width:160px;">${escapeHtml(pkg.destination)}</td>
         <td style="width:130px;">${categories}</td>
-        <td style="width:110px;" id="pkg_${pkg.id}">${status}</td>
-        <td style="width:150px;">${escapeHtml(pkg.code || "PKG" + (100 + i))}</td>
+        <td style="width:110px;" id="pkg_${pkg.id}">${pkg.isCompleted ? status : 'Incomplete'}</td>
+        <td style="width:150px;">${escapeHtml(pkg.packageUniqueCode)}</td>
 
-        <td style="width:200px;">
-          <button class="action-btn action-edit"
-            onclick="location.href='add-package?packageId=${pkg.id}'">Edit</button>
-            <button class="action-btn action-deactivate" id="statusButton_${pkg.id}" onclick="toggleStatus('${pkg.id}')">${pkg.status ? 'Inactive' : 'Active'}</button>
-        </td>
+        <td style="width:200px; text-align: center">
+          <button class="action-btn action-edit" ${!pkg.isCompleted ? 'style="width: 68%;background: rgb(253 13 13 / 48%);color: white;"' : ''}
+            onclick="location.href='add-package?packageId=${pkg.id}'">${pkg.isCompleted ? 'Copy' : 'Complete'}</button>`;
+            if(pkg.isCompleted){
+				      html += `<button class="action-btn action-deactivate" style="margin-left: 21px;" id="statusButton_${pkg.id}" onclick="toggleStatus('${pkg.id}')">${pkg.status ? 'Inactive' : 'Active'}</button>`;
+            }
+html +=`</td>
       </tr>
     `;
 	});
 
-	document.getElementById("packageTableBody").innerHTML = html;
+  $("#packageTableBody").html(html)
 }
 
 function escapeHtml(s) {

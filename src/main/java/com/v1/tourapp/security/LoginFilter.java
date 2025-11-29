@@ -41,11 +41,14 @@ public class LoginFilter implements Filter {
 
         List<String> publicUrls = Arrays.asList(
                 req.getContextPath()+"/dashboard/login",
+                req.getContextPath()+"/dashboard/package-details",
                 req.getContextPath()+"/api/login",
                 req.getContextPath()+"/dashboard/home",
                 req.getContextPath()+"/static",
                 req.getContextPath()+"/api/get-all-categories",
-                req.getContextPath()+"/api/get-all-packages"
+                req.getContextPath()+"/api/get-all-packages",
+                req.getContextPath()+"/api/save-package-inquiry",
+                req.getContextPath()+"/api/get-all-activities-by-packageId"
         );
 
         boolean isPublic = publicUrls.stream().anyMatch(path::startsWith);

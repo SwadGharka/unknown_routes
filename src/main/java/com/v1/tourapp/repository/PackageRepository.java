@@ -18,4 +18,7 @@ public interface PackageRepository extends JpaRepository<Packages, Long> {
 	@Transactional
     @Query(value = "UPDATE PACKAGES SET STATUS = ?1 WHERE ID = ?2 ", nativeQuery = true)
     int updatePackageStatus(Boolean status, Long packageId);
+
+    @Query(value = "SELECT * FROM PACKAGES WHERE IS_COMPLETED = FALSE ORDER BY ID DESC LIMIT 0,1 ", nativeQuery = true)
+    Packages getIncompletedPackage();
 }
