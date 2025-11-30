@@ -10,14 +10,14 @@
 
         <!-- Lightbox (Gallery) -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/packageDetails.css">
         <script src="${pageContext.request.contextPath}/static/js/packageDetails.js"></script>
     </head>
     <body>
         <%@ include file="common/commonScript.jsp" %>
-        <div class="package-hero"
-            style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4');">
+        <div class="package-hero" id="imageUrl">
             <div class="hero-content">
                 <h1 class="package-title" id="packageName"></h1>
                 <p class="package-location" id="daysAndDestination"></p>
@@ -29,20 +29,34 @@
                 <!-- LEFT CONTENT -->
                 <div class="col-lg-8">
                     <!-- Gallery -->
+                    <!-- Gallery (replace existing) -->
                     <div class="glass-box">
-                        <h3>Photo Gallery</h3>
-                        <div class="gallery-grid">
-                            <a href="https://picsum.photos/900/600?random=1" data-lightbox="g">
-                                <img src="https://picsum.photos/300/200?1" class="gallery-img">
-                            </a>
-                            <a href="https://picsum.photos/900/600?random=2" data-lightbox="g">
-                                <img src="https://picsum.photos/300/200?2" class="gallery-img">
-                            </a>
-                            <a href="https://picsum.photos/900/600?random=3" data-lightbox="g">
-                                <img src="https://picsum.photos/300/200?3" class="gallery-img">
-                            </a>
+                    <h3>Photo Gallery</h3>
+
+                    <!-- Thumb strip -->
+                    <button class="thumb-side-btn left" id="thumbPrev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></button>
+                    <div class="thumb-strip" id="thumbStrip"></div>
+                    <button class="thumb-side-btn right" id="thumbNext"><span class="carousel-control-next-icon" aria-hidden="true"></span></button>
+                    </div>
+
+                    <!-- Modal with Carousel (keep near page bottom) -->
+                    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                        <div class="modal-content" style="background:transparent;border:none;">
+                        <div id="modalCarousel" class="carousel slide" data-bs-ride="false">
+                            <div class="carousel-inner" id="modalCarouselImages"></div>
+
+                            <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </button>
+                        </div>
                         </div>
                     </div>
+                    </div>
+
                     <input type="hidden" value="${packageId}" id="packageId">
                     <input type="hidden" value="" id="travelType">
                     <!-- Major Attractions -->
@@ -88,7 +102,7 @@
                     <div class="sidebar">
                         <div class="side-card">
                             <h4>Starting Price</h4>
-                            <div class="side-price" id="price">₹54,999</div>
+                            <div class="side-price" id="price"></div>
 
                             <hr>
 
@@ -106,14 +120,37 @@
 
             </div>
         </div>
-        <div class="float-book-btn" onclick="bookNow()">Book Now
+        <div class="float-book-btn" onclick="bookNow()">Book Now</div>
+        <!-- Image Preview Modal -->
+        <div class="modal fade" id="imageModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content" style="background: transparent; border: none;">
+
+                <div id="modalCarousel" class="carousel slide">
+                    <div class="carousel-inner" id="modalCarouselImages"></div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+
+                </div>
+            </div>
         </div>
+    <%@ include file="/WEB-INF/views/bookingModal.jsp" %>
+    <jsp:include page="/WEB-INF/views/footer.jsp" />
     </body>
     <script>
         $(document).ready(async function () {
             await getPackageDetails();
+            // loadCarousels();
+             buildGallery();
+
+                $('#thumbPrev').on('click', () => thumbScroll(-260));
+                $('#thumbNext').on('click', () => thumbScroll(260));
         });
     </script>
-    <%@ include file="/WEB-INF/views/bookingModal.jsp" %>
-    <jsp:include page="/WEB-INF/views/footer.jsp" />
 </html>

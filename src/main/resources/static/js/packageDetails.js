@@ -1,9 +1,3 @@
-function toTitleCase(str){
-    return str.replace(/\w\S*/g,
-         txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-    );
-}
-
 function formatAmount(amount) {
     let x = amount.toString();
     let lastThree = x.substring(x.length - 3);
@@ -27,6 +21,14 @@ async function getPackageDetails(){
         showLoader("", false);
         // prefillPackageForm(response.packageData);
         let data = response.packageData;
+        let cleanUrl = data.imageUrl.split("?")[0];
+
+        $("#imageUrl").css({
+            "background-image": "url('" + cleanUrl + "')",
+            "background-size": "cover",
+            "background-position": "center"
+        });
+
         $("#title").text("Package Details | "+data.name);
         $("#packageName").text(data.name);
         $("#daysAndDestination").text(data.totalDays+ " Days  • "+data.destination);
@@ -69,10 +71,11 @@ async function getPackageDetails(){
             let activityList = activitiesResponse.activityArray;
             let activityHtml = '';
             activityList.forEach(item => {
+                let header = toTitleCase(item.header);
                 activityHtml += `
                     <div class="accordion-item">
                         <div class="accordion-header">
-                            Day ${item.day} – ${item.header}
+                            ${header}
                             <span>+</span>
                         </div>
 
@@ -111,3 +114,84 @@ function bookNow(event){
     let packageId = $("#packageId").val();
     openBookingModal(event, name, packageId, travelType)
 }
+
+// Dynamic images (backend se aayengi)
+let galleryImages = [
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
+    "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2",
+    "https://images.unsplash.com/photo-1544735716-392fe2489ffa",
+    "https://images.unsplash.com/photo-1570168007204-dfb528c6958f",
+    "https://images.unsplash.com/photo-1582972236019-ea4af5ffe587"
+];
+
+// --- Build Carousel Slides ---
+function loadCarousels() {
+
+    // Normal page carousel
+    let html1 = "";
+    galleryImages.forEach((img, i) => {
+        html1 += `
+            <div class="carousel-item ${i === 0 ? 'active' : ''}">
+                <img src="${img}" class="d-block w-100 gallery-img" style="height:220px; object-fit:cover; border-radius:14px; cursor:pointer;"
+                     onclick="openImageModal(${i})">
+            </div>
+        `;
+    });
+    $("#carouselImages").html(html1);
+
+    // Modal carousel
+    let html2 = "";
+    galleryImages.forEach((img, i) => {
+        html2 += `
+            <div class="carousel-item ${i === 0 ? 'active' : ''}">
+                <img src="${img}" class="d-block w-100" style="height:450px; object-fit:cover; border-radius:18px;">
+            </div>
+        `;
+    });
+    $("#modalCarouselImages").html(html2);
+}
+
+function buildGallery() {
+  const $thumbStrip = $("#thumbStrip");
+  const $modalInner = $("#modalCarouselImages");
+  $thumbStrip.empty();
+  $modalInner.empty();
+
+  galleryImages.forEach((src, i) => {
+    // thumbnails
+    const t = $(`<img tabindex="0" class="thumb" src="${src}" alt="img-${i}">`);
+    t.on("click keypress", e => {
+      if (e.type === "click" || (e.type === "keypress" && (e.key === "Enter" || e.key === " "))) {
+        openImageModal(i);
+      }
+    });
+    $thumbStrip.append(t);
+
+    // modal slides
+    const slide = $(`
+      <div class="carousel-item ${i === 0 ? 'active' : ''}">
+        <img src="${src}" alt="modal-${i}">
+      </div>
+    `);
+    $modalInner.append(slide);
+  });
+}
+
+// open modal at index using Bootstrap 5 API
+function openImageModal(index) {
+  const modalEl = document.getElementById('imageModal');
+  const modal = new bootstrap.Modal(modalEl, { backdrop: true });
+  modal.show();
+
+  // init carousel and jump to slide
+  const modalCarouselEl = document.getElementById('modalCarousel');
+  const carousel = new bootstrap.Carousel(modalCarouselEl, { interval: false, ride: false });
+  carousel.to(index);
+}
+
+// thumb scroll controls
+function thumbScroll(delta) {
+  const el = document.getElementById('thumbStrip');
+  el.scrollBy({ left: delta, behavior: 'smooth' });
+}
+

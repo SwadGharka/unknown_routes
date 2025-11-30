@@ -14,8 +14,6 @@ body {
     display: flex;
     align-items: flex-end;
     padding: 50px;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
 }
 
 .package-hero::after {
@@ -114,10 +112,7 @@ body {
     height: 0;
     overflow: hidden;
     padding: 0 16px;
-    transition: none;
-    /* jQuery animation use hoga */
 }
-
 
 /* TWO BOXES SIDE-BY-SIDE */
 .dual-box {
@@ -174,3 +169,155 @@ body {
         display: block;
     }
 }
+
+/* 🚀 MOBILE FIX – FULL WIDTH CONTENT */
+@media (max-width: 768px) {
+
+    /* Remove Bootstrap padding */
+    .container,
+    .container-fluid {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+    }
+
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    [class*="col-"] {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+
+    /* Larger content boxes */
+    .glass-box {
+        padding: 18px !important;
+        border-radius: 14px !important;
+    }
+
+    /* Adjust gallery */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    .gallery-img {
+        height: 150px !important;
+    }
+
+    /* Reduce hero padding */
+    .package-hero {
+        padding: 25px !important;
+        height: 360px !important;
+    }
+
+    .package-title {
+        font-size: 30px;
+    }
+}
+
+/* Make carousel arrows visible over glass box */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    /* filter: invert(0); */
+}
+
+.thumb-side-btn{
+    filter: invert(1);
+}
+
+/* Remove modal padding */
+.modal-content {
+   box-shadow: none;
+}
+/* thumbnail strip */
+.thumb-strip {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 8px 2px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.thumb-strip::-webkit-scrollbar { height: 8px; }
+
+.thumb {
+  flex: 0 0 220px;        /* fixed width */
+  height: 140px;          /* fixed height */
+  border-radius: 12px;
+  object-fit: cover;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  transition: transform .18s ease;
+}
+.thumb:active, .thumb:focus, .thumb:hover { transform: translateY(-4px); }
+
+/* Modal large image */
+#modalCarousel .carousel-item img {
+  width: 100%;
+  height: 60vh;           /* large view height */
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* thumb buttons */
+.thumb-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(45deg, rgba(13,110,253,0.2), rgba(111,66,193,0.2));
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Wrap with relative */
+.thumb-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Left & right control buttons */
+.thumb-side-btn {
+    position: absolute;
+    top: 60%;
+    transform: translateY(-50%);
+    background: rgb(0, 0, 0);
+    border: none;
+    padding: 5px 10px;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 5;
+    transition: 0.25s;
+}
+
+.thumb-side-btn:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Exact positions */
+.thumb-side-btn.left  { 
+    left: 20px; 
+    color: black;
+}
+.thumb-side-btn.right { right: 16px; }
+
+/* Spacing inside strip */
+.thumb-strip {
+    flex: 1;
+    margin-inline: 63px;
+}
+
+.modal-backdrop.show {
+    background: rgb(0, 0, 0) !important;   /* Dark background */
+    backdrop-filter: blur(5px) !important;
+}
+
+.modal-backdrop {
+    transition: all 0.3s ease;
+}
+
