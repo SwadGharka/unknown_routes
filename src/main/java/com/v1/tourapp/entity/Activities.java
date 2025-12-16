@@ -25,9 +25,9 @@ import lombok.Setter;
 @Table(name = "activities")
 public class Activities {
 
-    
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activities_seq")
+    @SequenceGenerator(name = "activities_seq", sequenceName = "activities_seq", allocationSize = 1)
     @Column(name = "ID")
     private Long id;
 
