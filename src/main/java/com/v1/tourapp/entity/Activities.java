@@ -28,18 +28,18 @@ public class Activities {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activities_seq")
     @SequenceGenerator(name = "activities_seq", sequenceName = "activities_seq", allocationSize = 1)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "package_id")
     private Long packageId;
 
-    @Column(name = "DAY")
+    @Column(name = "day")
     private Integer day;
     
-    @Column(name = "HEADER")
+    @Column(name = "header")
     private String header;
 
-    @Column(name = "POINTS")
+    @Column(name = "points")
     private String points;
 }
