@@ -40,19 +40,22 @@ public class LoginFilter implements Filter {
         String path = req.getRequestURI();
 
         List<String> publicUrls = Arrays.asList(
-                req.getContextPath()+"/dashboard/login",
-                req.getContextPath()+"/dashboard/package-details",
-                req.getContextPath()+"/api/login",
-                req.getContextPath()+"/dashboard/home",
-                req.getContextPath()+"/static",
-                req.getContextPath()+"/api/get-all-categories",
-                req.getContextPath()+"/api/get-all-packages",
-                req.getContextPath()+"/api/save-package-inquiry",
-                req.getContextPath()+"/api/get-all-activities-by-packageId",
-                req.getContextPath()+"/api/get-packages-by-id"
+                "/dashboard/login",
+                    "/dashboard/package-details",
+                    "/api/login",
+                    "/dashboard/home",
+                    "/static",
+                    "/api/get-all-categories",
+                    "/api/get-all-packages",
+                    "/api/save-package-inquiry",
+                    "/api/get-all-activities-by-packageId",
+                    "/api/get-packages-by-id"
         );
-
-        boolean isPublic = publicUrls.stream().anyMatch(path::startsWith);
+        if (path.contains("WEB-INF") || path.contains("/static") || path.endsWith(".jsp")) {
+            chain.doFilter(request, response);
+            return;
+        }
+        boolean isPublic = publicUrls.stream().anyMatch(path::contains);
 
         if (!isLoggedIn && !isPublic) {
             res.sendRedirect(req.getContextPath() + "/dashboard/login");
