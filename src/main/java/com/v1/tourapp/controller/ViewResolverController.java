@@ -92,7 +92,7 @@ public class ViewResolverController {
         if(sessionUtil.getSession().getAttribute("userName") != null){
             return "redirect:/dashboard/home";
         }
-        return "login";
+        return "loginPage";
     }
     
     @GetMapping("/logout")
