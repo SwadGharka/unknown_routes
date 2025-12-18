@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -22,24 +21,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "activities")
+@Table(name = "`ACTIVITIES`")
 public class Activities {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activities_seq")
-    @SequenceGenerator(name = "activities_seq", sequenceName = "activities_seq", allocationSize = 1)
-    @Column(name = "id")
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "`ID`")
+	private Long id;
 
-    @Column(name = "package_id")
+    @Column(name = "`PACKAGE_ID`")
     private Long packageId;
 
-    @Column(name = "day")
+    @Column(name = "`day`")
     private Integer day;
     
-    @Column(name = "header")
+    @Column(name = "`header`")
     private String header;
 
-    @Column(name = "points")
+    @Column(name = "`points`")
     private String points;
+
 }
