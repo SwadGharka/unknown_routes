@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OOO Trips Login</title>
+  <title>${title}</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/login.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="${pageContext.request.contextPath}/static/js/common.js"></script>

@@ -35,7 +35,7 @@ public class ViewResolverController {
     
     @GetMapping("/home")
     public String dashboard(Model model) {
-        baseController.updateModel(model);
+        baseController.updateModel(model, "OOO Trips - Out Of Office");
         return "dashboard";
     }
     
@@ -51,7 +51,7 @@ public class ViewResolverController {
             return "redirect:/dashboard/login";
         }
         model.addAttribute("packageId", packageId);
-		baseController.updateModel(model);
+		baseController.updateModel(model, "Add Package");
 		return "addPackage";
 	}
     
@@ -61,19 +61,19 @@ public class ViewResolverController {
         if(sessionUtil.getSession().getAttribute("userName") == null){
             return "redirect:/dashboard/login";
         }
-        baseController.updateModel(model);
+        baseController.updateModel(model, "Add Category");
         return "addCategory";
     }
 	
 	@GetMapping("/car-rental")
     public String carRentalDashboard(Model model) {
-        baseController.updateModel(model);
+        baseController.updateModel(model, "Car Rental");
         return "carRentalHome";
     }
 	
 	@GetMapping("/addVehicle")
     public String addCarRental(Model model) {
-        baseController.updateModel(model);
+        baseController.updateModel(model, "Add Vehical");
         return "addVehicle";
 	}
 	
@@ -82,13 +82,14 @@ public class ViewResolverController {
         if(sessionUtil.getSession().getAttribute("userName") == null){
             return "redirect:/dashboard/login";
         }
-        baseController.updateModel(model);
+        baseController.updateModel(model, "Package List");
         return "packageList";
     }
 	
 	@GetMapping("/login")
     public String login(Model model) {
-        baseController.updateModel(model);
+        model.addAttribute("title", "Login");
+        baseController.updateModel(model, "Login");
         if(sessionUtil.getSession().getAttribute("userName") != null){
             return "redirect:/dashboard/home";
         }

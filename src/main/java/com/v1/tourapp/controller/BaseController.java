@@ -27,4 +27,10 @@ public class BaseController {
         model.addAttribute("PATH_FOLDER_CSS", sessionUtil.getBaseUrlWithContextPath()+PATH_FOLDER_CSS);
         return model;
     }
+
+    public Model updateModel(Model model, String title){
+        updateModel(model);
+        model.addAttribute("title", title);
+        return model;
+    }
 }
