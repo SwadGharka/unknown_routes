@@ -2,13 +2,14 @@ package com.v1.tourapp.repository;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.v1.tourapp.entity.PackageAndCategoryMapping;
+
+import jakarta.transaction.Transactional;
 
 public interface PackageAndCategoryMappingRepository extends JpaRepository<PackageAndCategoryMapping, Long>{
     

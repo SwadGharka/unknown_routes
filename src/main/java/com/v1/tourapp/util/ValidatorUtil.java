@@ -28,9 +28,6 @@ public class ValidatorUtil {
 
     }
     public static Long longvalue(Object value) {
-        if(value instanceof String){
-            String stringvalue = value.toString();
-        }
         if ((value.equals("") || value == "" ||value == "0" || value == null || value.toString().equalsIgnoreCase("undefined") || value.toString().equalsIgnoreCase("null"))) {
             return 0l;
         }

@@ -1,14 +1,12 @@
 package com.v1.tourapp.util;
 
-import javax.servlet.http.HttpSession;
-
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.v1.tourapp.entity.User;
 import com.v1.tourapp.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -1,6 +1,5 @@
 package com.v1.tourapp.controller;
 
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.v1.tourapp.util.PackageUtil;
 import com.v1.tourapp.util.SessionUtil;
 import com.v1.tourapp.util.ValidatorUtil;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/dashboard")
