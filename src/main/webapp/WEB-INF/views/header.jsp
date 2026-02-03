@@ -69,12 +69,6 @@
           <a class="nav-link fw-semibold text-white" href="package-list">Package List</a>
         </li>
         <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" target="_blank" href="car-rental">Rent Cars</a>
-        </li>
-        <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" target="_blank" href="addVehicle">Add Vehicle</a>
-        </li>
-        <li class="nav-item" style="margin-left: 20px;">
           <a class="nav-link fw-semibold text-white" href="logout">Log out</a>
         </li>
       </ul>

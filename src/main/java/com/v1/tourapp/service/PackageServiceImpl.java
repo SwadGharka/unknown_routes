@@ -4,14 +4,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.v1.tourapp.dao.PackageDao;
 import com.v1.tourapp.entity.Packages;
-import com.v1.tourapp.repository.PackageRepository;
 
 @Service
 public class PackageServiceImpl implements PackageService {
 
     @Autowired
-    PackageRepository packageRepository;
+    PackageDao packageRepository;
 
     @Override
     public Packages save(Packages packages){

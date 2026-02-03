@@ -1,4 +1,4 @@
-package com.v1.tourapp.repository;
+package com.v1.tourapp.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.v1.tourapp.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserDao extends JpaRepository<User, Long>{
 
     @Query(value = "SELECT * FROM USER WHERE USER_NAME = ?1",nativeQuery = true)
     User getUserByUserName(String userName);

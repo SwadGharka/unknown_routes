@@ -1,4 +1,4 @@
-package com.v1.tourapp.repository;
+package com.v1.tourapp.dao;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +10,7 @@ import com.v1.tourapp.entity.Packages;
 import jakarta.transaction.Transactional;
 
 @Repository
-public interface PackageRepository extends JpaRepository<Packages, Long> {
+public interface PackageDao extends JpaRepository<Packages, Long> {
 
     @Query(value = "select * from packages where status in (?1) ", nativeQuery = true)
     List<Packages> getAllPackages(List<Boolean> status);

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.v1.tourapp.util.PackageUtil;
 import com.v1.tourapp.util.SessionUtil;
 import com.v1.tourapp.util.ValidatorUtil;
@@ -15,8 +16,8 @@ import com.v1.tourapp.util.ValidatorUtil;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/dashboard")
 @CrossOrigin
+@RequestMapping(value = {"","/dashboard", "/dashboard/"})
 public class ViewResolverController {
 
     @Autowired
@@ -28,25 +29,25 @@ public class ViewResolverController {
     @Autowired
     PackageUtil packageUtil;
     
-    @GetMapping(value={"","/"})
+    @GetMapping(value={"", "/"})
     public String index(Model model) {
         baseController.updateModel(model);
-        return "redirect:/dashboard/login";
+        return "redirect:/dashboard/home";
     }
     
-    @GetMapping("/home")
+    @GetMapping(value={"home"})
     public String dashboard(Model model) {
         baseController.updateModel(model, "OOO Trips - Out Of Office");
         return "dashboard";
     }
     
-    @GetMapping("/home-copy")
+    @GetMapping("home-copy")
     public String copyDashboard(Model model) {
         baseController.updateModel(model);
         return "dashboardCopy";
     }
     
-    @GetMapping("/add-package")
+    @GetMapping("add-package")
 	public String addPackage(Model model, @RequestParam("packageId") @Nullable Integer  packageId) {
         if(sessionUtil.getSession().getAttribute("userName") == null){
             return "redirect:/dashboard/login";
@@ -57,7 +58,7 @@ public class ViewResolverController {
 	}
     
     
-	@GetMapping("/add-category")
+	@GetMapping("add-category")
     public String showAddCategoryPage(Model model) {
         if(sessionUtil.getSession().getAttribute("userName") == null){
             return "redirect:/dashboard/login";
@@ -66,19 +67,13 @@ public class ViewResolverController {
         return "addCategory";
     }
 	
-	@GetMapping("/car-rental")
-    public String carRentalDashboard(Model model) {
-        baseController.updateModel(model, "Car Rental");
-        return "carRentalHome";
-    }
-	
-	@GetMapping("/addVehicle")
+	@GetMapping("addVehicle")
     public String addCarRental(Model model) {
         baseController.updateModel(model, "Add Vehical");
         return "addVehicle";
 	}
 	
-	@GetMapping("/package-list")
+	@GetMapping("package-list")
     public String packageList(Model model) {
         if(sessionUtil.getSession().getAttribute("userName") == null){
             return "redirect:/dashboard/login";
@@ -87,7 +82,7 @@ public class ViewResolverController {
         return "packageList";
     }
 	
-	@GetMapping("/login")
+	@GetMapping("login")
     public String login(Model model) {
         model.addAttribute("title", "Login");
         baseController.updateModel(model, "Login");
@@ -97,17 +92,30 @@ public class ViewResolverController {
         return "login";
     }
     
-    @GetMapping("/logout")
+    @GetMapping("logout")
 	public String userLogOut(HttpSession session) {
 		session.invalidate();
         sessionUtil.getSession().setAttribute("userName", null);
         return "redirect:/dashboard/home";
 	}
 
-    @GetMapping("/package-details")
+    @GetMapping("package-details")
     public String getPackageDetails(@RequestParam("payload") String payload, Model model) {
         model.addAttribute("packageId", ValidatorUtil.payloadDecode(payload));
         return "packageDetails";
+    }
+
+    @GetMapping("blog-list")
+    public String getBlogList(Model model) {
+        // model.addAttribute("packageId", ValidatorUtil.payloadDecode(payload));
+        return "blogList";
+    }
+
+    @GetMapping("new-blog")
+    public String newBlogForm(Model model) {
+        model.addAttribute("title", "Add New Blog");
+        // model.addAttribute("blogPost", new Blog());
+        return "blog/blogEditor";
     }
 
 }

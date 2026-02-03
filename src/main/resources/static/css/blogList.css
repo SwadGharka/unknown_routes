@@ -1,0 +1,46 @@
+.blog-container {
+  padding-top: 90px;
+  padding-bottom: 50px;
+}
+
+.section-title {
+  background: linear-gradient(45deg, rgba(13,110,253,0.8), rgba(111,66,193,0.8));
+  color: white;
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 12px;
+  margin-bottom: 35px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.blog-card {
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+}
+
+.blog-img {
+  width: 100%;
+  height: 200px;
+  border-radius: 15px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.readBtn {
+  margin-top: 10px;
+  padding: 7px 25px;
+  border: none;
+  background: linear-gradient(45deg, rgba(13,110,253,0.9), rgba(111,66,193,0.9));
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+}

@@ -2,15 +2,17 @@ package com.v1.tourapp.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.v1.tourapp.dao.PackageAndCategoryMappingDao;
 import com.v1.tourapp.entity.PackageAndCategoryMapping;
-import com.v1.tourapp.repository.PackageAndCategoryMappingRepository;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class PackageAndCategoryMappingServiceImpl implements PackageAndCategoryMappingService{
     
     @Autowired
-    PackageAndCategoryMappingRepository packageAndCategoryMappingRepository;
+    PackageAndCategoryMappingDao packageAndCategoryMappingRepository;
 
     @Override
     public PackageAndCategoryMapping save(PackageAndCategoryMapping packageAndCategoryMapping){

@@ -1,4 +1,4 @@
-package com.v1.tourapp.repository;
+package com.v1.tourapp.dao;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.v1.tourapp.entity.Category;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface CategoryDao extends JpaRepository<Category, Long> {
     
     @Query(value="SELECT ID, NAME FROM CATEGORY WHERE STATUS = TRUE;", nativeQuery = true)
     List<Object[]>getAllCategoriesNameAndIds();

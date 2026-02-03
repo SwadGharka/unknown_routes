@@ -41,10 +41,15 @@ public class LoginFilter implements Filter {
         String path = req.getRequestURI();
 
         List<String> publicUrls = Arrays.asList(
+                req.getContextPath()+"",
+                req.getContextPath()+"/",
+                req.getContextPath()+"/dashboard",
+                req.getContextPath()+"/dashboard/",
                 req.getContextPath()+"/dashboard/login",
                 req.getContextPath()+"/dashboard/package-details",
                 req.getContextPath()+"/api/login",
                 req.getContextPath()+"/dashboard/home",
+                req.getContextPath()+"/dashboard/blog-list",
                 req.getContextPath()+"/static",
                 req.getContextPath()+"/api/get-all-categories",
                 req.getContextPath()+"/api/get-all-packages",

@@ -1,4 +1,4 @@
-package com.v1.tourapp.repository;
+package com.v1.tourapp.dao;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import com.v1.tourapp.entity.PackageAndCategoryMapping;
 
 import jakarta.transaction.Transactional;
 
-public interface PackageAndCategoryMappingRepository extends JpaRepository<PackageAndCategoryMapping, Long>{
+public interface PackageAndCategoryMappingDao extends JpaRepository<PackageAndCategoryMapping, Long>{
     
     @Query(value = "SELECT C.ID, C.NAME FROM PACKAGES_CATEGORY_MAPPING PCM LEFT JOIN CATEGORY C ON C.ID = PCM.CATEGORY_ID WHERE PACKAGE_ID = ?1 AND ACTIVE = 'Y' ", nativeQuery = true)
     List<Object[]> getAllCategoryIdsByPackageId(Long packageId);

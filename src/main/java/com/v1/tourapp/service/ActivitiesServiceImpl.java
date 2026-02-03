@@ -5,15 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.v1.tourapp.dao.ActivitiesDao;
 import com.v1.tourapp.entity.Activities;
-import com.v1.tourapp.repository.ActivitiesRepository;
 
 @Service
 public class ActivitiesServiceImpl implements ActivitiesService {
 
 
     @Autowired
-    ActivitiesRepository activitiesRepository;
+    ActivitiesDao activitiesRepository;
 
     @Override
     public List<Activities> saveAll(List<Activities> activities){
