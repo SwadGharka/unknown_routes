@@ -48,7 +48,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav ms-auto align-items-lg-center" style="list-style: none; margin: 0; padding: 0;">
         <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="home">Home</a>
+          <a class="nav-link fw-semibold text-white" href="${pageContext.request.contextPath}/dashboard/home">Home</a>
         </li>
         <%--<li class="nav-item" style="margin-left: 20px;">
           <a class="nav-link fw-semibold text-white" href="#">Why Us</a>
@@ -60,16 +60,22 @@
           <a class="nav-link fw-semibold text-white" href="#">Contact</a>
         </li>--%>
         <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="add-category">Add Category</a>
+          <a class="nav-link fw-semibold text-white" href="${pageContext.request.contextPath}/dashboard/add-category">Add Category</a>
         </li>
         <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="add-package">Add Package</a>
+          <a class="nav-link fw-semibold text-white" href="${pageContext.request.contextPath}/dashboard/add-package">Add Package</a>
         </li>
         <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="package-list">Package List</a>
+          <a class="nav-link fw-semibold text-white" href="${pageContext.request.contextPath}/dashboard/package-list">Package List</a>
         </li>
         <li class="nav-item" style="margin-left: 20px;">
-          <a class="nav-link fw-semibold text-white" href="logout">Log out</a>
+          <a class="nav-link fw-semibold text-white" href="${pageContext.request.contextPath}/dashboard/new-blog">Add Blog</a>
+        </li>
+        <li class="nav-item" style="margin-left: 20px;">
+          <a class="nav-link fw-semibold text-white" href="${pageContext.request.contextPath}/dashboard/blog-list">Blog List</a>
+        </li>
+        <li class="nav-item" style="margin-left: 20px;">
+          <a class="nav-link fw-semibold text-white" href="${pageContext.request.contextPath}/dashboard/logout">Log out</a>
         </li>
       </ul>
     </div>

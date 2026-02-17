@@ -97,11 +97,18 @@ async function getDataByPayloadWithParentUrl(method, globalflag, isMessageShow, 
             resolve(data)
           },
           error: function (xhr, status, e) {
-                if(isMessageShow){
-                    showMessage('error','request failed')
-                }
-                reject(e);
-            }
+              if (xhr.status === 401) {
+                  window.location.href = "/dashboard/login";
+                  return;
+              }
+
+              if(isMessageShow){
+                  showMessage('error','request failed')
+              }
+
+              reject(e);
+          }
+
       });
   });
 }

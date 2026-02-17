@@ -2,7 +2,9 @@ package com.v1.tourapp.security;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -38,32 +40,56 @@ public class LoginFilter implements Filter {
         
         boolean isLoggedIn = (session != null && session.getAttribute("userName") != null);
 
+        String contextPath = req.getContextPath();
         String path = req.getRequestURI();
+        String appPath = path.startsWith(contextPath) ? path.substring(contextPath.length()) : path;
 
-        List<String> publicUrls = Arrays.asList(
-                req.getContextPath()+"",
-                req.getContextPath()+"/",
-                req.getContextPath()+"/dashboard",
-                req.getContextPath()+"/dashboard/",
-                req.getContextPath()+"/dashboard/login",
-                req.getContextPath()+"/dashboard/package-details",
-                req.getContextPath()+"/api/login",
-                req.getContextPath()+"/dashboard/home",
-                req.getContextPath()+"/dashboard/blog-list",
-                req.getContextPath()+"/static",
-                req.getContextPath()+"/api/get-all-categories",
-                req.getContextPath()+"/api/get-all-packages",
-                req.getContextPath()+"/api/save-package-inquiry",
-                req.getContextPath()+"/api/get-all-activities-by-packageId",
-                req.getContextPath()+"/api/get-packages-by-id",
-                req.getContextPath()+"/dashboard/package-list"
+        Set<String> publicExactUrls = new HashSet<>(Arrays.asList(
+                "/dashboard/login",
+                "/dashboard/package-details",
+                "/api/login",
+                "/dashboard/home",
+                "/dashboard/error",
+                "/api/get-all-categories",
+                "/api/get-all-packages",
+                "/api/save-package-inquiry",
+                "/api/get-all-activities-by-packageId",
+                "/api/get-packages-by-id"
+        ));
+
+        List<String> publicPrefixes = Arrays.asList(
+                "/dashboard/view-blog/",
+                "/attachments/",
+                "/static/"
         );
 
-        boolean isPublic = publicUrls.stream().anyMatch(path::startsWith);
-
+        boolean isPublic = publicExactUrls.contains(appPath)
+                || publicPrefixes.stream().anyMatch(appPath::startsWith);
+        // if(!isPublic){
+        //     res.sendRedirect(req.getContextPath() + "/dashboard/error");
+        //     return;
+        // }
         if (!isLoggedIn && !isPublic) {
-            res.sendRedirect(req.getContextPath() + "/dashboard/login");
-            return;
+
+            String ajaxHeader = req.getHeader("X-Requested-With");
+            boolean isAjax = "XMLHttpRequest".equals(ajaxHeader);
+
+            if (isAjax) {
+
+                res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                res.setContentType("application/json");
+                res.setCharacterEncoding("UTF-8");
+
+                res.getWriter().write(
+                    "{\"status\":401,\"message\":\"Session Expired\"}"
+                );
+                return;
+
+            } else {
+
+                res.sendRedirect(req.getContextPath() + "/dashboard/login");
+                return;
+            }
         }
         chain.doFilter(request, response);
     }

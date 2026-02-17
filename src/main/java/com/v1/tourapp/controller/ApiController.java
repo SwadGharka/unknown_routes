@@ -1,13 +1,19 @@
 package com.v1.tourapp.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.v1.tourapp.dto.Payload;
+import com.v1.tourapp.util.BlogUtil;
 import com.v1.tourapp.util.ContactInquiryUtil;
 import com.v1.tourapp.util.PackageUtil;
 import com.v1.tourapp.util.UserUtil;
@@ -32,6 +38,9 @@ public class ApiController {
     
     @Autowired
     ContactInquiryUtil contactInquiryUtil;
+    
+    @Autowired
+    BlogUtil blogUtil;
 
     @PostMapping("/save-category")
     public ResponseEntity<String> saveCategory(@RequestBody Payload payload) {
@@ -108,5 +117,33 @@ public class ApiController {
 	public ResponseEntity<String> saveInquiry(@RequestBody Payload payload) {
 		return ResponseEntity.ok().body(contactInquiryUtil.saveInquiry(payload.getPayload()).toString());
 	}
+    
+	@PostMapping("/save-blog")
+	public ResponseEntity<String> saveBlog(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(blogUtil.saveBlog(payload.getPayload()).toString());
+	}
+	@PostMapping("/slug-check")
+	public ResponseEntity<String> checkSlugIsExist(@RequestBody Payload payload) {
+		return ResponseEntity.ok().body(blogUtil.checkSlugIsExist(payload.getPayload()).toString());
+	}
+	
+	@PostMapping("/get-all-blog-list")
+	public ResponseEntity<String> getAllBlogList() {
+		return ResponseEntity.ok().body(blogUtil.getAllBlogList().toString());
+	}
 
+	@PostMapping("/update-blog-image")
+	public ResponseEntity<String> updateBlogImage(@RequestParam("file") MultipartFile file) throws IOException {
+		return ResponseEntity.ok().body(blogUtil.updateBlogImage(file).toString());
+	}
+
+	@PostMapping("/update-blog-status")
+	public ResponseEntity<String> updateBlogStatus(@RequestBody Payload payload) throws IOException {
+		return ResponseEntity.ok().body(blogUtil.updateBlogStatus(payload.getPayload()).toString());
+	}
+
+	@PostMapping("/get-blog-by-id")
+	public ResponseEntity<String> getBlogById(@RequestBody Payload payload) throws IOException {
+		return ResponseEntity.ok().body(blogUtil.getBlogById(payload.getPayload()).toString());
+	}
 }

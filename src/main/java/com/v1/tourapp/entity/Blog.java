@@ -1,6 +1,7 @@
 package com.v1.tourapp.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,8 +11,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
 @Table(name = "BLOGS")
 public class Blog {
 
@@ -26,10 +31,10 @@ public class Blog {
     @Column(name = "SLUG")
     private String slug;
 
-    // @Column(name = "")
-    // private String excerpt;
+    @Column(name = "EXCERPT")
+    private String excerpt;
 
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", columnDefinition = "LONGTEXT")
     private String content;
 
     @Column(name = "COVER_IMAGE")
@@ -39,22 +44,22 @@ public class Blog {
     private String status;   // DRAFT or PUBLISHED
 
     @Column(name = "PUBLISH_AT")
-    private LocalDateTime publishedAt;
+    private Date publishedAt;
 
     @Column(name = "CREATED_AT")
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @Column(name = "UPDATED_AT")
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 
     @PrePersist
     public void prePersist() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        createdAt = new Date();
+        updatedAt = createdAt;
     }
 
     @PreUpdate
     public void preUpdate() {
-        updatedAt = LocalDateTime.now();
+        updatedAt = new Date();
     }
 }

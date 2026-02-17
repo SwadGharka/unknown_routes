@@ -9,110 +9,137 @@
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	
+    <!-- ✅ Jodit Editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jodit@3/build/jodit.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jodit@3/build/jodit.min.js"></script>
+
+
     <!-- ✅ Common CSS -->
-    <!-- <link rel="stylesheet" href="${PATH_FOLDER_CSS}/common.css"> -->
+    <%@ include file="../common/commonScript.jsp" %> 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/dashboard.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/hero.css">
-
-    <%@ include file="../common/commonScript.jsp" %>
-    <!-- ✅ Common JS -->
-    <script src="${pageContext.request.contextPath}/static/js/dashboard.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/hero.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/blogEditor.css">
+    <script src="${pageContext.request.contextPath}/static/js/blog/blogEditor.js"></script>
 </head>
 <body>
-<div class="container">
-  <h2>Blog Editor</h2>
-  <form action="${pageContext.request.contextPath}/admin/blog" method="post" id="blogForm">
-    <input type="hidden" name="id" value="${blogPost.id}"/>
+<%@ include file="../header.jsp"%>
+<div class="blog-editor-container">
+    <h2>✍️ Add New Blog</h2>
 
-    <label>Title</label>
-    <input type="text" name="title" class="form-control" value="${blogPost.title}" required>
+    <form>
+        <input type="hidden" id="editBlogId" value="${blogId}">
+        <div class="blog-editor-grid">
 
-    <label>Slug</label>
-    <div class="input-group">
-      <input type="text" name="slug" class="form-control" value="${blogPost.slug}" placeholder="auto generate">
-      <div class="input-group-append">
-        <button type="button" id="checkSlugBtn" class="btn btn-outline-secondary">Check</button>
-      </div>
-    </div>
-    <small id="slugFeedback" class="text-muted"></small>
+            <div>
+                <label>Title</label>
+                <input type="text" name="title" id="title">
+            </div>
 
-    <label>Excerpt</label>
-    <textarea name="excerpt" class="form-control">${blogPost.excerpt}</textarea>
+            <div>
+                <label>Slug</label>
+                <div class="slug-group">
+                    <input type="text" name="slug" id="slug">
+                    <button type="button" onclick="checkSlug()">Check</button>
+                </div>
+                <small id="slugFeedback"></small>
+            </div>
 
-    <label>Content</label>
-    <textarea name="content" id="contentEditor" class="form-control" rows="12">${blogPost.content}</textarea>
+            <div class="full-width">
+                <label>Excerpt</label>
+                <textarea rows="3" id="excerpt"></textarea>
+            </div>
 
-    <label>Cover image</label>
-    <div>
-      <input type="text" name="coverImage" class="form-control" id="coverImageUrl" value="${blogPost.coverImage}">
-      <input type="file" id="coverImageFile" accept="image/*">
-      <button type="button" id="uploadCoverBtn" class="btn btn-sm btn-secondary mt-2">Upload Image</button>
-      <div id="uploadPreview" class="mt-2">
-        <img src="${blogPost.coverImage}" class="img-fluid" style="max-height:150px">
-      </div>
-    </div>
+            <div class="full-width">
+                <label for="blogContent">Content</label>
 
-    <label>Status</label>
-    <select name="status" class="form-control">
-      <option value="DRAFT" ${blogPost.status == 'DRAFT' ? 'selected' : ''}>Draft</option>
-      <option value="PUBLISHED" ${blogPost.status == 'PUBLISHED' ? 'selected' : ''}>Published</option>
-    </select>
+                <textarea id="blogContent"
+                        name="content"
+                        class="blog-content-editor">
+                </textarea>
+            </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Save</button>
-  </form>
+            <div class="full-width">
+                <label>Cover Image</label>
+                <div class="image-upload-box">
+                    <input type="file" id="imageUpload">
+                    <input type="hidden" id="coverImageUrl">
+                    <div id="uploadPreview">
+					</div>
+                </div>
+            </div>
+
+            <div>
+                <label>Status</label>
+                <select id="status">
+                    <option>DRAFT</option>
+                    <option>PUBLISHED</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="editor-actions">
+            <button type="button" class="btn-save" onclick="saveBlog()">Save Blog</button>
+        </div>
+
+    </form>
 </div>
-
 <script>
-$(function(){
-  // auto slug from title
-  $("input[name='title']").on('keyup', function(){
-    let title = $(this).val();
-    let slug = title.toLowerCase().trim().replace(/[^a-z0-9\- ]/g,'').replace(/\s+/g,'-');
-    $("input[name='slug']").val(slug);
-    $("#slugFeedback").text('');
-  });
-
-  $("#checkSlugBtn").on('click', function(){
-    let slug = $("input[name='slug']").val();
-    if (!slug) { $("#slugFeedback").text('Enter slug'); return; }
-    $.get("/admin/blog/check-slug", { slug: slug }, function(data){
-      if (data.exists) {
-        $("#slugFeedback").text('Slug already taken, it will be made unique on save.');
-      } else {
-        $("#slugFeedback").text('Slug available.');
-      }
-    });
-  });
-
-  // image upload
-  $("#uploadCoverBtn").on('click', function(){
-    let f = $("#coverImageFile")[0].files[0];
-    if (!f) { alert('Choose file'); return; }
-    let fd = new FormData();
-    fd.append('file', f);
-    $.ajax({
-      url: '/admin/blog/upload-image',
-      type: 'POST',
-      data: fd,
-      contentType: false,
-      processData: false,
-      success: function(res) {
-        if (res.success) {
-          $("#coverImageUrl").val(res.url);
-          $("#uploadPreview").html('<img src="'+res.thumb+'" style="max-height:150px" class="img-fluid rounded">');
-        } else {
-          alert(res.message || 'Upload failed');
+    let editor;
+    $(document).ready(function () {
+        editor = new Jodit('#blogContent', {
+            height: 400,
+            placeholder: 'Write your blog content here...',
+            toolbarSticky: false,
+            uploader: {
+                insertImageAsBase64URI: false
+            }
+        });
+        if ($("#editBlogId").val() != null && $("#editBlogId").val() != undefined && $("#editBlogId").val() != '') {
+            getBlogData();
         }
-      },
-      error: function() { alert('Upload error'); }
     });
-  });
+    $(function(){
+        $("#title").on('keyup', function(){
+            let title = $(this).val();
+            let slug = title.toLowerCase().trim().replace(/[^a-z0-9\- ]/g,'').replace(/\s+/g,'-');
+            $("#slug").val(slug);
+            $("#slugFeedback").text('');
+        });
 
-});
+        $("#imageUpload").on("change", function () {
+            let file = this.files[0];
+            if (!file) return;
+            let formData = new FormData();
+            formData.append("file", file);
+            $.ajax({
+                url: BASE_URL + CONTEXT_PATH + "api/update-blog-image",
+                type: "POST",
+                data: formData,
+                contentType: false,   // VERY IMPORTANT
+                processData: false,   // VERY IMPORTANT
+                success: function (res) {
+                    res = JSON.parse(res);
+                    if (res.status === 1) {
+                        $("#coverImage").val(res.url);
+                        showMessage("success", "Image uploaded");
+                        $("#coverImageUrl").val(res.url);
+                        $("#uploadPreview").html('<img src="'+res.url+'" style="max-height:150px" class="img-fluid rounded">');
+                        //   $("#uploadPreview").html('<img src="'+res.url+'" style="max-height:150px" class="img-fluid rounded">');
+                    } else {
+                        showMessage("error", res.message);
+                    }
+                },
+                error: function () {
+                    showMessage("error", "Image upload failed");
+                }
+            });
+
+        });
+    });
 </script>
 </body>
 </html>
