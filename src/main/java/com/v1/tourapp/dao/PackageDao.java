@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface PackageDao extends JpaRepository<Packages, Long> {
 
-    @Query(value = "select * from packages where status in (?1) ", nativeQuery = true)
+    @Query(value = "SELECT * FROM PACKAGES WHERE STATUS IN (?1) ", nativeQuery = true)
     List<Packages> getAllPackages(List<Boolean> status);
 
     @Modifying
