@@ -23,18 +23,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BlogUtil {
     
-
-    @Value("${BLOG_FILE_UPLOAD}")
-    private String BLOG_FILE_UPLOAD;
-
-    @Value("${DEVELOPMENT_MODE}")
-    private String DEVELOPMENT_MODE;
-
     @Autowired
     BlogService blogService;
 
     @Autowired
     SessionUtil sessionUtil;
+
+    @Autowired
+    AttachmentUtil attachmentUtil;
 
     public JSONObject saveBlog(String payload) {
         JSONObject response = new JSONObject();
@@ -132,39 +128,16 @@ public class BlogUtil {
 
     public JSONObject updateBlogImage(MultipartFile file) {
         JSONObject response = new JSONObject();
+        response.put("status", 0);
+        response.put("message", "Image not uploaded");
         try {
-            if (file == null || file.isEmpty()) {
-                response.put("status", 0);
-                response.put("message", "Attachment is empty");
-                return response;
+            JSONObject attcahmentresponse = attachmentUtil.uploadFile(file, "blogs");
+            if(attcahmentresponse.optInt("status") == 1){
+                response.put("status", 1);
+                response.put("url", attcahmentresponse.optString("url"));
+                response.put("name", attcahmentresponse.optString("name"));
+                response.put("message", "Image uploaded successfully");
             }
-            String original = file.getOriginalFilename().replaceAll("\\s+", "-").toLowerCase();
-
-            if (!original.endsWith(".jpg") &&
-                !original.endsWith(".jpeg") &&
-                !original.endsWith(".png") &&
-                !original.endsWith(".webp")) {
-
-                response.put("status", 0);
-                response.put("message", "Invalid file type");
-                return response;
-            }
-
-            long maxSize = 5 * 1024 * 1024;
-            if (file.getSize() > maxSize) {
-                response.put("status", 0);
-                response.put("message", "File size exceeds 5MB");
-                return response;
-            }
-            Files.createDirectories(Paths.get(BLOG_FILE_UPLOAD));
-            String fileName = UUID.randomUUID() + "-" + original;
-            Path path = Paths.get(BLOG_FILE_UPLOAD, fileName);
-            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            String url =  sessionUtil.getBaseUrlWithContextPath() + BLOG_FILE_UPLOAD + "/" + fileName;
-            response.put("status", 1);
-            response.put("url", url);
-            response.put("name", fileName);
-            response.put("message", "Image uploaded successfully");
         } catch (Exception e) {
             log.error("Exception in updateBlogImage ::", e);
             response.put("status", 0);
