@@ -51,7 +51,7 @@ function renderBlogTable(list) {
                     </button>`;
 
             html += `<a onclick="location.href='new-blog?blogId=${blog.id}'" class="btn-action edit">Edit</a>
-                    <a href="${BASE_URL != '' ? BASE_URL: ''}${CONTEXT_PATH != '' ? CONTEXT_PATH : ''}dashboard/view-blog/${blog.slug}" class="btn-action view" target="_blank">View</a>
+                    <a href="${BASE_URL != '' ? BASE_URL: ''}${CONTEXT_PATH != '' ? CONTEXT_PATH : ''}blog/${blog.slug}" class="btn-action view" target="_blank">View</a>
                 </div>
             </div>
         `;

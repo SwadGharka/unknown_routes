@@ -133,22 +133,22 @@ public class ViewResolverController {
         return "blog/blogEditor";
     }
 
-    @GetMapping("view-blog/{slug}")
-    public String viewBlog(Model model, @PathVariable("slug") String slug) {
-        model.addAttribute("title", "View Blog");
-        Blog blog = blogutil.getBlogBySlug(slug);
-        if(blog == null){
-            return "common/404";
-        }
-        if(sessionUtil.getSession().getAttribute("userName") != null){
-            model.addAttribute("blog", blog);
-            return "blog/viewBlog";
-        }else{
-            if(blog.getStatus().equalsIgnoreCase("PUBLISHED")){
-                model.addAttribute("blog", blog);
-                return "blog/viewBlog";
-            }
-        }
-        return "common/404";
-    }
+    // @GetMapping("view-blog/{slug}")
+    // public String viewBlog(Model model, @PathVariable("slug") String slug) {
+    //     model.addAttribute("title", "View Blog");
+    //     Blog blog = blogutil.getBlogBySlug(slug);
+    //     if(blog == null){
+    //         return "common/404";
+    //     }
+    //     if(sessionUtil.getSession().getAttribute("userName") != null){
+    //         model.addAttribute("blog", blog);
+    //         return "blog/viewBlog";
+    //     }else{
+    //         if(blog.getStatus().equalsIgnoreCase("PUBLISHED")){
+    //             model.addAttribute("blog", blog);
+    //             return "blog/viewBlog";
+    //         }
+    //     }
+    //     return "common/404";
+    // }
 }
